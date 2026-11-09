@@ -5,7 +5,7 @@
   "min_version" : "0.0.0.0",
   "notes" : 
   {
-    "zh" : "• 屏保：修复在线屏保运行时看不到鼠标、点不到「退出屏保」按钮\r\n• 屏保：修复鼠标移到屏幕边缘会弹出任务视图 / 小组件面板（全屏窗口重新抢回前台与置顶）\r\n• 屏保程序：独立版本号与在线更新，设置中心 → 屏保页可查看版本并检查更新，不用重装主程序\r\n• 反馈问题：可直接提交到 GitHub Issues（中继服务，Token 只在服务端），失败自动退回本地保存 + 预填 issue 页面\r\n• 更新历史：修复发版后一直读到旧缓存、看不到最新版本的问题（缓存 6 小时有效期）\r\n• 其它：设置中心高度、对话框层级、工具箱图标等细节修复"
+    "zh" : "• 设置中心：需要管理员权限的系统设置不再灰掉——已提权直接改，普通权限经「ZkDesk 服务」完成；未安装服务时提示安装一次（只需一次管理员授权），装好自动继续，之后不再弹 UAC\r\n• 屏保：跳过锁屏界面同样支持服务安装引导；取消安装只把勾选拨回，不再误报失败\r\n• 修复：服务端写注册表的类型名不匹配，导致经服务修改系统设置必然失败（包括旧的跳过锁屏界面）"
   },
   "notes_url" : {},
   "packages" : 
@@ -17,38 +17,38 @@
         {
           "mode" : "replace",
           "path" : "history.json",
-          "sha256" : "44d13a32053f53a07d02617816d4ac6c4a7ab5b99abda68a17673c4cc1b1a0a1",
-          "size" : 2044
+          "sha256" : "4a5461f5c2d8fe377ba4266597aed9f16a40e5a996fe07a20343cbbee888ba1d",
+          "size" : 2647
         },
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "1b5efcc5a854be6657af65efcf3085a946fee5c3767af01124b33b868c775d52",
+          "sha256" : "cfaf453d1668c2f91d7a235c53617e5784498eeb20a9bd3f0e51eca6406adce4",
           "size" : 21178880
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "67cb0b86fd1ed2fa45e1bb804e77e472671e870bbe8cc27aa420aa3bb9124d96",
-          "size" : 570880
+          "sha256" : "7361f6bec9d1c23225ee0d190ab6af005af68ad625212b56d949b35dd20eac86",
+          "size" : 571904
         },
         {
           "mode" : "replace",
           "path" : "zkupdate.exe",
-          "sha256" : "8d4b867370de225591203e3914e5b9c2b897d2f583228a095a85c76963d9836c",
+          "sha256" : "730239b284978933da924d047f03283dc87dd0599cccd168292f88ece1c755f6",
           "size" : 904192
         }
       ],
       "from" : 
       [
-        "1.0.0.0"
+        "1.0.0.1"
       ],
-      "id" : "delta-1.0.0.0-1.0.0.1",
+      "id" : "delta-1.0.0.1-1.1.0.1",
       "kind" : "delta",
       "seeds" : [],
-      "sha256" : "1ca8d65d85fc8caa73fee045de57f165d1d9bdb8690b2ef4b48c643da865ca4a",
-      "size" : 10547084,
-      "url" : "1.0.0.1/zkdesk-1.0.0.0-to-1.0.0.1-x64.zip"
+      "sha256" : "01da8a38df489c782dfa11c4cf918dced5ba0b6af17cf3269b164a971856683a",
+      "size" : 10548768,
+      "url" : "1.1.0.1/zkdesk-1.0.0.1-to-1.1.0.1-x64.zip"
     },
     {
       "delete" : [],
@@ -81,8 +81,8 @@
         {
           "mode" : "replace",
           "path" : "history.json",
-          "sha256" : "44d13a32053f53a07d02617816d4ac6c4a7ab5b99abda68a17673c4cc1b1a0a1",
-          "size" : 2044
+          "sha256" : "4a5461f5c2d8fe377ba4266597aed9f16a40e5a996fe07a20343cbbee888ba1d",
+          "size" : 2647
         },
         {
           "mode" : "replace",
@@ -123,19 +123,19 @@
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "1b5efcc5a854be6657af65efcf3085a946fee5c3767af01124b33b868c775d52",
+          "sha256" : "cfaf453d1668c2f91d7a235c53617e5784498eeb20a9bd3f0e51eca6406adce4",
           "size" : 21178880
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "67cb0b86fd1ed2fa45e1bb804e77e472671e870bbe8cc27aa420aa3bb9124d96",
-          "size" : 570880
+          "sha256" : "7361f6bec9d1c23225ee0d190ab6af005af68ad625212b56d949b35dd20eac86",
+          "size" : 571904
         },
         {
           "mode" : "replace",
           "path" : "zkupdate.exe",
-          "sha256" : "8d4b867370de225591203e3914e5b9c2b897d2f583228a095a85c76963d9836c",
+          "sha256" : "730239b284978933da924d047f03283dc87dd0599cccd168292f88ece1c755f6",
           "size" : 904192
         }
       ],
@@ -143,7 +143,7 @@
       [
         "*"
       ],
-      "id" : "full-1.0.0.1",
+      "id" : "full-1.1.0.1",
       "kind" : "full",
       "seeds" : 
       [
@@ -153,15 +153,15 @@
           "path" : "Modules/Modules.json"
         }
       ],
-      "sha256" : "b3fced8f4467be6a3e1e1c5e9c3f410789932babea9392884c1ebf42801251f0",
-      "size" : 11007720,
-      "url" : "1.0.0.1/zkdesk-1.0.0.1-x64-full.zip"
+      "sha256" : "417d8802c7c3c382c3aec2b04aa36e356002dd4ee689f638ce34d36202df5744",
+      "size" : 11009404,
+      "url" : "1.1.0.1/zkdesk-1.1.0.1-x64-full.zip"
     }
   ],
   "paused" : false,
   "product" : "zkdesk",
-  "released_at" : "2026-11-09T13:10:08Z",
+  "released_at" : "2026-11-09T13:45:03Z",
   "rollout" : 100,
   "schema" : 1,
-  "version" : "1.0.0.1"
+  "version" : "1.1.0.1"
 }
