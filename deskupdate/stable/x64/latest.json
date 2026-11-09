@@ -17,19 +17,19 @@
         {
           "mode" : "replace",
           "path" : "history.json",
-          "sha256" : "65e4e3ec1444af7f5bc9601009813fc81c0eeed42eee0e30cc66ea98650e181e",
+          "sha256" : "44d13a32053f53a07d02617816d4ac6c4a7ab5b99abda68a17673c4cc1b1a0a1",
           "size" : 2044
         },
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "c0a1c2190222afec4c1dd561e09f7e6e278ca2c5ccd7f4b4810e5de165d1f6a0",
-          "size" : 21164544
+          "sha256" : "1b5efcc5a854be6657af65efcf3085a946fee5c3767af01124b33b868c775d52",
+          "size" : 21178880
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "48d766901aec247f369c961f4ceb754c6d2430eb68f2b5e0c381543528808716",
+          "sha256" : "67cb0b86fd1ed2fa45e1bb804e77e472671e870bbe8cc27aa420aa3bb9124d96",
           "size" : 570880
         },
         {
@@ -46,8 +46,8 @@
       "id" : "delta-1.0.0.0-1.0.0.1",
       "kind" : "delta",
       "seeds" : [],
-      "sha256" : "2f7804e58ce89526a8450eb7eec3b21399c41580eb87c3b407dcaedf45bcde57",
-      "size" : 10541461,
+      "sha256" : "1ca8d65d85fc8caa73fee045de57f165d1d9bdb8690b2ef4b48c643da865ca4a",
+      "size" : 10547084,
       "url" : "1.0.0.1/zkdesk-1.0.0.0-to-1.0.0.1-x64.zip"
     },
     {
@@ -81,7 +81,7 @@
         {
           "mode" : "replace",
           "path" : "history.json",
-          "sha256" : "65e4e3ec1444af7f5bc9601009813fc81c0eeed42eee0e30cc66ea98650e181e",
+          "sha256" : "44d13a32053f53a07d02617816d4ac6c4a7ab5b99abda68a17673c4cc1b1a0a1",
           "size" : 2044
         },
         {
@@ -123,13 +123,13 @@
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "c0a1c2190222afec4c1dd561e09f7e6e278ca2c5ccd7f4b4810e5de165d1f6a0",
-          "size" : 21164544
+          "sha256" : "1b5efcc5a854be6657af65efcf3085a946fee5c3767af01124b33b868c775d52",
+          "size" : 21178880
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "48d766901aec247f369c961f4ceb754c6d2430eb68f2b5e0c381543528808716",
+          "sha256" : "67cb0b86fd1ed2fa45e1bb804e77e472671e870bbe8cc27aa420aa3bb9124d96",
           "size" : 570880
         },
         {
@@ -153,14 +153,14 @@
           "path" : "Modules/Modules.json"
         }
       ],
-      "sha256" : "b41d02d2b0301b26644574e91cd476dc6e587b51065e2f5d457e83ea0f78fa87",
-      "size" : 11002097,
+      "sha256" : "b3fced8f4467be6a3e1e1c5e9c3f410789932babea9392884c1ebf42801251f0",
+      "size" : 11007720,
       "url" : "1.0.0.1/zkdesk-1.0.0.1-x64-full.zip"
     }
   ],
   "paused" : false,
   "product" : "zkdesk",
-  "released_at" : "2026-11-09T12:58:16Z",
+  "released_at" : "2026-11-09T13:10:08Z",
   "rollout" : 100,
   "schema" : 1,
   "version" : "1.0.0.1"
