@@ -17,14 +17,14 @@
         {
           "mode" : "replace",
           "path" : "history.json",
-          "sha256" : "948b4c7e50ca466d714b5959dbe7fd8674003454b8a44bfc1816efba1ce4174e",
+          "sha256" : "8ed811b04af01713c98986cbcbcb223eca8815e4ed894055613fc481f4ad95be",
           "size" : 2545
         },
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "a806fdcc07e0487fd782e409c0cb5b59b034a242b3285b19ac39cef5987fc285",
-          "size" : 21159936
+          "sha256" : "b4c44b276f6be3dcb8e5f46137f27cc7726fc0c834f1f02a5e41bd4f6d551670",
+          "size" : 21160960
         },
         {
           "mode" : "replace",
@@ -46,8 +46,8 @@
       "id" : "delta-1.0.0.0-1.0.0.1",
       "kind" : "delta",
       "seeds" : [],
-      "sha256" : "bec36c49f802c629c3bc6160a58e105f1ce3c16df9584e1b470b3d94f1f70834",
-      "size" : 10539008,
+      "sha256" : "aa97bbc5ded9082a6d7cdbf4e7b0734c02bd217463d9f91a7b74f83c470b48e9",
+      "size" : 10539282,
       "url" : "1.0.0.1/zkdesk-1.0.0.0-to-1.0.0.1-x64.zip"
     },
     {
@@ -81,7 +81,7 @@
         {
           "mode" : "replace",
           "path" : "history.json",
-          "sha256" : "948b4c7e50ca466d714b5959dbe7fd8674003454b8a44bfc1816efba1ce4174e",
+          "sha256" : "8ed811b04af01713c98986cbcbcb223eca8815e4ed894055613fc481f4ad95be",
           "size" : 2545
         },
         {
@@ -123,8 +123,8 @@
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "a806fdcc07e0487fd782e409c0cb5b59b034a242b3285b19ac39cef5987fc285",
-          "size" : 21159936
+          "sha256" : "b4c44b276f6be3dcb8e5f46137f27cc7726fc0c834f1f02a5e41bd4f6d551670",
+          "size" : 21160960
         },
         {
           "mode" : "replace",
@@ -153,14 +153,14 @@
           "path" : "Modules/Modules.json"
         }
       ],
-      "sha256" : "a4b843d7d114ea3e4ec6d0ce737999dc3fceaff4b6f8a92485f7d05df5ff6a6a",
-      "size" : 10999644,
+      "sha256" : "6f30736ee9a7e2eb4309438fbbaab408e8461ad9c3b2e413f1243e060c70e5d2",
+      "size" : 10999918,
       "url" : "1.0.0.1/zkdesk-1.0.0.1-x64-full.zip"
     }
   ],
   "paused" : false,
   "product" : "zkdesk",
-  "released_at" : "2026-11-09T12:00:00Z",
+  "released_at" : "2026-11-09T12:19:20Z",
   "rollout" : 100,
   "schema" : 1,
   "version" : "1.0.0.1"

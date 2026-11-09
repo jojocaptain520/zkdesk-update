@@ -23,7 +23,7 @@
     },
     {
       "path" : "history.json",
-      "sha256" : "948b4c7e50ca466d714b5959dbe7fd8674003454b8a44bfc1816efba1ce4174e",
+      "sha256" : "8ed811b04af01713c98986cbcbcb223eca8815e4ed894055613fc481f4ad95be",
       "size" : 2545
     },
     {
@@ -58,8 +58,8 @@
     },
     {
       "path" : "zkdesk64.exe",
-      "sha256" : "a806fdcc07e0487fd782e409c0cb5b59b034a242b3285b19ac39cef5987fc285",
-      "size" : 21159936
+      "sha256" : "b4c44b276f6be3dcb8e5f46137f27cc7726fc0c834f1f02a5e41bd4f6d551670",
+      "size" : 21160960
     },
     {
       "path" : "zkdesk_svc.exe",
