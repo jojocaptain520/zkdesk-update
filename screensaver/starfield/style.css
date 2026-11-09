@@ -7,7 +7,8 @@ html, body {
 }
 
 body {
-  cursor: none;
+  /* 退出改成点右上角按钮：光标必须可见，否则用户找不到按钮 */
+  cursor: default;
   font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, sans-serif;
 }
 
