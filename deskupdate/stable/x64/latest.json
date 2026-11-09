@@ -29,7 +29,7 @@
         {
           "mode" : "replace",
           "path" : "ScreenSaver.scr",
-          "sha256" : "f8b26fb4bdb267fb38ed790181da8e709e53c720155006f18155f646d29f250a",
+          "sha256" : "9bfae5d0020ce3bdecfb6c12fde2506ba56a088bb69814bafcef47f9d6efd2d1",
           "size" : 418304
         },
         {
@@ -41,7 +41,7 @@
         {
           "mode" : "replace",
           "path" : "history.json",
-          "sha256" : "ceafc669c8e429eb3f3c695e11515213b06ec7b9a917ed0f7993705e5e04dc52",
+          "sha256" : "7d5fd3de98c0c6876f0336b55b5fc6c979994bafffa7ede34f6e8f74f407e936",
           "size" : 1625
         },
         {
@@ -83,8 +83,8 @@
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "33ee4ca16d4fa2507328139eb352ea7efb4f181523b79bc29433e37b2f521c7c",
-          "size" : 21143040
+          "sha256" : "a59be310c75d4b33e96c7e331d69deef7b76caf94ecc5eef28ddce4c74fc456f",
+          "size" : 21159936
         },
         {
           "mode" : "replace",
@@ -113,14 +113,14 @@
           "path" : "Modules/Modules.json"
         }
       ],
-      "sha256" : "69b578f5698f08d9a669acbe7943daadcdbf82036840b527702e24bbadb59313",
-      "size" : 10992173,
+      "sha256" : "a6b3e63fb0d2e94b2bd6e2bae62569926c10a7efba3d79738f1b437837d32975",
+      "size" : 10999362,
       "url" : "1.0.0.0/zkdesk-1.0.0.0-x64-full.zip"
     }
   ],
   "paused" : false,
   "product" : "zkdesk",
-  "released_at" : "2026-11-09T11:18:15Z",
+  "released_at" : "2026-11-09T11:34:32Z",
   "rollout" : 100,
   "schema" : 1,
   "version" : "1.0.0.0"
