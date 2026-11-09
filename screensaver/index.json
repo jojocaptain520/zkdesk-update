@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-11-09 16:47",
+  "updated": "2026-11-09 17:36",
   "presets": [
     {
       "id": "flip-clock",
@@ -29,51 +29,51 @@
     },
     {
       "id": "gradient-flow",
-      "name": "流体渐变",
-      "desc": "缓慢流动的极光色块，护眼不刺眼",
-      "version": "1.0.0",
+      "name": "热带雨林",
+      "desc": "雨林光影里的藤叶、鹦鹉与巨嘴鸟，深绿护眼",
+      "version": "1.1.0",
       "entry": "index.html",
       "cover": "covers/gradient-flow.png",
       "files": [
         {
           "path": "app.js",
-          "size": 7147,
-          "sha256": "e1d3edbdd88a36d0c8a8410584ed149c3b78e2f9e21d9f29610b456515a2808a"
+          "size": 23987,
+          "sha256": "c601f42a7fa92069d3e3fe319a9a006449d608834e268fe0335394ca6d28bb64"
         },
         {
           "path": "index.html",
           "size": 361,
-          "sha256": "dc37ad225d92fffd70a7d7a548765a1ab2efb6cefa38ae36a8dabb9fffd7ed97"
+          "sha256": "82cfc9e6017eefbec480f7ff40761d9c39ed67d4aa6b0ae944ef711976f912cb"
         },
         {
           "path": "style.css",
-          "size": 806,
-          "sha256": "92831233045d478628c8c19b925ef826a2cbeb485f2e58cc020407816d3ba657"
+          "size": 862,
+          "sha256": "8ef8910f1afb357a0e9fbd2a0b81be80537e740acc55458f963236ae7563f57f"
         }
       ]
     },
     {
       "id": "matrix-rain",
-      "name": "数字雨",
-      "desc": "绿色字符雨，致敬 Matrix",
-      "version": "1.0.0",
+      "name": "浅色海滩",
+      "desc": "浅蓝天空、暖暖沙滩与缓缓海浪，白天用也柔和不刺眼",
+      "version": "1.1.0",
       "entry": "index.html",
       "cover": "covers/matrix-rain.png",
       "files": [
         {
           "path": "app.js",
-          "size": 4015,
-          "sha256": "29a63cbe0a1dfe510ca752969a6fd4cda3cf022e08dad3c100f634a414751d20"
+          "size": 18749,
+          "sha256": "bf385fea8e1aa4a5eb49038d63811c9db9f9ef9a59cd0adee3e0920a1b41760d"
         },
         {
           "path": "index.html",
-          "size": 321,
-          "sha256": "610bd0b2fd13265c8947a54e11426784f3eb1247c63edc4dfbf8f4b61f8581de"
+          "size": 352,
+          "sha256": "ca85b81d720bab51d2e16d7206fc164df4006ff92d54ed081ac3eaff21fab406"
         },
         {
           "path": "style.css",
-          "size": 575,
-          "sha256": "a0fc4220b72c9ff374099401b504c2cfc114c76b36e4645847f60ef81bbe33d7"
+          "size": 818,
+          "sha256": "ea2cf3ff94a7bb34bc4452ea1fc91d399a823417b535bacb2b0156799cae32f3"
         }
       ]
     },

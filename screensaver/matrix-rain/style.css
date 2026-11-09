@@ -1,9 +1,9 @@
-/* 数字雨：页面只负责铺满与压暗四周，画面全部由 canvas 绘制 */
+/* 浅色海滩：整体浅色调，四周用亮白柔光收边，不压暗 */
 html, body {
   margin: 0;
   height: 100%;
   overflow: hidden;
-  background: #000;
+  background: #eaf7ff;
 }
 
 body {
@@ -19,10 +19,18 @@ body {
   height: 100%;
 }
 
-/* 四周轻微压暗，突出中间雨幕 */
+/* 四周淡淡的白雾，让画面往中间收 */
 .vignette {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.62) 100%);
+  background: radial-gradient(ellipse at 52% 46%, rgba(255, 255, 255, 0) 46%, rgba(255, 255, 255, 0.55) 100%);
+}
+
+/* 顶部一层很淡的暖光，像午后阳光 */
+.sunwash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 80% 14%, rgba(255, 248, 214, 0.45) 0%, rgba(255, 248, 214, 0) 55%);
 }

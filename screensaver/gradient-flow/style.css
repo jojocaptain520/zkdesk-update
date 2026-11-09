@@ -1,9 +1,9 @@
-/* 流体渐变：低分辨率绘制再放大，得到柔和的极光/油彩质感 */
+/* 热带雨林：深绿流体光影 + 动物剪影，低分辨率绘制放大得到柔和质感 */
 html, body {
   margin: 0;
   height: 100%;
   overflow: hidden;
-  background: #03030a;
+  background: #04120e;
 }
 
 body {
@@ -17,7 +17,7 @@ body {
   display: block;
   width: 100%;
   height: 100%;
-  filter: saturate(1.18) contrast(1.02);
+  filter: saturate(1.12) contrast(1.03);
 }
 
 /* 运行时生成的细颗粒，压住暗部渐变的色带 */
@@ -26,15 +26,16 @@ body {
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  opacity: 0.055;
+  opacity: 0.05;
   mix-blend-mode: overlay;
   background-repeat: repeat;
 }
 
+/* 四周压暗成雨林深处的感觉 */
 .vignette {
   position: fixed;
   inset: 0;
   z-index: 3;
   pointer-events: none;
-  background: radial-gradient(ellipse at 50% 46%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.60) 100%);
+  background: radial-gradient(ellipse at 50% 48%, rgba(0, 0, 0, 0) 34%, rgba(1, 8, 5, 0.72) 100%);
 }
