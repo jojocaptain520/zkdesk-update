@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "updated": "2026-11-09 16:47",
+  "presets": [
+    {
+      "id": "flip-clock",
+      "name": "翻页时钟",
+      "desc": "大号翻页时钟，深色极简",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/flip-clock.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 5315,
+          "sha256": "41323e8b80ad687cc49850cbd67dc86bab57b41a2a6b016e45441c322f120b4d"
+        },
+        {
+          "path": "index.html",
+          "size": 1721,
+          "sha256": "0d47c1058081a3afe6f297f52facf1183e7b0f35260f73ce543ca44e9ae1b184"
+        },
+        {
+          "path": "style.css",
+          "size": 4914,
+          "sha256": "c43442a0b3168244081096e98c7f8dbeee9d59359d9127620fc806e1a852a4ff"
+        }
+      ]
+    },
+    {
+      "id": "gradient-flow",
+      "name": "流体渐变",
+      "desc": "缓慢流动的极光色块，护眼不刺眼",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/gradient-flow.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 7147,
+          "sha256": "e1d3edbdd88a36d0c8a8410584ed149c3b78e2f9e21d9f29610b456515a2808a"
+        },
+        {
+          "path": "index.html",
+          "size": 361,
+          "sha256": "dc37ad225d92fffd70a7d7a548765a1ab2efb6cefa38ae36a8dabb9fffd7ed97"
+        },
+        {
+          "path": "style.css",
+          "size": 806,
+          "sha256": "92831233045d478628c8c19b925ef826a2cbeb485f2e58cc020407816d3ba657"
+        }
+      ]
+    },
+    {
+      "id": "matrix-rain",
+      "name": "数字雨",
+      "desc": "绿色字符雨，致敬 Matrix",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/matrix-rain.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 4015,
+          "sha256": "29a63cbe0a1dfe510ca752969a6fd4cda3cf022e08dad3c100f634a414751d20"
+        },
+        {
+          "path": "index.html",
+          "size": 321,
+          "sha256": "610bd0b2fd13265c8947a54e11426784f3eb1247c63edc4dfbf8f4b61f8581de"
+        },
+        {
+          "path": "style.css",
+          "size": 575,
+          "sha256": "a0fc4220b72c9ff374099401b504c2cfc114c76b36e4645847f60ef81bbe33d7"
+        }
+      ]
+    },
+    {
+      "id": "starfield",
+      "name": "星空穿越",
+      "desc": "星点从深空飞来，越近越亮",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/starfield.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 5977,
+          "sha256": "b21214919b3b35ff6308dd6bb29b4e3eb7ce540492598f9cfa9693d697d8d7f2"
+        },
+        {
+          "path": "index.html",
+          "size": 324,
+          "sha256": "051207e442e0dd072e7326f11473f479cb5a510d2edaa5a7319b8c5757201c6f"
+        },
+        {
+          "path": "style.css",
+          "size": 488,
+          "sha256": "b373e17cd1a59b19a896a30977b773b655d4c5de639c413d6e8a6e39a34ce0a4"
+        }
+      ]
+    }
+  ]
+}

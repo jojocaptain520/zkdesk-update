@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>翻页时钟</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="dust"></canvas>
+<div class="vignette"></div>
+<main class="stage">
+  <div class="clock" id="clock">
+    <div class="digit">
+      <div class="half top"><span>0</span></div>
+      <div class="half bottom"><span>0</span></div>
+      <div class="flap">
+        <div class="leaf front"><span>0</span></div>
+        <div class="leaf back"><span>0</span></div>
+      </div>
+    </div>
+    <div class="digit">
+      <div class="half top"><span>0</span></div>
+      <div class="half bottom"><span>0</span></div>
+      <div class="flap">
+        <div class="leaf front"><span>0</span></div>
+        <div class="leaf back"><span>0</span></div>
+      </div>
+    </div>
+    <div class="colon"><i></i><i></i></div>
+    <div class="digit">
+      <div class="half top"><span>0</span></div>
+      <div class="half bottom"><span>0</span></div>
+      <div class="flap">
+        <div class="leaf front"><span>0</span></div>
+        <div class="leaf back"><span>0</span></div>
+      </div>
+    </div>
+    <div class="digit">
+      <div class="half top"><span>0</span></div>
+      <div class="half bottom"><span>0</span></div>
+      <div class="flap">
+        <div class="leaf front"><span>0</span></div>
+        <div class="leaf back"><span>0</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="meta">
+    <span id="date">--</span>
+    <i class="dot"></i>
+    <span id="weekday">--</span>
+  </div>
+  <div class="progress"><i id="secbar"></i></div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

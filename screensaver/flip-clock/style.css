@@ -1,0 +1,256 @@
+/* 翻页时钟：大号 HH:MM + 日期/星期，深色优雅风格 */
+:root {
+  --card-h: 200px;
+  --card-w: 144px;
+  --digit-fs: 164px;
+  --gold: #c9a86a;
+  --paper: #f4eee2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+body {
+  cursor: none;
+  font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, sans-serif;
+  color: #e9e3d7;
+  background:
+    radial-gradient(1100px 620px at 50% 40%, rgba(72, 80, 108, 0.28), rgba(8, 9, 14, 0) 72%),
+    radial-gradient(900px 560px at 50% 106%, rgba(122, 88, 46, 0.10), rgba(0, 0, 0, 0) 70%),
+    linear-gradient(180deg, #0c0e16 0%, #07080e 55%, #030407 100%);
+}
+
+#dust {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 44%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.60) 100%);
+}
+
+.stage {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3.4vh;
+}
+
+.clock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.digit {
+  position: relative;
+  width: var(--card-w);
+  height: var(--card-h);
+  margin: 0 calc(var(--card-w) * 0.065);
+  border-radius: 18px;
+  perspective: 900px;
+  transform: translateZ(0);
+}
+
+.half,
+.leaf {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+}
+
+.half span,
+.leaf span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: var(--card-h);
+  line-height: var(--card-h);
+  text-align: center;
+  font-size: var(--digit-fs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--paper);
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.55);
+}
+
+.half.top,
+.leaf.front {
+  background: linear-gradient(180deg, #252c3a 0%, #1b2130 100%);
+  border-radius: 18px 18px 5px 5px;
+}
+
+.half.bottom,
+.leaf.back {
+  background: linear-gradient(180deg, #141a26 0%, #0b0f17 100%);
+  border-radius: 5px 5px 18px 18px;
+}
+
+.half.top { top: 0; }
+.half.bottom { top: 50%; }
+.half.top span { top: 0; }
+.half.bottom span { top: calc(var(--card-h) * -0.5); }
+
+.flap {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+
+.leaf {
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.leaf.front {
+  top: 0;
+  transform-origin: 50% 100%;
+  z-index: 2;
+}
+
+.leaf.back {
+  top: 50%;
+  transform-origin: 50% 0;
+  transform: rotateX(90deg);
+  z-index: 1;
+}
+
+.leaf.front span { top: 0; }
+.leaf.back span { top: calc(var(--card-h) * -0.5); }
+
+/* 外框高光与中缝 */
+.digit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  border-radius: 18px;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.075),
+    0 22px 60px rgba(0, 0, 0, 0.55);
+}
+
+.digit::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+  z-index: 7;
+  pointer-events: none;
+  background: linear-gradient(90deg,
+    rgba(0, 0, 0, 0.05),
+    rgba(0, 0, 0, 0.72) 10%,
+    rgba(0, 0, 0, 0.72) 90%,
+    rgba(0, 0, 0, 0.05));
+}
+
+@keyframes flipTop {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(-90deg); }
+}
+
+@keyframes flipBottom {
+  0% { transform: rotateX(90deg); }
+  100% { transform: rotateX(0deg); }
+}
+
+.digit.flipping .leaf.front {
+  animation: flipTop 0.3s cubic-bezier(0.55, 0.06, 0.68, 0.19) both;
+}
+
+.digit.flipping .leaf.back {
+  animation: flipBottom 0.3s cubic-bezier(0.2, 0.7, 0.3, 1) 0.3s both;
+}
+
+.colon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--card-h) * 0.13);
+  width: calc(var(--card-w) * 0.34);
+  flex: 0 0 auto;
+}
+
+.colon i {
+  display: block;
+  width: calc(var(--card-h) * 0.072);
+  height: calc(var(--card-h) * 0.072);
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 22px rgba(201, 168, 106, 0.5);
+  animation: blink 2s steps(1, end) infinite;
+}
+
+@keyframes blink {
+  0%, 54% { opacity: 1; }
+  55%, 100% { opacity: 0.16; }
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  font-size: clamp(15px, 1.45vw, 27px);
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  color: #a89c86;
+  white-space: nowrap;
+}
+
+.meta .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(201, 168, 106, 0.85);
+  box-shadow: 0 0 12px rgba(201, 168, 106, 0.5);
+  flex: 0 0 auto;
+}
+
+.progress {
+  width: min(360px, 44vw);
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.075);
+  overflow: hidden;
+}
+
+.progress i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: var(--gold);
+  opacity: 0.7;
+  box-shadow: 0 0 10px rgba(201, 168, 106, 0.8);
+}

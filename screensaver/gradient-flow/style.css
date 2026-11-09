@@ -1,0 +1,40 @@
+/* 流体渐变：低分辨率绘制再放大，得到柔和的极光/油彩质感 */
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #03030a;
+}
+
+body {
+  cursor: none;
+  font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, sans-serif;
+}
+
+#scene {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: saturate(1.18) contrast(1.02);
+}
+
+/* 运行时生成的细颗粒，压住暗部渐变的色带 */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.055;
+  mix-blend-mode: overlay;
+  background-repeat: repeat;
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 46%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.60) 100%);
+}
