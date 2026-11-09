@@ -1,0 +1,121 @@
+{
+  "arch" : "x64",
+  "channel" : "stable",
+  "mandatory" : false,
+  "min_version" : "0.0.0.0",
+  "notes" : 
+  {
+    "zh" : ""
+  },
+  "notes_url" : {},
+  "packages" : 
+  [
+    {
+      "delete" : [],
+      "files" : 
+      [
+        {
+          "mode" : "replace",
+          "path" : "Modules/ContextMenuManager/ContextMenuManager.exe",
+          "sha256" : "1352c2222d2d28dd1a8824334f16c0676dfe88cd7211de873ec9b125f6782ec7",
+          "size" : 552960
+        },
+        {
+          "mode" : "seed",
+          "path" : "Modules/Modules.json",
+          "sha256" : "f31ed2beca57336f5ba0abc6ed685e9afebe7bcf0303d10655744ea0216b982c",
+          "size" : 852
+        },
+        {
+          "mode" : "replace",
+          "path" : "ScreenSaver.scr",
+          "sha256" : "e0b814a46306a7d3d4747dd4bc268e9895ad11f06ae21548ed6a0df262a9202e",
+          "size" : 417792
+        },
+        {
+          "mode" : "replace",
+          "path" : "configs/files.json",
+          "sha256" : "f803b82116f6c22afded9155313ce415d24fecc3b61910e9b077d239b29151c6",
+          "size" : 1544
+        },
+        {
+          "mode" : "replace",
+          "path" : "web/app.js",
+          "sha256" : "75581d6b3e896120e04b3f7e1b2c2be30c9ba83bf395d432b045a5e01c2c77ea",
+          "size" : 4466
+        },
+        {
+          "mode" : "replace",
+          "path" : "web/index.html",
+          "sha256" : "0da3e6caf0162d9486f7101a280a8887d33d62fd0b6529aaf1651db3e32f9e72",
+          "size" : 1544
+        },
+        {
+          "mode" : "replace",
+          "path" : "web/settings.css",
+          "sha256" : "ab50cc14540e6120e431c5dce659a3c300871b0ea0c47a9f2ae98ae4f63c21f1",
+          "size" : 4674
+        },
+        {
+          "mode" : "replace",
+          "path" : "web/settings.html",
+          "sha256" : "a38d05bde5b3b4f355ddbd81d7788486684644b50758e7070e5d3f1732de5516",
+          "size" : 1357
+        },
+        {
+          "mode" : "replace",
+          "path" : "web/settings.js",
+          "sha256" : "e788ea571e669b920a708d715479b09dbae051f8947e14c62dfe119fe6e6643d",
+          "size" : 3036
+        },
+        {
+          "mode" : "replace",
+          "path" : "web/style.css",
+          "sha256" : "1471092de04c23a898849624b46ff553f8b42ad6dcc8ac33423c763c947d6397",
+          "size" : 6296
+        },
+        {
+          "mode" : "replace",
+          "path" : "zkdesk64.exe",
+          "sha256" : "88b637de9dab820ca119fec9f7719efe2fb8efdb9fcda0606b373e343cab647d",
+          "size" : 21134848
+        },
+        {
+          "mode" : "replace",
+          "path" : "zkdesk_svc.exe",
+          "sha256" : "7d5bf7ac13998cac3ea32c77f33fb0bf6b8ed1bd79c9911507a01f460831ef91",
+          "size" : 570880
+        },
+        {
+          "mode" : "replace",
+          "path" : "zkupdate.exe",
+          "sha256" : "48d8809d1626d9f46d38b535dcb5a5838e0d2baf65a0c3bf36f5159f6a48920a",
+          "size" : 870400
+        }
+      ],
+      "from" : 
+      [
+        "*"
+      ],
+      "id" : "full-1.0.0.0",
+      "kind" : "full",
+      "seeds" : 
+      [
+        {
+          "key" : "path",
+          "kind" : "modules-json",
+          "path" : "Modules/Modules.json"
+        }
+      ],
+      "sha256" : "8e753995b1fe5d6ad42ee9a9611f0f22624cbbc02e098bd2c3874fd577e04805",
+      "size" : 11009419,
+      "url" : "1.0.0.0/zkdesk-1.0.0.0-x64-full.zip"
+    }
+  ],
+  "paused" : false,
+  "product" : "zkdesk",
+  "released_at" : "2026-11-09T05:04:16Z",
+  "rollout" : 100,
+  "schema" : 1,
+  "version" : "1.0.0.0"
+}
