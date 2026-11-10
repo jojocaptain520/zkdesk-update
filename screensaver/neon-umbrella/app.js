@@ -694,11 +694,11 @@
     for (var v = 0; v < 3; v++) {
       var vy = 0.646 + v * 0.050;
       g2.fillStyle = 'rgba(22,36,52,0.92)';
-      g2.fillRect(X(0.372), Y(vy), 0.070 * MW, 0.018 * MH);
-      g2.fillRect(X(0.558), Y(vy), 0.070 * MW, 0.018 * MH);
+      g2.fillRect(X(0.344), Y(vy), 0.062 * MW, 0.016 * MH);
+      g2.fillRect(X(0.594), Y(vy), 0.062 * MW, 0.016 * MH);
       g2.fillStyle = 'rgba(' + GLOW + ',0.50)';
-      g2.fillRect(X(0.372), Y(vy + 0.001), 0.070 * MW, 0.0035 * MH);
-      g2.fillRect(X(0.558), Y(vy + 0.001), 0.070 * MW, 0.0035 * MH);
+      g2.fillRect(X(0.344), Y(vy + 0.001), 0.062 * MW, 0.0030 * MH);
+      g2.fillRect(X(0.594), Y(vy + 0.001), 0.062 * MW, 0.0030 * MH);
     }
 
     /* orange hazard marks kept off the face axis */
@@ -888,10 +888,8 @@
       [0.318, 0.520, 0.344, 0.612],
       [0.660, 0.470, 0.682, 0.520],
       [0.682, 0.520, 0.656, 0.612],
-      [0.352, 0.690, 0.392, 0.690],
-      [0.648, 0.690, 0.608, 0.690],
-      [0.470, 0.724, 0.530, 0.724],
-      [0.474, 0.780, 0.526, 0.780]
+      [0.340, 0.700, 0.376, 0.700],
+      [0.660, 0.700, 0.624, 0.700]
     ];
     for (var li = 0; li < lines.length; li++) {
       g2.beginPath();
@@ -908,25 +906,13 @@
       g2.fill();
     }
 
-    /* ---------------- 8b. rim light: cyan left, orange right ---------------- */
+    /* ---------------- 8b. a whisper of rim light on the crown ---------------- */
     g2.save();
     g2.shadowColor = 'rgba(' + GLOW + ',0.9)';
-    g2.shadowBlur = 10 * u;
-    g2.strokeStyle = 'rgba(' + GLOW + ',0.55)';
-    g2.lineWidth = Math.max(1.6, 2.6 * u);
-    g2.stroke(pHead);
-    g2.stroke(pShL1);
-    g2.stroke(pChest);
-    g2.stroke(pArmL);
-    g2.restore();
-    g2.save();
-    g2.shadowColor = 'rgba(' + ORANGE + ',0.85)';
     g2.shadowBlur = 9 * u;
-    g2.strokeStyle = 'rgba(' + ORANGE + ',0.42)';
+    g2.strokeStyle = 'rgba(' + GLOW + ',0.34)';
     g2.lineWidth = Math.max(1.4, 2.2 * u);
-    g2.stroke(pShR1);
-    g2.stroke(pArmR);
-    g2.stroke(pGun);
+    g2.stroke(pHead);
     g2.restore();
     /* ---------------- 9. bottom fade into the street ---------------- */
     var fade = g2.createLinearGradient(0, Y(0.73), 0, MH);
