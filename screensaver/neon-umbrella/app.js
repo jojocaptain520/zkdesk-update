@@ -1079,6 +1079,10 @@
       g2.drawImage(mechCan, g.mx, g.my, g.mw, g.mh);
     }
 
+    /* 4b. splash where the armour meets the wet street */
+    blit(g2, sprIce, g.cx, g.baseY, g.mw * 1.10, g.mh * 0.10, 0.34);
+    blit(g2, sprWhite, g.cx, g.baseY, g.mw * 0.62, g.mh * 0.045, 0.40);
+
     /* 5. its reflection below the base line */
     if (mechRefl) {
       g2.globalAlpha = 0.9;
