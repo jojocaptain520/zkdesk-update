@@ -1,0 +1,17 @@
+/* 雨巷佳人：江南雨巷，粉墙黛瓦，油纸伞下的背影 */
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+body {
+  cursor: default;
+}
+
+#scene {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,19 @@
+/* 庭院月洞门：粉墙瓦檐 + 圆月洞门框景，门内竹石、雾与暖灯，墙外落花薄雾 */
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+body {
+  /* 屏保只看画面，光标默认隐藏，鼠标一动宿主会显示出来 */
+  cursor: default;
+  font-family: "KaiTi", "STKaiti", "SimSun", serif;
+}
+
+#scene {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

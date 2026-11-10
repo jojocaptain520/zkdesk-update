@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-11-10 09:13",
+  "updated": "2026-11-10 09:31",
   "presets": [
     {
       "id": "flip-clock",
@@ -199,6 +199,181 @@
           "path": "style.css",
           "size": 408,
           "sha256": "35f9da9e94dbcf76d08d63af44c58ebab0f67d1929e6d69163453957307780dd"
+        }
+      ]
+    },
+    {
+      "id": "bamboo-rain",
+      "name": "竹林听雨",
+      "desc": "雨雾竹林，石阶苔石，檐角滴水成串，竹影随风轻摆",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/bamboo-rain.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 34823,
+          "sha256": "ecb4e629b0ef255cb13071601d650900b58651884e31fe08698e59289f11916d"
+        },
+        {
+          "path": "index.html",
+          "size": 295,
+          "sha256": "fbad427c8c2dd51be67b682ab4743230904adf29bc0a1bc4383817e3bd610894"
+        },
+        {
+          "path": "style.css",
+          "size": 337,
+          "sha256": "e974dd4c91c4ca7915181f59fd3afe1fc3f662a0e24846766ff008bc0b5ac84d"
+        }
+      ]
+    },
+    {
+      "id": "courtyard-gate",
+      "name": "庭院月洞门",
+      "desc": "粉墙瓦檐环着一轮月洞门，门内竹石朦胧，一盏暖灯，墙外落花随风",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/courtyard-gate.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 51718,
+          "sha256": "7af3718841fe3d1c209a6d90ea6194e3fd0e2f3995d0ef4c3a3c8f3158a4d960"
+        },
+        {
+          "path": "index.html",
+          "size": 298,
+          "sha256": "df758d817cbf1caddbc1a968284573f86e592c0e0942e3c698cd9e026e4eb473"
+        },
+        {
+          "path": "style.css",
+          "size": 419,
+          "sha256": "78ca6a3714f3d0c0e467ada22a01ebe7e14b1ec17822e88e4ef3a8ef9e77ee99"
+        }
+      ]
+    },
+    {
+      "id": "guqin-moon",
+      "name": "月下抚琴",
+      "desc": "月夜湖心亭，竹影摇风，有人独坐抚琴，流萤点点",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/guqin-moon.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 34964,
+          "sha256": "cf26cfc89dafc90871a9d251e496ce7639647557516e883b99ee59b5ef879aff"
+        },
+        {
+          "path": "index.html",
+          "size": 295,
+          "sha256": "b97b7f4b2122f160b4365d81d097b039964225ffdcc6ba01f9b5256f263ef408"
+        },
+        {
+          "path": "style.css",
+          "size": 241,
+          "sha256": "ef0014ccd790f6949758c23ff22008c14bb1fddc12b0e8cd0814774881adae66"
+        }
+      ]
+    },
+    {
+      "id": "ink-mountain",
+      "name": "水墨远山",
+      "desc": "宣纸留白，三层墨山渐远渐淡，云海漫过江面，一叶孤舟缓缓漂过",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/ink-mountain.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 31605,
+          "sha256": "7b686e9825d6bf4bcc780e4ed5379c4bd64c0c3b3a807815b764858ae4eb1c1d"
+        },
+        {
+          "path": "index.html",
+          "size": 295,
+          "sha256": "9b0e98b60d562aaa83affccd103f3dff2b9c52c6b63160decafbc3e2c9fc3344"
+        },
+        {
+          "path": "style.css",
+          "size": 371,
+          "sha256": "f02ae5efbefd94043fad1b4d56c0f0e0c059c036f492dee696162601197b8db2"
+        }
+      ]
+    },
+    {
+      "id": "jiangnan-rain",
+      "name": "江南烟雨",
+      "desc": "白墙黛瓦的水巷、石拱桥与乌篷船，细雨薄雾里一叶轻舟",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/jiangnan-rain.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 35387,
+          "sha256": "65b718d8f3e2f034f816d10adbc6813ad5dd1b7622251e8750535ce55c04ce33"
+        },
+        {
+          "path": "index.html",
+          "size": 295,
+          "sha256": "ac4f371915b2c22d634016735a39dce41a39b45ac3f1240f2f52c3cfcb12b27e"
+        },
+        {
+          "path": "style.css",
+          "size": 148,
+          "sha256": "1c7f042218d01d6bdb92631e05ff5da25d7555f019cb15d1060456ccb0cee1f7"
+        }
+      ]
+    },
+    {
+      "id": "lantern-river",
+      "name": "灯影秦淮",
+      "desc": "夜色秦淮，画舫灯火与顺流河灯，倒影在水波里碎成暖光",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/lantern-river.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 47409,
+          "sha256": "402f453850539ee174e915fbab2c03d6f669fab6309672e3c556e24e0f4e0411"
+        },
+        {
+          "path": "index.html",
+          "size": 295,
+          "sha256": "ede267987d73f94e39aab427cf5cb3e9141ee9d920fdde42d06d94900496c8f0"
+        },
+        {
+          "path": "style.css",
+          "size": 319,
+          "sha256": "9e256e41d87ff76222ec6665c34d7829ab73c3d6506a8bef4d94bda9dd2921ee"
+        }
+      ]
+    },
+    {
+      "id": "yuxiang-lady",
+      "name": "雨巷佳人",
+      "desc": "江南雨巷，粉墙黛瓦，一柄油纸伞的背影缓缓走过青石板",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/yuxiang-lady.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 50724,
+          "sha256": "b9759db4325dd381f9068aab026c1621306edf62345939e4c0a093b504e13d73"
+        },
+        {
+          "path": "index.html",
+          "size": 295,
+          "sha256": "e266eb9332a6a8e6ab4fa21dec5e18cb8fb73f38f36fdbf0a4f8c3ef13e072a1"
+        },
+        {
+          "path": "style.css",
+          "size": 247,
+          "sha256": "a88dfe35955a1baebd0efa305ef5ec5b49218a4fdb29abe249f590da03c979b1"
         }
       ]
     }
