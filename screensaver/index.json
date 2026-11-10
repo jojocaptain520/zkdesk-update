@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-11-10 10:35",
+  "updated": "2026-11-10 10:59",
   "presets": [
     {
       "id": "flip-clock",
@@ -499,6 +499,31 @@
           "path": "style.css",
           "size": 381,
           "sha256": "8c554566ef2349084d623a82b5ee9ad3a9d76a396b467f8b1f8f126dff2e88e7"
+        }
+      ]
+    },
+    {
+      "id": "hanfu-heroine",
+      "name": "汉服·月下",
+      "desc": "月下湖边的汉服背影：红襦裙、广袖与团扇，长发和发带都在风里",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/hanfu-heroine.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 33003,
+          "sha256": "c8ae4eb3713447d61bbb55f2f08ea7a92102d1d59908688d7207d4a338e1dfed"
+        },
+        {
+          "path": "index.html",
+          "size": 297,
+          "sha256": "bfba499ae3b3f4bda4a1a540b432274d8aeffb3957fece516972557626920668"
+        },
+        {
+          "path": "style.css",
+          "size": 148,
+          "sha256": "4f62f1a0ebbf6fca907ab36b65e2cc066f5667edfe1fabe215a1980d2fa0e612"
         }
       ]
     }
