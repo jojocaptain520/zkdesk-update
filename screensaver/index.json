@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-11-10 09:49",
+  "updated": "2026-11-10 10:35",
   "presets": [
     {
       "id": "flip-clock",
@@ -374,6 +374,131 @@
           "path": "style.css",
           "size": 247,
           "sha256": "a88dfe35955a1baebd0efa305ef5ec5b49218a4fdb29abe249f590da03c979b1"
+        }
+      ]
+    },
+    {
+      "id": "mech-battle",
+      "name": "战场冲锋",
+      "desc": "尘烟与爆炸里的机甲冲锋",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/mech-battle.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 29423,
+          "sha256": "5d8b9ca3ad6e28af2af20a7ca45dba27b9cdf4ce284eee92c9eb10fa87b6e15a"
+        },
+        {
+          "path": "index.html",
+          "size": 320,
+          "sha256": "3ce642640aaec979f9402571ac183a1040e9a4274b4d29ba929a25b7417ac1de"
+        },
+        {
+          "path": "style.css",
+          "size": 697,
+          "sha256": "195aa9fe36584821f197227196ecd1a63260cdb026e7083f9883909af068a7e1"
+        }
+      ]
+    },
+    {
+      "id": "mech-forge",
+      "name": "熔炉装配",
+      "desc": "装配线上的机械臂与火花",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/mech-forge.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 75262,
+          "sha256": "068918e72278c4678860a16a6e58920a955bcc1466871af9d153175604942e71"
+        },
+        {
+          "path": "index.html",
+          "size": 324,
+          "sha256": "22e154b498a82fdda2e4fb37f83beb12cfdd0f1547aca1ed7291b10df78861d3"
+        },
+        {
+          "path": "style.css",
+          "size": 1091,
+          "sha256": "726e3c2142de599c0805de248308d4bde800d496e4073cd2e9c55cee0be9986d"
+        }
+      ]
+    },
+    {
+      "id": "mech-hangar",
+      "name": "黎明机库",
+      "desc": "晨光里的机库，机甲待命",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/mech-hangar.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 49314,
+          "sha256": "0bf562de34b434a2cb9e909dd49355b07e13e541cfd38046c5c1af18fd9b7620"
+        },
+        {
+          "path": "index.html",
+          "size": 350,
+          "sha256": "e4f634fc0f870ae72b435d175efe714857556293f900d3d49ce6d63deaf549d6"
+        },
+        {
+          "path": "style.css",
+          "size": 1003,
+          "sha256": "5009db9925c507886eb46cee0a4d352b926de732a84bc8b3fea13da46162fb5a"
+        }
+      ]
+    },
+    {
+      "id": "mech-orbit",
+      "name": "轨道巡航",
+      "desc": "地球弧线上的机甲与星海",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/mech-orbit.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 33323,
+          "sha256": "a357ec4502d5f7a05ee3e804c82a9154757826de2a6c1aa36ceec5793703bd07"
+        },
+        {
+          "path": "index.html",
+          "size": 295,
+          "sha256": "c7505050ecc21f9014b30e408c5f2a186ccd7d1cc5f046b77a433814df70acc4"
+        },
+        {
+          "path": "style.css",
+          "size": 422,
+          "sha256": "926c3c785849fddd023df113345d3df5cc6c29c1f5233a4da1418672121bb5f4"
+        }
+      ]
+    },
+    {
+      "id": "mech-rooftop",
+      "name": "雨夜守望",
+      "desc": "楼顶俯瞰霓虹城的机甲",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/mech-rooftop.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 40680,
+          "sha256": "4a49bd7c33339d5eeaeacb9931b20683d4e7c8130cab790ceebf468ee5c1ad92"
+        },
+        {
+          "path": "index.html",
+          "size": 337,
+          "sha256": "a3a3db2f72d19c1a72b705274174dec643eda6c54f0893f53c0af8e7a597f0fc"
+        },
+        {
+          "path": "style.css",
+          "size": 381,
+          "sha256": "8c554566ef2349084d623a82b5ee9ad3a9d76a396b467f8b1f8f126dff2e88e7"
         }
       ]
     }

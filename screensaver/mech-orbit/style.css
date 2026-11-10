@@ -1,0 +1,21 @@
+/* 轨道巡航：近地轨道、地球弧线与星海，机甲巡航 */
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #0a0f22;
+}
+
+body {
+  /* 退出靠宿主注入的右上角按钮，光标必须可见 */
+  cursor: default;
+  font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, sans-serif;
+}
+
+#scene {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}

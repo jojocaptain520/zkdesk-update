@@ -1,0 +1,46 @@
+/* Dawn Hangar: a mech waiting in the morning light. */
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #101c26;
+}
+
+body {
+  /* Exit is a button injected by the host, so keep the cursor visible. */
+  cursor: default;
+  font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, sans-serif;
+}
+
+#scene {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* warm dawn bloom coming from the door side */
+.bloom {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 74% 46%,
+    rgba(255, 190, 120, 0.26) 0%,
+    rgba(255, 150, 90, 0.10) 30%,
+    rgba(255, 140, 80, 0) 62%);
+}
+
+/* cool edge, no black hole */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 44% 48%,
+      rgba(8, 16, 24, 0) 44%,
+      rgba(8, 16, 24, 0.46) 100%),
+    linear-gradient(180deg, rgba(8, 16, 24, 0.40) 0%, rgba(8, 16, 24, 0) 20%);
+}

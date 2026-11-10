@@ -1,0 +1,28 @@
+/* 雨夜守望：摩天楼顶，机甲立在边缘俯瞰雨里的霓虹城 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #10283c;
+}
+
+body {
+  cursor: default;
+}
+
+#stage {
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #10283c;
+}

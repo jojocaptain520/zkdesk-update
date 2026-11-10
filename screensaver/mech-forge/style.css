@@ -1,0 +1,38 @@
+/* 熔炉装配 / Forge Assembly -- mech skeleton being welded on a factory line.
+   Bright industrial hall: cool blue-white overhead lamps against furnace orange.
+   All lighting is painted on the canvas; only a very light edge vignette here so
+   the hall still reads as a lit space instead of a black box. */
+html, body {
+  margin: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+body {
+  /* exit is a button injected by the host, so keep the cursor normal */
+  cursor: default;
+  font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, sans-serif;
+}
+
+#scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* barely there: the hall is meant to be bright, so no heavy black frame.
+   The calm corner for the host's exit button is painted by the canvas as a
+   soft radial falloff, so no opaque CSS block sits on top of the artwork. */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 48%,
+      rgba(9, 18, 27, 0) 58%,
+      rgba(9, 18, 27, 0.18) 100%);
+}

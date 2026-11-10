@@ -1,0 +1,35 @@
+/* 战场冲锋：尘烟与爆炸里的机甲冲锋，全部由 canvas 程序化绘制 */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #6d7d8c;
+  /* 宿主在右上角注入退出按钮，光标保持可见 */
+  cursor: default;
+}
+
+#scene {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* 极轻的画框压边，交给合成器，不占每帧预算 */
+.veil {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 60% 46%,
+    rgba(255, 255, 255, 0) 48%,
+    rgba(60, 74, 90, 0.14) 82%,
+    rgba(38, 50, 64, 0.30) 100%);
+}
