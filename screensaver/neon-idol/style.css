@@ -1,0 +1,49 @@
+/* Neon Idol: cyber girl bust, purple-black night, cyan / magenta rim light. */
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #07040e;
+}
+
+body {
+  /* Exit is a button injected by the host, so keep the cursor visible. */
+  cursor: default;
+  font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, sans-serif;
+}
+
+#scene {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: brightness(1.16) saturate(1.08) contrast(1.02);
+}
+
+/* CRT scanlines, very light so the face stays clean. */
+.scan {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.065;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.85) 0px,
+    rgba(0, 0, 0, 0.85) 1px,
+    rgba(0, 0, 0, 0) 1px,
+    rgba(0, 0, 0, 0) 3px);
+}
+
+/* Soft dark frame; centre follows the face so the subject keeps the eye. */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 43% 44%, rgba(0, 0, 0, 0) 36%, rgba(2, 1, 5, 0.74) 100%),
+    linear-gradient(180deg, rgba(2, 1, 5, 0.42) 0%, rgba(2, 1, 5, 0) 26%),
+    linear-gradient(0deg, rgba(2, 1, 5, 0.30) 0%, rgba(2, 1, 5, 0) 18%);
+}

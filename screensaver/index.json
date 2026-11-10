@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-11-09 19:34",
+  "updated": "2026-11-10 08:32",
   "presets": [
     {
       "id": "flip-clock",
@@ -99,6 +99,106 @@
           "path": "style.css",
           "size": 581,
           "sha256": "45229d22573b55f8c4107f1e26e8b27488d2e88177ce8660a570f5a5fa716c85"
+        }
+      ]
+    },
+    {
+      "id": "cyber-manga",
+      "name": "赛博漫剧",
+      "desc": "漫画分镜里的赛博少女，网点与霓虹撞色",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/cyber-manga.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 39835,
+          "sha256": "fa9a0c4ad3dd3eec828ba374ffc61f7da5f413f630342b574565f56ade7c5dbf"
+        },
+        {
+          "path": "index.html",
+          "size": 295,
+          "sha256": "5e2b121300d34c18ac394cbaea235caec4a416b09e6e854428f02336f4499c18"
+        },
+        {
+          "path": "style.css",
+          "size": 425,
+          "sha256": "8cf5aa75831482c02cc22715a9f0e2cbce4449f1eea7ad6cd02aada26aed4d98"
+        }
+      ]
+    },
+    {
+      "id": "cyber-qipao",
+      "name": "赛博旗袍",
+      "desc": "旗袍少女剪影，机械关节与霓虹灯笼",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/cyber-qipao.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 42529,
+          "sha256": "9015994709db69317df9339e24cccbef2ecc0b3b6120a9a96cd5295249da7ffb"
+        },
+        {
+          "path": "index.html",
+          "size": 324,
+          "sha256": "de64019c81a76c59e5397ec6fe2c2a9730186b03c27039ce2b7bff6dabd6e2d3"
+        },
+        {
+          "path": "style.css",
+          "size": 690,
+          "sha256": "d6db0e45f9d441fdc01aa2f7c75bddce5383cb2c67a71349c82b8ea3f75c43f9"
+        }
+      ]
+    },
+    {
+      "id": "neon-idol",
+      "name": "霓虹偶像",
+      "desc": "赛博少女半身像，霓虹边缘光与全息光环",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/neon-idol.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 54699,
+          "sha256": "d98bf6c8d3663fefbe60a2fc5860a3f79bc50b4c1e20026caf2cabeddec080f1"
+        },
+        {
+          "path": "index.html",
+          "size": 349,
+          "sha256": "92e3f3b52d081190a34c33cc9f6835c89265f7f6f57ca9fc85bf7885b1a9e148"
+        },
+        {
+          "path": "style.css",
+          "size": 1227,
+          "sha256": "07f322c537a83c64362c0b461db2744037732c0357efa50173239f91aa97e64a"
+        }
+      ]
+    },
+    {
+      "id": "neon-umbrella",
+      "name": "雨夜霓虹",
+      "desc": "雨夜霓虹街，撑伞少女与湿地倒影",
+      "version": "1.0.0",
+      "entry": "index.html",
+      "cover": "covers/neon-umbrella.png",
+      "files": [
+        {
+          "path": "app.js",
+          "size": 43657,
+          "sha256": "98a6956ca461bb89e7ccf57b4b575a2ac905040afa035d43d3ff2b7d0a341c24"
+        },
+        {
+          "path": "index.html",
+          "size": 337,
+          "sha256": "6d7fb197bb0cbababdff122271f0d6a2d97589982fa4e89c52789acbe737972f"
+        },
+        {
+          "path": "style.css",
+          "size": 404,
+          "sha256": "383e10a8472a19eaa62f7921b9dc641a9cba39fae2b8610409548fef5fad856e"
         }
       ]
     }

@@ -1,0 +1,21 @@
+/* 赛博漫剧：漫画分镜页 + 网点 + 少女侧脸 + 霓虹撞色 */
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #0a0a0c;
+}
+
+body {
+  /* 退出靠宿主注入的右上角按钮，光标必须可见 */
+  cursor: default;
+  font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, sans-serif;
+}
+
+#scene {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
