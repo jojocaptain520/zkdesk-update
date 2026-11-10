@@ -1,9 +1,9 @@
-/* Neon Idol: cyber girl bust, purple-black night, cyan / magenta rim light. */
+/* Holo Girl: bright pastel hologram portrait, lavender to ice blue. */
 html, body {
   margin: 0;
   height: 100%;
   overflow: hidden;
-  background: #07040e;
+  background: #f4ecff;
 }
 
 body {
@@ -18,32 +18,29 @@ body {
   display: block;
   width: 100%;
   height: 100%;
-  filter: brightness(1.16) saturate(1.08) contrast(1.02);
 }
 
-/* CRT scanlines, very light so the face stays clean. */
-.scan {
+/* very soft white bloom around the subject */
+.bloom {
   position: fixed;
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  opacity: 0.065;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.85) 0px,
-    rgba(0, 0, 0, 0.85) 1px,
-    rgba(0, 0, 0, 0) 1px,
-    rgba(0, 0, 0, 0) 3px);
+  background: radial-gradient(ellipse at 46% 40%,
+    rgba(255, 255, 255, 0.13) 0%,
+    rgba(255, 255, 255, 0.04) 30%,
+    rgba(255, 255, 255, 0) 58%);
 }
 
-/* Soft dark frame; centre follows the face so the subject keeps the eye. */
+/* airy edge, cool lavender instead of black */
 .vignette {
   position: fixed;
   inset: 0;
   z-index: 3;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 43% 44%, rgba(0, 0, 0, 0) 36%, rgba(2, 1, 5, 0.74) 100%),
-    linear-gradient(180deg, rgba(2, 1, 5, 0.42) 0%, rgba(2, 1, 5, 0) 26%),
-    linear-gradient(0deg, rgba(2, 1, 5, 0.30) 0%, rgba(2, 1, 5, 0) 18%);
+    radial-gradient(ellipse at 46% 44%,
+      rgba(126, 112, 186, 0) 46%,
+      rgba(126, 112, 186, 0.26) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 24%);
 }

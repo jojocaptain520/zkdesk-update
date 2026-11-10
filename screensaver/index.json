@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-11-10 08:32",
+  "updated": "2026-11-10 09:07",
   "presets": [
     {
       "id": "flip-clock",
@@ -104,101 +104,101 @@
     },
     {
       "id": "cyber-manga",
-      "name": "赛博漫剧",
-      "desc": "漫画分镜里的赛博少女，网点与霓虹撞色",
-      "version": "1.0.0",
+      "name": "星海漫剧",
+      "desc": "浅色漫画分镜里的星空少女，梦幻柔光",
+      "version": "2.0.0",
       "entry": "index.html",
       "cover": "covers/cyber-manga.png",
       "files": [
         {
           "path": "app.js",
-          "size": 39835,
-          "sha256": "fa9a0c4ad3dd3eec828ba374ffc61f7da5f413f630342b574565f56ade7c5dbf"
+          "size": 48233,
+          "sha256": "fa69de13af0da9cbe5bd59cc5e2d9c5416e893bef5cb20a166f6ad10b3073339"
         },
         {
           "path": "index.html",
           "size": 295,
-          "sha256": "5e2b121300d34c18ac394cbaea235caec4a416b09e6e854428f02336f4499c18"
+          "sha256": "27c6ffb6b37728925ca47d504e970fc3c627e8b1d351c5d0f6682ec2e94620b8"
         },
         {
           "path": "style.css",
-          "size": 425,
-          "sha256": "8cf5aa75831482c02cc22715a9f0e2cbce4449f1eea7ad6cd02aada26aed4d98"
+          "size": 428,
+          "sha256": "0f8074cc158fafb3fb956ba41f326ea1eefa6c20d4cb775b1910c8ea91910a3b"
         }
       ]
     },
     {
       "id": "cyber-qipao",
-      "name": "赛博旗袍",
-      "desc": "旗袍少女剪影，机械关节与霓虹灯笼",
-      "version": "1.0.0",
+      "name": "光织少女",
+      "desc": "青白光织长裙少女，干净的未来科技感",
+      "version": "2.0.0",
       "entry": "index.html",
       "cover": "covers/cyber-qipao.png",
       "files": [
         {
           "path": "app.js",
-          "size": 42529,
-          "sha256": "9015994709db69317df9339e24cccbef2ecc0b3b6120a9a96cd5295249da7ffb"
+          "size": 41240,
+          "sha256": "344900a74a4dfe93b41a66d1e5c9934dc290ada2fb00cc9b60cca550e0f61945"
         },
         {
           "path": "index.html",
-          "size": 324,
-          "sha256": "de64019c81a76c59e5397ec6fe2c2a9730186b03c27039ce2b7bff6dabd6e2d3"
+          "size": 320,
+          "sha256": "b3378e46984074f86ffeb047890aa785288764a919feb0a2a174ed2361ff8865"
         },
         {
           "path": "style.css",
-          "size": 690,
-          "sha256": "d6db0e45f9d441fdc01aa2f7c75bddce5383cb2c67a71349c82b8ea3f75c43f9"
+          "size": 703,
+          "sha256": "0f877738ea888b8d71171880ce4f6745523b32e7156090bee44f10a3d56c893e"
         }
       ]
     },
     {
       "id": "neon-idol",
-      "name": "霓虹偶像",
-      "desc": "赛博少女半身像，霓虹边缘光与全息光环",
-      "version": "1.0.0",
+      "name": "全息少女",
+      "desc": "浅色全息光带里的少女，柔光粉紫冰蓝",
+      "version": "2.0.0",
       "entry": "index.html",
       "cover": "covers/neon-idol.png",
       "files": [
         {
           "path": "app.js",
-          "size": 54699,
-          "sha256": "d98bf6c8d3663fefbe60a2fc5860a3f79bc50b4c1e20026caf2cabeddec080f1"
+          "size": 52315,
+          "sha256": "387a935be554a4176bd2f902f070d5ceb95868829db39bfd24a70bebd983b635"
         },
         {
           "path": "index.html",
-          "size": 349,
-          "sha256": "92e3f3b52d081190a34c33cc9f6835c89265f7f6f57ca9fc85bf7885b1a9e148"
+          "size": 350,
+          "sha256": "74cbd5fa6e2ea6b8ce600ca09ac0774a53c89a7efcc475ce19a997261f7914bf"
         },
         {
           "path": "style.css",
-          "size": 1227,
-          "sha256": "07f322c537a83c64362c0b461db2744037732c0357efa50173239f91aa97e64a"
+          "size": 1053,
+          "sha256": "4c82d60e20a4074c7b6983308a1b06b6cb122aa1c60b604a4e04f7cd86c24df0"
         }
       ]
     },
     {
       "id": "neon-umbrella",
-      "name": "雨夜霓虹",
-      "desc": "雨夜霓虹街，撑伞少女与湿地倒影",
-      "version": "1.0.0",
+      "name": "樱花霓虹",
+      "desc": "黄昏樱花雨里的少女，粉橙与淡紫",
+      "version": "2.0.0",
       "entry": "index.html",
       "cover": "covers/neon-umbrella.png",
       "files": [
         {
           "path": "app.js",
-          "size": 43657,
-          "sha256": "98a6956ca461bb89e7ccf57b4b575a2ac905040afa035d43d3ff2b7d0a341c24"
+          "size": 53100,
+          "sha256": "db8258395fa52ab5948d901638d211ce5c152a8205d4c62c70a0a27e79338202"
         },
         {
           "path": "index.html",
-          "size": 337,
-          "sha256": "6d7fb197bb0cbababdff122271f0d6a2d97589982fa4e89c52789acbe737972f"
+          "size": 338,
+          "sha256": "7df7ab196fecc428ec006440f6c305343e123661be2ce3803e33a3e2cf98d2f6"
         },
         {
           "path": "style.css",
-          "size": 404,
-          "sha256": "383e10a8472a19eaa62f7921b9dc641a9cba39fae2b8610409548fef5fad856e"
+          "size": 408,
+          "sha256": "35f9da9e94dbcf76d08d63af44c58ebab0f67d1929e6d69163453957307780dd"
         }
       ]
     }

@@ -1,4 +1,4 @@
-/* 雨夜霓虹：整屏 canvas 程序化绘制，宿主在右上角注入「退出屏保」按钮 */
+/* 樱花霓虹：黄昏粉橙到淡紫的天空，花瓣、透明伞下的少女、浅色湿地倒影 */
 * {
   margin: 0;
   padding: 0;
@@ -10,7 +10,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #05060f;
+  background: #f3dbe2;
 }
 
 body {
@@ -24,5 +24,5 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
-  background: #05060f;
+  background: #f3dbe2;
 }
