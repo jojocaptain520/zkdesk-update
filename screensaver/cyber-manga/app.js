@@ -1,11 +1,11 @@
-/* Star Sea Manga screensaver
- * High key comic page: paper white base, pale blue halftone, three skewed
- * panels with light frames, a girl profile gazing at the stars (line art in
- * deep blue grey, light blue-grey hair), twinkling stars and meteors.
+/* Mecha Manga screensaver
+ * High key comic page, machines only: a mecha head close up with a glowing
+ * mono eye, a mecha unit launching with speed lines and thruster flame, and a
+ * gear / joint close up with sparks. No people, no faces, no humanoid figures.
  *
  * Everything is pre-rendered into offscreen canvases on layout()/resize.
- * The frame loop only does drawImage / clip / globalAlpha, so no shadowBlur,
- * createRadialGradient, getImageData or fillText happen per frame.
+ * The frame loop only does drawImage / clip / globalAlpha / short strokes, so
+ * no shadowBlur, createRadialGradient, getImageData or fillText happen there.
  */
 (function () {
   'use strict';
@@ -17,12 +17,15 @@
   var MAX_DPR = 1.5;
   var PAPER = '#fdfaf3';
   var LINE = '#33405a';
-  var PALE = '#cfe0f4';        /* pale blue tone dots on the page */
-  var CYAN = '#8ee6f2';
-  var PINK = '#ffb8d2';
+  var BLUE = '#cfe0f4';
+  var CYAN = '#35c8ff';
+  var ORANGE = '#ff9a3c';
+  var STEEL = '#dfe8f3';
+  var STEEL2 = '#c6d4e7';
+  var STEEL3 = '#a9bcd6';
   var FONT = '"Microsoft YaHei UI","Microsoft YaHei","PingFang SC","Segoe UI",sans-serif';
 
-  var W = 1;                   /* css px */
+  var W = 1;
   var H = 1;
   var dpr = 1;
   var rafId = 0;
@@ -39,11 +42,11 @@
   var dotH = 1;
   var grainCv = null;
   var panels = [];
-  var toneTile = null;         /* 4px halftone, blue grey */
-  var pageDotTile = null;      /* 8px halftone, pale blue */
-  var sparkBig = null;
-  var sparkMid = null;
-  var sparkPink = null;
+  var toneTile = null;
+  var pageDotTile = null;
+  var sparkCyan = null;
+  var sparkOrange = null;
+  var starBig = null;
 
   /* ---------------------------------------------------------------- utils */
 
@@ -95,52 +98,33 @@
     return p;
   }
 
-  function runPath(p2, segs) {
-    for (var i = 0; i < segs.length; i++) {
-      var s = segs[i];
-      if (s[0] === 'M') { p2.moveTo(s[1], s[2]); }
-      else if (s[0] === 'L') { p2.lineTo(s[1], s[2]); }
-      else if (s[0] === 'C') { p2.bezierCurveTo(s[1], s[2], s[3], s[4], s[5], s[6]); }
-      else if (s[0] === 'Q') { p2.quadraticCurveTo(s[1], s[2], s[3], s[4]); }
-      else { p2.closePath(); }
-    }
-    return p2;
+  function makeSparkle(px, core, halo) {
+    var c = mkCanvas(px, px);
+    var g = ctxOf(c);
+    var r = px * 0.5;
+    var rg = g.createRadialGradient(r, r, 0, r, r, r);
+    rg.addColorStop(0, halo);
+    rg.addColorStop(0.35, halo.replace(/[\d.]+\)$/, '0.14)'));
+    rg.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = rg;
+    g.fillRect(0, 0, px, px);
+    var w = px * 0.05;
+    g.fillStyle = core;
+    g.beginPath();
+    g.moveTo(r, 0);
+    g.quadraticCurveTo(r + w, r - w, px, r);
+    g.quadraticCurveTo(r + w, r + w, r, px);
+    g.quadraticCurveTo(r - w, r + w, 0, r);
+    g.quadraticCurveTo(r - w, r - w, r, 0);
+    g.fill();
+    g.beginPath();
+    g.arc(r, r, px * 0.05, 0, 6.2832);
+    g.fillStyle = '#ffffff';
+    g.fill();
+    return c;
   }
 
-  function facePoly(mtx, pts) {
-    var p2 = new Path2D();
-    for (var i = 0; i < pts.length; i++) {
-      var x = mtx[0] * pts[i][0] + mtx[2] * pts[i][1] + mtx[4];
-      var y = mtx[1] * pts[i][0] + mtx[3] * pts[i][1] + mtx[5];
-      if (i === 0) { p2.moveTo(x, y); } else { p2.lineTo(x, y); }
-    }
-    p2.closePath();
-    return p2;
-  }
-
-  /* transform a unit-space path description into panel-space Path2D */
-  function xfPath(segs, mtx, out) {
-    var p2 = out || new Path2D();
-    function P(x, y) {
-      return [mtx[0] * x + mtx[2] * y + mtx[4], mtx[1] * x + mtx[3] * y + mtx[5]];
-    }
-    var a, b, c, i;
-    for (i = 0; i < segs.length; i++) {
-      var s = segs[i];
-      if (s[0] === 'M') { a = P(s[1], s[2]); p2.moveTo(a[0], a[1]); }
-      else if (s[0] === 'L') { a = P(s[1], s[2]); p2.lineTo(a[0], a[1]); }
-      else if (s[0] === 'C') {
-        a = P(s[1], s[2]); b = P(s[3], s[4]); c = P(s[5], s[6]);
-        p2.bezierCurveTo(a[0], a[1], b[0], b[1], c[0], c[1]);
-      } else if (s[0] === 'Q') {
-        a = P(s[1], s[2]); b = P(s[3], s[4]);
-        p2.quadraticCurveTo(a[0], a[1], b[0], b[1]);
-      } else { p2.closePath(); }
-    }
-    return p2;
-  }
-
-  /* soft neon stroke using stacked translucent passes (no shadowBlur needed) */
+  /* soft neon stroke from stacked translucent passes */
   function neonStroke(g, p2, width, color, alphaCore) {
     g.save();
     g.lineJoin = 'miter';
@@ -161,64 +145,149 @@
     g.restore();
   }
 
-  function makeSparkle(px, core, halo) {
+  /* unit space polygon helper */
+  function uPoly(g, pts) {
+    var p2 = new Path2D();
+    for (var i = 0; i < pts.length; i++) {
+      if (i === 0) { p2.moveTo(pts[i][0], pts[i][1]); } else { p2.lineTo(pts[i][0], pts[i][1]); }
+    }
+    p2.closePath();
+    return p2;
+  }
+
+  /* ============================================================= SPRITES = */
+
+  function makeLens(px) {
     var c = mkCanvas(px, px);
     var g = ctxOf(c);
     var r = px * 0.5;
     var rg = g.createRadialGradient(r, r, 0, r, r, r);
-    rg.addColorStop(0, halo);
-    rg.addColorStop(0.35, halo.replace(/[\d.]+\)$/, '0.16)'));
-    rg.addColorStop(1, 'rgba(255,255,255,0)');
+    rg.addColorStop(0, 'rgba(53,200,255,0.90)');
+    rg.addColorStop(0.30, 'rgba(53,200,255,0.50)');
+    rg.addColorStop(0.52, 'rgba(53,200,255,0.15)');
+    rg.addColorStop(1, 'rgba(53,200,255,0)');
     g.fillStyle = rg;
     g.fillRect(0, 0, px, px);
-    var w = px * 0.05;
-    g.fillStyle = core;
     g.beginPath();
-    g.moveTo(r, 0);
-    g.quadraticCurveTo(r + w, r - w, px, r);
-    g.quadraticCurveTo(r + w, r + w, r, px);
-    g.quadraticCurveTo(r - w, r + w, 0, r);
-    g.quadraticCurveTo(r - w, r - w, r, 0);
+    g.arc(r, r, px * 0.205, 0, 6.2832);
+    g.fillStyle = '#223050';
+    g.fill();
+    g.strokeStyle = 'rgba(51,64,90,0.9)';
+    g.lineWidth = Math.max(1, px * 0.014);
+    g.stroke();
+    g.beginPath();
+    g.arc(r, r, px * 0.165, 0, 6.2832);
+    g.fillStyle = CYAN;
     g.fill();
     g.beginPath();
-    g.arc(r, r, px * 0.05, 0, 6.2832);
+    g.arc(r, r, px * 0.100, 0, 6.2832);
+    g.fillStyle = '#b6f0ff';
+    g.fill();
+    g.beginPath();
+    g.arc(r - px * 0.045, r - px * 0.045, px * 0.046, 0, 6.2832);
     g.fillStyle = '#ffffff';
     g.fill();
     return c;
   }
 
-  function makeMeteor(len, thick, tint) {
-    var c = mkCanvas(len, thick);
+  function makeFlame(w, h) {
+    var c = mkCanvas(w, h);
     var g = ctxOf(c);
-    var lg = g.createLinearGradient(0, 0, len, 0);
-    lg.addColorStop(0, 'rgba(255,255,255,0)');
-    lg.addColorStop(0.5, tint);
-    lg.addColorStop(0.94, 'rgba(255,255,255,0.92)');
-    lg.addColorStop(1, 'rgba(255,255,255,0)');
+    var lg = g.createLinearGradient(w, 0, 0, 0);
+    lg.addColorStop(0, 'rgba(255,255,255,0.96)');
+    lg.addColorStop(0.16, 'rgba(255,232,170,0.95)');
+    lg.addColorStop(0.44, 'rgba(255,154,60,0.88)');
+    lg.addColorStop(0.76, 'rgba(255,140,52,0.35)');
+    lg.addColorStop(1, 'rgba(255,150,60,0)');
     g.fillStyle = lg;
     g.beginPath();
-    g.moveTo(0, thick * 0.5);
-    g.lineTo(len, thick * 0.18);
-    g.lineTo(len, thick * 0.82);
-    g.closePath();
+    g.moveTo(w, h * 0.50);
+    g.quadraticCurveTo(w * 0.52, h * 0.04, w * 0.10, h * 0.34);
+    g.quadraticCurveTo(w * 0.00, h * 0.50, w * 0.10, h * 0.66);
+    g.quadraticCurveTo(w * 0.52, h * 0.96, w, h * 0.50);
     g.fill();
-    var rg = g.createRadialGradient(len * 0.96, thick * 0.5, 0, len * 0.96, thick * 0.5, thick * 0.62);
-    rg.addColorStop(0, 'rgba(255,255,255,1)');
-    rg.addColorStop(0.42, 'rgba(220,242,255,0.8)');
-    rg.addColorStop(1, 'rgba(200,235,255,0)');
+    var rg = g.createRadialGradient(w * 0.90, h * 0.5, 0, w * 0.90, h * 0.5, h * 0.55);
+    rg.addColorStop(0, 'rgba(255,255,255,0.95)');
+    rg.addColorStop(0.45, 'rgba(255,224,160,0.55)');
+    rg.addColorStop(1, 'rgba(255,200,120,0)');
     g.fillStyle = rg;
-    g.fillRect(len * 0.58, 0, len * 0.42, thick);
+    g.fillRect(0, 0, w, h);
     return c;
   }
 
-  /* =========================================================== GEOMETRY == */
+  function makeGear(px, teeth, fill, shade) {
+    var c = mkCanvas(px, px);
+    var g = ctxOf(c);
+    var r = px * 0.5;
+    var rOut = r * 0.95;
+    var rBase = r * 0.74;
+    var rHub = r * 0.30;
+    g.save();
+    g.translate(r, r);
+    g.fillStyle = fill;
+    g.beginPath();
+    g.arc(0, 0, rBase, 0, 6.2832);
+    g.fill();
+    var i, a;
+    for (i = 0; i < teeth; i++) {
+      a = (i / teeth) * 6.2832;
+      g.save();
+      g.rotate(a);
+      g.beginPath();
+      g.moveTo(rBase - 1, -r * 0.105);
+      g.lineTo(rOut, -r * 0.068);
+      g.lineTo(rOut, r * 0.068);
+      g.lineTo(rBase - 1, r * 0.105);
+      g.closePath();
+      g.fill();
+      g.restore();
+    }
+    g.beginPath();
+    g.arc(0, 0, rBase, 0, 6.2832);
+    g.strokeStyle = LINE;
+    g.lineWidth = Math.max(1.4, px * 0.012);
+    g.stroke();
+    /* inner ring shading */
+    g.beginPath();
+    g.arc(0, 0, rBase * 0.80, 0.2, 3.4);
+    g.strokeStyle = 'rgba(51,64,90,0.22)';
+    g.lineWidth = Math.max(2, px * 0.022);
+    g.stroke();
+    /* hub */
+    g.beginPath();
+    g.arc(0, 0, rHub * 1.45, 0, 6.2832);
+    g.fillStyle = shade;
+    g.fill();
+    g.beginPath();
+    g.arc(0, 0, rHub, 0, 6.2832);
+    g.fillStyle = PAPER;
+    g.fill();
+    g.strokeStyle = LINE;
+    g.lineWidth = Math.max(1.4, px * 0.012);
+    g.stroke();
+    /* bolts on the hub */
+    var b;
+    for (b = 0; b < 5; b++) {
+      g.save();
+      g.rotate((b / 5) * 6.2832 + 0.4);
+      g.beginPath();
+      g.arc(0, -rHub * 1.28, Math.max(1.6, px * 0.016), 0, 6.2832);
+      g.fillStyle = 'rgba(51,64,90,0.55)';
+      g.fill();
+      g.restore();
+    }
+    g.restore();
+    return c;
+  }
+
+  /* =========================================================== GEOMETRY = */
 
   var PANEL_DEF = [
-    /* main panel: girl gazing at the stars, top left, about 62% x 70% */
+    /* main panel: mecha head close up, top left, about 62% x 70% */
     { tl: [0.030, 0.196], u: [0.614, -0.044], v: [-0.016, 0.652] },
-    /* small panel: starry night sky with meteors, top right */
+    /* small panel: mecha launching, top right */
     { tl: [0.676, 0.190], u: [0.308, -0.020], v: [-0.014, 0.272] },
-    /* small panel: light trails, bottom right */
+    /* small panel: gears and sparks, bottom right */
     { tl: [0.670, 0.502], u: [0.310, -0.020], v: [-0.016, 0.402] }
   ];
 
@@ -235,24 +304,20 @@
       var br = { x: tr.x + v.x, y: tr.y + v.y };
       var bw = Math.sqrt(u.x * u.x + u.y * u.y);
       var bh = Math.sqrt(v.x * v.x + v.y * v.y);
+      var minX = Math.min(tl.x, tr.x, bl.x, br.x);
+      var minY = Math.min(tl.y, tr.y, bl.y, br.y);
 
       var p = {
         index: i,
         tl: tl, u: u, v: v, bw: bw, bh: bh,
         mtx: [u.x / bw, u.y / bw, v.x / bh, v.y / bh, tl.x, tl.y],
-        tw: [],
-        meteors: [],
-        bbox: null
+        bbox: {
+          x: minX, y: minY,
+          w: Math.max(tl.x, tr.x, bl.x, br.x) - minX,
+          h: Math.max(tl.y, tr.y, bl.y, br.y) - minY
+        },
+        eye: null, streak: null, streakOff: 0, flames: [], gears: [], sparks: []
       };
-      var minX = Math.min(tl.x, tr.x, bl.x, br.x);
-      var minY = Math.min(tl.y, tr.y, bl.y, br.y);
-      p.bbox = {
-        x: minX,
-        y: minY,
-        w: Math.max(tl.x, tr.x, bl.x, br.x) - minX,
-        h: Math.max(tl.y, tr.y, bl.y, br.y) - minY
-      };
-
       p.path = new Path2D();
       p.path.moveTo(tl.x, tl.y);
       p.path.lineTo(tr.x, tr.y);
@@ -262,817 +327,622 @@
 
       p.content = mkCanvas(bw, bh);
       var g = ctxOf(p.content);
-      if (i === 0) { paintMain(g, bw, bh, m); }
-      else if (i === 1) { paintNightSky(g, bw, bh, m); }
-      else { paintTrails(g, bw, bh, m); }
+      if (i === 0) { paintMechaHead(p, g, bw, bh, m); }
+      else if (i === 1) { paintLaunch(p, g, bw, bh, m); }
+      else { paintGears(p, g, bw, bh, m); }
 
-      buildMotion(p, i);
       buildChrome(p, m);
       panels.push(p);
     }
   }
 
-  /* ==================================================== ANIMATED PIECES = */
+  /* ================================================== PANEL 0: MECHA HEAD */
 
-  function buildMotion(p, i) {
-    var rnd = rngOf(0x51a7 + i * 977);
-    var bw = p.bw;
-    var bh = p.bh;
-    var k, x, y, dx, dy, d, n;
+  var MECHA = {
+    out: [
+      [-0.98, 0.06], [-0.96, -0.34], [-0.78, -0.72], [-0.44, -0.94],
+      [-0.06, -0.98], [0.26, -0.96], [0.50, -0.82], [0.62, -0.60],
+      [0.80, -0.50], [0.86, -0.14], [0.84, 0.08], [0.62, 0.30],
+      [0.52, 0.46], [0.26, 0.60], [0.00, 0.64], [-0.28, 0.56],
+      [-0.58, 0.42], [-0.82, 0.24]
+    ],
+    cap: [
+      [-0.92, -0.42], [-0.76, -0.74], [-0.42, -0.94], [-0.06, -0.98],
+      [0.24, -0.96], [0.46, -0.84], [0.30, -0.64], [-0.10, -0.72],
+      [-0.50, -0.64]
+    ],
+    side: [
+      [-0.94, -0.30], [-0.92, 0.08], [-0.78, 0.28], [-0.52, 0.44],
+      [-0.26, 0.54], [-0.34, 0.20], [-0.56, -0.10], [-0.74, -0.34]
+    ],
+    facePl: [
+      [0.26, -0.60], [0.60, -0.56], [0.82, -0.42], [0.86, -0.14],
+      [0.84, 0.08], [0.62, 0.30], [0.34, 0.18], [0.20, -0.26]
+    ],
+    brow: [[-0.14, -0.46], [0.80, -0.54], [0.84, -0.36], [-0.10, -0.28]],
+    cheek: [[0.60, 0.28], [0.52, 0.46], [0.26, 0.60], [0.08, 0.38], [0.30, 0.22]],
+    sock: [[-0.10, -0.30], [0.74, -0.38], [0.78, -0.10], [-0.06, -0.02]],
+    ant1: [[0.02, -0.94], [0.12, -1.00], [-0.86, -1.06], [-0.92, -0.98]],
+    ant2: [[-0.34, -0.88], [-0.30, -0.96], [-1.02, -0.80], [-1.04, -0.72]],
+    neck1: [[-0.40, 0.62], [0.26, 0.62], [0.30, 0.80], [-0.44, 0.80]],
+    neck2: [[-0.44, 0.84], [0.30, 0.84], [0.34, 1.04], [-0.48, 1.04]],
+    sh: [[-1.12, 1.12], [-0.20, 1.02], [0.60, 1.22], [0.74, 1.72], [-1.06, 1.72]],
+    podAt: [-0.72, -0.02],
+    podR: 0.215
+  };
 
-    n = (i === 0) ? 16 : 22;
-    for (k = 0; k < n; k++) {
-      /* keep the main panel sparkles in its sky half, never on her face */
-      for (var tries = 0; tries < 40; tries++) {
-        x = bw * (0.06 + rnd() * 0.88);
-        y = bh * (0.05 + rnd() * 0.90);
-        if (i !== 0) { break; }
-        dx = (x - bw * 0.30) / (bw * 0.32);
-        dy = (y - bh * 0.34) / (bh * 0.44);
-        if (dx * dx + dy * dy > 1.0) { break; }
-      }
-      var size = Math.min(bw, bh) * (0.030 + rnd() * 0.045);
-      p.tw.push({
-        x: x, y: y, s: size,
-        spr: rnd() < 0.24 ? sparkPink : (rnd() < 0.55 ? sparkBig : sparkMid),
-        ph: rnd() * 6.2832,
-        spd: 0.7 + rnd() * 1.9,
-        lo: 0.20 + rnd() * 0.35
-      });
-    }
-
-    /* meteors: panel 1 gets two, panel 2 two */
-    var mm = (i === 0) ? 0 : 2;
-    for (k = 0; k < mm; k++) {
-      var ang = 2.42 + rnd() * 0.30;                   /* down-left sweep */
-      var len = Math.min(bw, bh) * (0.28 + rnd() * 0.18);
-      var thick = len * 0.075;
-      var sx = bw * (0.56 + rnd() * 0.42);
-      var sy = bh * (0.02 + rnd() * 0.28);
-      var dist = len * 3.6;
-      p.meteors.push({
-        x0: sx, y0: sy,
-        x1: sx + Math.cos(ang) * dist,
-        y1: sy + Math.sin(ang) * dist,
-        ang: ang,
-        len: len, thick: thick,
-        spr: makeMeteor(len, thick, 'rgba(214,238,255,0.72)'),
-        period: 4.5 + rnd() * 3.0,
-        off: rnd(),
-        dur: 0.10 + rnd() * 0.06
-      });
-    }
-  }
-
-  /* ======================================================= MAIN PANEL ART */
-
-  function paintMain(g, bw, bh, m) {
-    var sky = g.createLinearGradient(0, 0, 0, bh);
-    sky.addColorStop(0, '#cfe0f6');
-    sky.addColorStop(0.34, '#e4eefb');
-    sky.addColorStop(0.68, '#f4f8fd');
-    sky.addColorStop(1, '#fdfaf3');
-    g.fillStyle = sky;
-    g.fillRect(0, 0, bw, bh);
-
-    /* pale blue screen tone over the upper sky */
-    g.save();
-    g.globalAlpha = 0.30;
-    g.fillStyle = tilePattern(g, toneTile);
-    g.beginPath();
-    g.moveTo(0, 0);
-    g.lineTo(bw, 0);
-    g.lineTo(bw, bh * 0.42);
-    g.bezierCurveTo(bw * 0.66, bh * 0.52, bw * 0.34, bh * 0.36, 0, bh * 0.56);
-    g.closePath();
-    g.fill();
-    g.restore();
-
-    /* moon with a soft halo */
-    var mx = bw * 0.805;
-    var my = bh * 0.170;
-    var mr = Math.min(bw, bh) * 0.098;
-    var halo = g.createRadialGradient(mx, my, mr * 0.6, mx, my, mr * 4.2);
-    halo.addColorStop(0, 'rgba(255,251,232,0.85)');
-    halo.addColorStop(0.30, 'rgba(255,250,226,0.34)');
-    halo.addColorStop(1, 'rgba(255,250,226,0)');
-    g.fillStyle = halo;
-    g.beginPath();
-    g.arc(mx, my, mr * 4.2, 0, 6.2832);
-    g.fill();
-
-    /* light rays from the moon */
-    g.save();
-    g.translate(mx, my);
-    var ra, rl;
-    for (var i = 0; i < 14; i++) {
-      ra = (i / 14) * 6.2832 + 0.11;
-      rl = mr * (4.6 + (i % 3) * 1.4);
-      g.fillStyle = (i % 2 === 0) ? 'rgba(255,255,255,0.16)' : 'rgba(214,236,255,0.13)';
-      g.beginPath();
-      g.moveTo(0, 0);
-      g.lineTo(Math.cos(ra - 0.055) * rl, Math.sin(ra - 0.055) * rl);
-      g.lineTo(Math.cos(ra + 0.055) * rl, Math.sin(ra + 0.055) * rl);
-      g.closePath();
-      g.fill();
-    }
-    g.restore();
-
-    g.fillStyle = '#fff7e2';
-    g.beginPath();
-    g.arc(mx, my, mr, 0, 6.2832);
-    g.fill();
-    g.strokeStyle = 'rgba(51,64,90,0.22)';
-    g.lineWidth = Math.max(1, mr * 0.040);
-    g.stroke();
-    /* a couple of craters, very soft */
-    g.fillStyle = 'rgba(214,224,238,0.55)';
-    g.beginPath();
-    g.arc(mx - mr * 0.30, my + mr * 0.24, mr * 0.20, 0, 6.2832);
-    g.fill();
-    g.beginPath();
-    g.arc(mx + mr * 0.34, my - mr * 0.30, mr * 0.13, 0, 6.2832);
-    g.fill();
-
-    /* static star field */
-    var rnd = rngOf(0x2ea1);
-    var k, sx, sy, sz, sa;
-    for (k = 0; k < 150; k++) {
-      sx = rnd() * bw;
-      sy = rnd() * bh * 0.86;
-      sz = 0.6 + rnd() * 1.9;
-      sa = 0.25 + rnd() * 0.55;
-      g.fillStyle = 'rgba(255,255,255,' + sa.toFixed(2) + ')';
-      g.beginPath();
-      g.arc(sx, sy, sz, 0, 6.2832);
-      g.fill();
-      if (sz > 1.9) {
-        g.fillStyle = 'rgba(51,64,90,' + (sa * 0.22).toFixed(2) + ')';
-        g.beginPath();
-        g.arc(sx, sy, sz * 2.1, 0, 6.2832);
-        g.fill();
-      }
-    }
-    /* a few larger sparkles, baked */
-    var bigs = [[0.62, 0.10, 26], [0.92, 0.44, 20], [0.70, 0.62, 16], [0.48, 0.07, 14]];
-    for (k = 0; k < bigs.length; k++) {
-      g.globalAlpha = 0.85;
-      g.drawImage(sparkMid, bigs[k][0] * bw - bigs[k][2] * 0.5, bigs[k][1] * bh - bigs[k][2] * 0.5, bigs[k][2], bigs[k][2]);
-    }
-    g.globalAlpha = 1;
-
-    /* soft cloud bands near the bottom */
-    g.save();
-    g.globalAlpha = 0.85;
-    g.fillStyle = 'rgba(255,255,255,0.78)';
-    for (k = 0; k < 3; k++) {
-      var cy = bh * (0.80 + k * 0.075);
-      g.beginPath();
-      g.moveTo(0, cy);
-      g.bezierCurveTo(bw * 0.28, cy - bh * 0.05, bw * 0.62, cy + bh * 0.045, bw, cy - bh * 0.015);
-      g.lineTo(bw, bh);
-      g.lineTo(0, bh);
-      g.closePath();
-      g.fill();
-    }
-    g.restore();
-
-    paintGirl(g, bw, bh, m);
-  }
-
-  /* the girl: high key line art, gazing up, soft smile, star-lit eyes */
-  function paintGirl(g, bw, bh, m) {
-    var s = bh * 0.460;
-    var ox = bw * 0.318;
-    var oy = bh * 0.489;
-    var rot = -0.30;
+  function paintMechaHead(p, g, bw, bh, m) {
+    var s = bh * 0.540;
+    var ox = bw * 0.470;
+    var oy = bh * 0.600;
+    var rot = -0.06;
     var cs = Math.cos(rot);
     var sn = Math.sin(rot);
-    var lw = clamp(m * 0.0039, 1.9, 3.9);
-    var mtx = [s * cs, s * sn, -s * sn, s * cs, ox, oy];
+    var lw = clamp(m * 0.0038, 1.9, 3.8);
     var ink = lw / s;
+    var mtx = [s * cs, s * sn, -s * sn, s * cs, ox, oy];
+    var i;
 
     function faceXf() {
       g.translate(ox, oy);
       g.rotate(rot);
       g.scale(s, s);
     }
-
-    var FRONT = [
-      ['M', 0.262, -0.878],
-      ['C', 0.372, -0.796, 0.434, -0.664, 0.442, -0.520],
-      ['C', 0.448, -0.436, 0.430, -0.376, 0.426, -0.316],
-      ['C', 0.422, -0.262, 0.410, -0.222, 0.414, -0.176],
-      ['C', 0.420, -0.110, 0.450, -0.048, 0.496, 0.020],
-      ['C', 0.540, 0.088, 0.582, 0.122, 0.606, 0.142],
-      ['L', 0.612, 0.158],
-      ['C', 0.586, 0.174, 0.522, 0.182, 0.494, 0.180],
-      ['C', 0.468, 0.179, 0.456, 0.192, 0.460, 0.214],
-      ['C', 0.466, 0.240, 0.490, 0.252, 0.498, 0.270],
-      ['C', 0.504, 0.288, 0.486, 0.300, 0.478, 0.312],
-      ['C', 0.470, 0.330, 0.492, 0.344, 0.494, 0.362],
-      ['C', 0.496, 0.384, 0.470, 0.398, 0.460, 0.416],
-      ['C', 0.452, 0.440, 0.462, 0.470, 0.462, 0.492],
-      ['C', 0.462, 0.526, 0.428, 0.566, 0.408, 0.590],
-      ['C', 0.376, 0.644, 0.324, 0.702, 0.298, 0.766],
-      ['C', 0.280, 0.810, 0.270, 0.882, 0.266, 0.964],
-      ['L', 0.260, 1.900]
-    ];
-    var BACK = [
-      ['L', -0.170, 1.900],
-      ['L', -0.172, 0.980],
-      ['C', -0.174, 0.860, -0.150, 0.790, -0.116, 0.742],
-      ['C', -0.076, 0.688, -0.140, 0.642, -0.232, 0.612],
-      ['C', -0.470, 0.598, -0.760, 0.522, -0.930, 0.374],
-      ['C', -1.034, 0.140, -1.030, -0.402, -0.894, -0.742],
-      ['C', -0.754, -1.012, -0.402, -1.064, -0.128, -1.012],
-      ['C', 0.028, -0.980, 0.164, -0.932, 0.262, -0.878]
-    ];
-
-    var facePath = new Path2D();
-    runPath(facePath, FRONT);
-    runPath(facePath, BACK);
-    facePath.closePath();
-
-    var rimPath = new Path2D();
-    runPath(rimPath, FRONT);
-
-    /* hair outlines, needed early so the drop shadow can include them */
-    var HAIR_SEGS = [
-      ['M', 0.310, -0.890],
-      ['C', 0.180, -0.946, 0.010, -0.962, -0.150, -0.946],
-      ['C', -0.430, -0.988, -0.762, -0.930, -0.932, -0.760],
-      ['C', -1.092, -0.600, -1.150, -0.300, -1.160, 0.040],
-      ['C', -1.176, 0.400, -1.246, 0.760, -1.362, 1.060],
-      ['C', -1.180, 1.020, -1.010, 0.882, -0.930, 0.700],
-      ['C', -0.900, 1.020, -0.878, 1.360, -0.930, 1.900],
-      ['L', -0.300, 1.900],
-      ['C', -0.262, 1.460, -0.226, 1.040, -0.180, 0.740],
-      ['C', -0.140, 0.500, -0.100, 0.300, -0.062, 0.140],
-      ['C', -0.030, -0.060, 0.010, -0.300, 0.060, -0.500],
-      ['C', 0.100, -0.662, 0.180, -0.800, 0.310, -0.890]
-    ];
-    var BANG_SEGS = [
-      ['M', 0.474, -0.548],
-      ['C', 0.456, -0.716, 0.402, -0.846, 0.300, -0.902],
-      ['C', 0.170, -0.962, 0.010, -0.976, -0.072, -0.932],
-      ['C', -0.078, -0.880, -0.050, -0.826, -0.016, -0.790],
-      ['Q', -0.010, -0.560, 0.040, -0.430],
-      ['Q', 0.070, -0.620, 0.120, -0.700],
-      ['Q', 0.160, -0.500, 0.190, -0.380],
-      ['Q', 0.226, -0.560, 0.268, -0.680],
-      ['Q', 0.310, -0.520, 0.344, -0.420],
-      ['Q', 0.386, -0.472, 0.430, -0.470],
-      ['Q', 0.464, -0.514, 0.474, -0.548]
-    ];
-    var hairBack = runPath(new Path2D(), HAIR_SEGS);
-    var bang = runPath(new Path2D(), BANG_SEGS);
-    bang.closePath();
-
-    /* soft blue shadow under her so the pale face reads against the sky */
-    var silFace = xfPath(FRONT, mtx);
-    xfPath(BACK, mtx, silFace);
-    silFace.closePath();
-    var silHair = xfPath(HAIR_SEGS, mtx);
-    var silBang = xfPath(BANG_SEGS, mtx);
-    silBang.closePath();
-    g.save();
-    g.shadowColor = 'rgba(96,128,172,0.44)';
-    g.shadowBlur = s * 0.055;
-    g.shadowOffsetX = s * 0.016;
-    g.shadowOffsetY = s * 0.030;
-    g.fillStyle = 'rgba(255,255,255,0.97)';
-    g.fill(silFace);
-    g.fill(silHair);
-    g.fill(silBang);
-    g.restore();
-
-    /* glow behind the head so the light hair separates from the sky */
-    var gl = g.createRadialGradient(
-      ox - s * 0.10, oy - s * 0.55, s * 0.20,
-      ox - s * 0.10, oy - s * 0.55, s * 1.45);
-    gl.addColorStop(0, 'rgba(255,255,255,0.36)');
-    gl.addColorStop(0.55, 'rgba(255,255,255,0.14)');
-    gl.addColorStop(1, 'rgba(255,255,255,0)');
-    g.fillStyle = gl;
-    g.fillRect(0, 0, bw, bh);
-
-    /* ---- skin */
-    g.save();
-    faceXf();
-    g.fillStyle = '#fdf8f0';
-    g.fill(facePath);
-    g.strokeStyle = LINE;
-    g.lineWidth = ink;
-    g.lineJoin = 'round';
-    g.stroke(facePath);
-    g.restore();
-
-    /* ---- blue-grey halftone shadows: cheek, under jaw, neck */
-    var pat = tilePattern(g, toneTile);
-    g.save();
-    g.fillStyle = pat;
-    g.globalAlpha = 0.42;
-    g.fill(facePoly(mtx, [
-      [0.470, 0.240], [0.446, 0.330], [0.410, 0.430], [0.372, 0.512],
-      [0.316, 0.566], [0.252, 0.606], [0.228, 0.540], [0.292, 0.492],
-      [0.348, 0.408], [0.396, 0.310], [0.430, 0.216]
-    ]));
-    g.globalAlpha = 0.36;
-    g.fill(facePoly(mtx, [
-      [0.116, 0.742], [0.262, 0.712], [0.294, 0.772], [0.286, 0.880],
-      [0.186, 0.900], [0.128, 0.812]
-    ]));
-    g.globalAlpha = 0.30;
-    g.fill(facePoly(mtx, [
-      [0.238, 0.880], [0.272, 0.876], [0.266, 1.060], [0.248, 1.060]
-    ]));
-    g.restore();
-
-    /* ---- pale pink blush on the cheek */
-    g.save();
-    g.globalAlpha = 0.42;
-    g.fillStyle = 'rgba(255,170,196,0.55)';
-    g.beginPath();
-    var bl = facePoly(mtx, [
-      [0.404, 0.176], [0.372, 0.238], [0.318, 0.276], [0.268, 0.268],
-      [0.276, 0.196], [0.330, 0.156]
-    ]);
-    g.fill(bl);
-    g.restore();
-
-    /* ---- features */
-    g.save();
-    faceXf();
-    g.lineJoin = 'round';
-    g.lineCap = 'round';
-
-    /* brow */
-    var brow = new Path2D();
-    brow.moveTo(0.150, -0.272);
-    brow.bezierCurveTo(0.228, -0.322, 0.330, -0.320, 0.420, -0.258);
-    g.strokeStyle = 'rgba(51,64,90,0.85)';
-    g.lineWidth = 0.019;
-    g.stroke(brow);
-
-    /* eye group: slightly enlarged for the soft manga look */
-    g.save();
-    g.translate(0.300, -0.100);
-    g.scale(1.15, 1.15);
-    g.translate(-0.300, 0.100);
-
-    /* sclera */
-    var sclera = new Path2D();
-    sclera.moveTo(0.412, -0.058);
-    sclera.bezierCurveTo(0.354, -0.130, 0.278, -0.158, 0.208, -0.154);
-    sclera.bezierCurveTo(0.164, -0.150, 0.132, -0.126, 0.114, -0.098);
-    sclera.bezierCurveTo(0.158, -0.036, 0.250, -0.018, 0.318, -0.032);
-    sclera.bezierCurveTo(0.368, -0.042, 0.394, -0.050, 0.412, -0.058);
-    sclera.closePath();
-    g.fillStyle = '#fffdf9';
-    g.fill(sclera);
-
-    /* iris: clear blue with a star glint */
-    g.save();
-    g.clip(sclera);
-    g.beginPath();
-    g.arc(0.312, -0.098, 0.060, 0, 6.2832);
-    g.fillStyle = '#7fa2cf';
-    g.fill();
-    g.beginPath();
-    g.arc(0.312, -0.098, 0.060, 0, 6.2832);
-    g.strokeStyle = 'rgba(51,64,90,0.75)';
-    g.lineWidth = 0.008;
-    g.stroke();
-    g.beginPath();
-    g.arc(0.312, -0.098, 0.026, 0, 6.2832);
-    g.fillStyle = '#33405a';
-    g.fill();
-    /* pale cyan lower rim */
-    g.beginPath();
-    g.arc(0.312, -0.098, 0.048, 0.5, 2.6);
-    g.strokeStyle = 'rgba(142,230,242,0.85)';
-    g.lineWidth = 0.012;
-    g.stroke();
-    /* 4 point star glint */
-    g.fillStyle = '#ffffff';
-    var gx = 0.292;
-    var gy = -0.120;
-    var gw = 0.014;
-    g.beginPath();
-    g.moveTo(gx, gy - 0.045);
-    g.quadraticCurveTo(gx + gw, gy - gw, gx + 0.038, gy);
-    g.quadraticCurveTo(gx + gw, gy + gw, gx, gy + 0.045);
-    g.quadraticCurveTo(gx - gw, gy + gw, gx - 0.038, gy);
-    g.quadraticCurveTo(gx - gw, gy - gw, gx, gy - 0.045);
-    g.fill();
-    /* tiny pink dot */
-    g.beginPath();
-    g.arc(0.334, -0.084, 0.011, 0, 6.2832);
-    g.fillStyle = 'rgba(255,184,210,0.95)';
-    g.fill();
-    g.restore();
-
-    /* upper lid */
-    var lid = new Path2D();
-    lid.moveTo(0.416, -0.054);
-    lid.bezierCurveTo(0.358, -0.136, 0.280, -0.170, 0.208, -0.166);
-    lid.bezierCurveTo(0.160, -0.162, 0.124, -0.134, 0.108, -0.102);
-    g.strokeStyle = LINE;
-    g.lineWidth = 0.030;
-    g.stroke(lid);
-
-    /* three soft lashes */
-    var lash1 = new Path2D();
-    lash1.moveTo(0.136, -0.126);
-    lash1.bezierCurveTo(0.118, -0.160, 0.106, -0.186, 0.098, -0.208);
-    lash1.bezierCurveTo(0.114, -0.184, 0.126, -0.154, 0.144, -0.110);
-    lash1.closePath();
-    g.fillStyle = LINE;
-    g.fill(lash1);
-    var lash2 = new Path2D();
-    lash2.moveTo(0.180, -0.156);
-    lash2.bezierCurveTo(0.168, -0.186, 0.160, -0.208, 0.155, -0.226);
-    lash2.bezierCurveTo(0.168, -0.204, 0.176, -0.180, 0.188, -0.146);
-    lash2.closePath();
-    g.fill(lash2);
-    var lash3 = new Path2D();
-    lash3.moveTo(0.226, -0.170);
-    lash3.bezierCurveTo(0.218, -0.194, 0.212, -0.212, 0.208, -0.226);
-    lash3.bezierCurveTo(0.218, -0.208, 0.224, -0.190, 0.234, -0.162);
-    lash3.closePath();
-    g.fill(lash3);
-
-    /* lower lid */
-    var low = new Path2D();
-    low.moveTo(0.408, -0.052);
-    low.bezierCurveTo(0.330, -0.012, 0.212, -0.010, 0.152, -0.068);
-    g.strokeStyle = 'rgba(51,64,90,0.55)';
-    g.lineWidth = 0.010;
-    g.stroke(low);
-    g.restore();
-
-    /* nose */
-    g.strokeStyle = 'rgba(51,64,90,0.75)';
-    var n1 = new Path2D();
-    n1.moveTo(0.472, 0.180);
-    n1.bezierCurveTo(0.502, 0.192, 0.526, 0.186, 0.542, 0.172);
-    g.lineWidth = 0.011;
-    g.stroke(n1);
-    var n2 = new Path2D();
-    n2.moveTo(0.462, 0.146);
-    n2.lineTo(0.470, 0.180);
-    g.lineWidth = 0.009;
-    g.stroke(n2);
-    var n3 = new Path2D();
-    n3.moveTo(0.436, -0.054);
-    n3.bezierCurveTo(0.442, 0.012, 0.452, 0.072, 0.470, 0.120);
-    g.strokeStyle = 'rgba(51,64,90,0.22)';
-    g.lineWidth = 0.009;
-    g.stroke(n3);
-
-    /* soft smile: mouth line lifting at the corner, pale pink lip */
-    var lip = new Path2D();
-    lip.moveTo(0.466, 0.320);
-    lip.bezierCurveTo(0.480, 0.336, 0.492, 0.344, 0.492, 0.358);
-    lip.bezierCurveTo(0.490, 0.376, 0.476, 0.386, 0.464, 0.382);
-    lip.bezierCurveTo(0.458, 0.366, 0.460, 0.338, 0.466, 0.320);
-    lip.closePath();
-    g.fillStyle = 'rgba(255,170,196,0.78)';
-    g.fill(lip);
-    var smile = new Path2D();
-    smile.moveTo(0.442, 0.310);
-    smile.bezierCurveTo(0.468, 0.324, 0.492, 0.322, 0.506, 0.304);
-    g.strokeStyle = 'rgba(51,64,90,0.85)';
-    g.lineWidth = 0.012;
-    g.stroke(smile);
-    /* smile corner tick */
-    var dimple = new Path2D();
-    dimple.moveTo(0.508, 0.300);
-    dimple.lineTo(0.516, 0.288);
-    g.lineWidth = 0.009;
-    g.stroke(dimple);
-
-    /* jaw line, very light */
-    var jaw = new Path2D();
-    jaw.moveTo(0.412, 0.582);
-    jaw.bezierCurveTo(0.336, 0.652, 0.236, 0.704, 0.124, 0.730);
-    jaw.bezierCurveTo(0.024, 0.754, -0.082, 0.748, -0.160, 0.704);
-    g.strokeStyle = 'rgba(51,64,90,0.55)';
-    g.lineWidth = 0.012;
-    g.stroke(jaw);
-    g.restore();
-
-    /* ---- hair: pale blue grey mass */
-    g.save();
-    faceXf();
-
-    /* hair body */
-    g.fillStyle = '#cfdcee';
-    g.fill(hairBack);
-    g.strokeStyle = LINE;
-    g.lineWidth = ink * 0.85;
-    g.stroke(hairBack);
-
-    /* inner shadow along the hair root */
-    g.save();
-    g.clip(hairBack);
-    var hs = g.createLinearGradient(-0.10, -0.10, -1.05, 0.55);
-    hs.addColorStop(0, 'rgba(150,175,208,0.34)');
-    hs.addColorStop(0.55, 'rgba(168,190,219,0.18)');
-    hs.addColorStop(1, 'rgba(207,220,238,0.06)');
-    g.fillStyle = hs;
-    g.fillRect(-1.5, -1.2, 3.2, 3.6);
-    g.restore();
-
-    /* bang over the forehead, same light tone, defined by its outline */
-    g.fillStyle = '#cbd9ec';
-    g.fill(bang);
-    g.strokeStyle = LINE;
-    g.lineWidth = ink * 0.85;
-    g.stroke(bang);
-
-    /* a few strand lines for texture */
-    g.strokeStyle = 'rgba(90,116,150,0.42)';
-    g.lineWidth = ink * 0.5;
-    var strands = [
-      ['M', 0.200, -0.930, 0.060, -0.560, -0.080, 0.100],
-      ['M', -0.060, -0.960, -0.300, -0.700, -0.520, 0.260],
-      ['M', -0.380, -0.960, -0.640, -0.640, -0.780, 0.500],
-      ['M', -0.700, -0.860, -0.900, -0.420, -0.960, 0.740],
-      ['M', 0.330, -0.820, 0.230, -0.500, 0.150, -0.180]
-    ];
-    for (var sm = 0; sm < strands.length; sm++) {
-      var st = strands[sm];
-      var sp = new Path2D();
-      sp.moveTo(st[1], st[2]);
-      sp.quadraticCurveTo(st[3], st[4], st[5], st[6]);
-      g.stroke(sp);
+    function fill(pts, color) {
+      g.fillStyle = color;
+      g.fill(uPoly(g, pts));
+    }
+    function shape(pts, color, width) {
+      var p2 = uPoly(g, pts);
+      if (color) { g.fillStyle = color; g.fill(p2); }
+      g.strokeStyle = LINE;
+      g.lineWidth = width || ink;
+      g.lineJoin = 'miter';
+      g.stroke(p2);
+      return p2;
+    }
+    function line(x1, y1, x2, y2, w) {
+      g.beginPath();
+      g.moveTo(x1, y1);
+      g.lineTo(x2, y2);
+      g.strokeStyle = LINE;
+      g.lineWidth = w || ink * 0.7;
+      g.stroke();
+    }
+    function bolt(x, y, r) {
+      g.beginPath();
+      g.arc(x, y, r, 0, 6.2832);
+      g.fillStyle = STEEL3;
+      g.fill();
+      g.strokeStyle = LINE;
+      g.lineWidth = ink * 0.55;
+      g.stroke();
     }
 
-    /* thin side lock in front of the ear */
-    var lock = new Path2D();
-    lock.moveTo(0.112, -0.740);
-    lock.bezierCurveTo(0.060, -0.430, 0.038, -0.120, 0.030, 0.130);
-    lock.bezierCurveTo(0.026, 0.240, 0.014, 0.310, -0.008, 0.372);
-    lock.bezierCurveTo(-0.012, 0.290, -0.012, 0.210, -0.010, 0.120);
-    lock.bezierCurveTo(-0.014, -0.140, 0.006, -0.440, 0.048, -0.744);
-    lock.closePath();
-    g.fillStyle = '#c2d2e8';
-    g.fill(lock);
-    g.strokeStyle = LINE;
-    g.lineWidth = ink * 0.7;
-    g.stroke(lock);
-    g.restore();
-
-    /* ---- paper white highlight crescent, clipped to the hair */
-    var hairClip = new Path2D();
-    runPath(hairClip, HAIR_SEGS);
-    runPath(hairClip, BANG_SEGS);
-    hairClip.closePath();
-
-    var hcx = -0.055;
-    var hcy = -0.070;
-    var A0 = 198 * Math.PI / 180;
-    var A1 = 292 * Math.PI / 180;
-    var HN = 26;
-    var cres = new Path2D();
-    var i2, u2, aa, sv, ro, th, rad2, px, py;
-    for (i2 = 0; i2 <= HN; i2++) {
-      u2 = i2 / HN;
-      aa = A0 + (A1 - A0) * u2;
-      sv = Math.sin(Math.PI * u2);
-      ro = 0.792 + 0.052 * sv;
-      px = hcx + Math.cos(aa) * ro;
-      py = hcy + Math.sin(aa) * ro;
-      if (i2 === 0) { cres.moveTo(px, py); } else { cres.lineTo(px, py); }
-    }
-    for (i2 = HN; i2 >= 0; i2--) {
-      u2 = i2 / HN;
-      aa = A0 + (A1 - A0) * u2;
-      sv = Math.sin(Math.PI * u2);
-      ro = 0.792 + 0.052 * sv;
-      th = (0.112 + 0.036 * sv) * Math.sqrt(Math.max(0, sv));
-      rad2 = ro - th;
-      cres.lineTo(hcx + Math.cos(aa) * rad2, hcy + Math.sin(aa) * rad2);
-    }
-    cres.closePath();
-    g.save();
-    faceXf();
-    g.clip(hairClip);
-    g.fillStyle = 'rgba(255,253,246,0.96)';
-    g.fill(cres);
-    g.restore();
-
-    /* small highlight sliver on the bang */
-    g.save();
-    g.fillStyle = 'rgba(255,253,246,0.9)';
-    g.fill(facePoly(mtx, [
-      [0.352, -0.876], [0.404, -0.802], [0.372, -0.786], [0.330, -0.842]
-    ]));
-    g.restore();
-
-    /* ---- soft glow rim along the profile edge */
-    g.save();
-    faceXf();
-    g.lineJoin = 'round';
-    g.strokeStyle = 'rgba(255,255,255,0.55)';
-    g.lineWidth = ink * 2.6;
-    g.stroke(rimPath);
-    g.strokeStyle = 'rgba(255,232,242,0.55)';
-    g.lineWidth = ink * 0.8;
-    g.stroke(rimPath);
-    g.restore();
-  }
-
-  /* ======================================================= NIGHT SKY PANEL */
-
-  function paintNightSky(g, bw, bh, m) {
-    var sky = g.createLinearGradient(0, 0, bw * 0.3, bh);
-    sky.addColorStop(0, '#a3bde6');
-    sky.addColorStop(0.45, '#c2d6f0');
-    sky.addColorStop(1, '#e2ecf9');
+    /* ---- background: sky + halftone + speed rays behind the head */
+    var sky = g.createLinearGradient(0, 0, 0, bh);
+    sky.addColorStop(0, '#e8f1fb');
+    sky.addColorStop(0.55, '#f6faff');
+    sky.addColorStop(1, '#fdfaf3');
     g.fillStyle = sky;
     g.fillRect(0, 0, bw, bh);
-
     g.save();
-    g.globalAlpha = 0.40;
+    g.globalAlpha = 0.34;
     g.fillStyle = tilePattern(g, toneTile);
     g.fillRect(0, 0, bw, bh);
     g.restore();
 
-    /* soft magenta / cyan glow at the corners */
-    var rg = g.createRadialGradient(bw * 0.82, bh * 0.14, 0, bw * 0.82, bh * 0.14, bw * 0.75);
-    rg.addColorStop(0, 'rgba(255,184,210,0.32)');
-    rg.addColorStop(1, 'rgba(255,184,210,0)');
+    var cx = bw * 0.47;
+    var cy = bh * 0.46;
+    var R = Math.sqrt(bw * bw + bh * bh) * 0.6;
+    var rnd = rngOf(0x3ac7);
+    var k, a, r0, len;
+    g.save();
+    g.lineCap = 'butt';
+    for (k = 0; k < 120; k++) {
+      a = rnd() * 6.2832;
+      r0 = R * (0.16 + rnd() * 0.30);
+      len = R * (0.30 + rnd() * 0.9);
+      g.strokeStyle = 'rgba(51,64,90,' + (0.04 + rnd() * 0.10).toFixed(3) + ')';
+      g.lineWidth = (0.7 + rnd() * 1.9) * (m / 900);
+      g.beginPath();
+      g.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0);
+      g.lineTo(cx + Math.cos(a) * (r0 + len), cy + Math.sin(a) * (r0 + len));
+      g.stroke();
+    }
+    g.restore();
+
+    /* ---- head assembly */
+    g.save();
+    faceXf();
+
+    /* antennas: steel blades with warm tips */
+    shape(MECHA.ant2, STEEL2, ink);
+    shape(MECHA.ant1, STEEL, ink);
+    fill([[0.04, -0.955], [0.10, -0.995], [-0.10, -1.00], [-0.12, -0.965]], ORANGE);
+    fill([[-0.83, -0.845], [-0.86, -0.885], [-1.01, -0.805], [-1.015, -0.775]], ORANGE);
+
+    /* shoulder plate under the head */
+    shape(MECHA.sh, STEEL2, ink);
+    fill([[-0.62, 1.16], [-0.06, 1.10], [0.30, 1.24], [0.33, 1.44], [-0.58, 1.50]], STEEL);
+    fill([[-0.90, 1.56], [-0.10, 1.44], [0.40, 1.58], [0.42, 1.68], [-0.94, 1.70]], CYAN);
+    line(-0.70, 1.20, -0.10, 1.32, ink * 0.6);
+    line(0.02, 1.26, 0.18, 1.62, ink * 0.6);
+    bolt(-0.52, 1.30, 0.045);
+    bolt(0.10, 1.36, 0.045);
+
+    /* neck rings */
+    var neckShade = [[-0.44, 0.62], [0.26, 0.62], [0.30, 0.80], [-0.44, 0.80]];
+    shape(MECHA.neck1, STEEL3, ink);
+    shape(MECHA.neck2, STEEL2, ink);
+    for (k = 0; k < 6; k++) {
+      line(-0.36 + k * 0.12, 0.64, -0.38 + k * 0.12, 0.78, ink * 0.5);
+    }
+    line(-0.34, 0.86, -0.32, 1.02, ink * 0.5);
+    line(-0.16, 0.86, -0.14, 1.02, ink * 0.5);
+    line(0.02, 0.86, 0.04, 1.02, ink * 0.5);
+    g.fillStyle = 'rgba(51,64,90,0.18)';
+    g.fill(uPoly(g, neckShade));
+
+    /* crest fin on the crown */
+    shape([[0.10, -0.94], [0.20, -0.98], [-0.06, -1.34], [-0.16, -1.30]], '#eef4fb', ink);
+    fill([[-0.02, -0.97], [0.06, -1.00], [-0.10, -1.28], [-0.15, -1.25]], ORANGE);
+
+    /* head base plate */
+    shape(MECHA.out, STEEL, ink * 1.2);
+
+    /* crown cap plate, paper highlight on the leading edges */
+    shape(MECHA.cap, '#eef4fb', ink);
+    fill([[-0.68, -0.72], [-0.44, -0.90], [-0.10, -0.94], [-0.16, -0.84], [-0.56, -0.78]], PAPER);
+    fill([[0.24, -0.90], [0.42, -0.82], [0.34, -0.74], [0.16, -0.80]], PAPER);
+
+    /* back side plate */
+    shape(MECHA.side, STEEL2, ink);
+    line(-0.86, -0.12, -0.54, 0.02, ink * 0.55);
+    line(-0.60, -0.30, -0.38, 0.30, ink * 0.55);
+    bolt(-0.80, -0.20, 0.034);
+
+    /* face / visor housing */
+    shape(MECHA.facePl, '#e7eff9', ink);
+    fill([[0.30, -0.54], [0.58, -0.50], [0.78, -0.40], [0.74, -0.34], [0.34, -0.40]], 'rgba(51,64,90,0.10)');
+
+    /* brow armour plate above the sensor slot */
+    shape(MECHA.brow, STEEL2, ink);
+    fill([[-0.13, -0.30], [0.81, -0.37], [0.81, -0.32], [-0.11, -0.25]], 'rgba(51,64,90,0.16)');
+
+    /* side pod (sensor pod on the ear) */
+    var podAt = MECHA.podAt;
+    var podR = MECHA.podR;
+    var hex = [];
+    for (k = 0; k < 6; k++) {
+      a = -Math.PI / 2 + k * Math.PI / 3;
+      hex.push([podAt[0] + Math.cos(a) * podR, podAt[1] + Math.sin(a) * podR]);
+    }
+    shape(hex, STEEL2, ink);
+    g.beginPath();
+    g.arc(podAt[0], podAt[1], podR * 0.58, 0, 6.2832);
+    g.fillStyle = STEEL3;
+    g.fill();
+    g.strokeStyle = LINE;
+    g.lineWidth = ink * 0.8;
+    g.stroke();
+    g.beginPath();
+    g.arc(podAt[0], podAt[1], podR * 0.30, 0, 6.2832);
+    g.fillStyle = '#223050';
+    g.fill();
+    g.beginPath();
+    g.arc(podAt[0], podAt[1], podR * 0.14, 0, 6.2832);
+    g.fillStyle = CYAN;
+    g.fill();
+
+    /* sensor slot: dark visor band, the moving lens is drawn every frame */
+    shape(MECHA.sock, '#2b3a5c', ink * 0.9);
+    fill([[-0.12, -0.335], [0.76, -0.415], [0.76, -0.355], [-0.11, -0.275]], CYAN);
+    fill([[-0.10, -0.03], [0.77, -0.11], [0.77, -0.06], [-0.09, 0.02]], 'rgba(53,200,255,0.50)');
+    line(-0.09, -0.005, 0.77, -0.085, ink * 0.55);
+
+    /* cheek armour with vents and warning chevrons */
+    shape(MECHA.cheek, STEEL3, ink);
+    var v;
+    for (v = 0; v < 3; v++) {
+      fill([[0.26 + v * 0.012, 0.30 + v * 0.062], [0.48, 0.24 + v * 0.062],
+        [0.47, 0.285 + v * 0.062], [0.26, 0.345 + v * 0.062]], '#223050');
+    }
+    fill([[0.42, 0.44], [0.54, 0.38], [0.53, 0.425], [0.42, 0.485]], ORANGE);
+    fill([[0.36, 0.50], [0.48, 0.44], [0.47, 0.485], [0.36, 0.545]], ORANGE);
+
+    /* chin grill */
+    for (v = 0; v < 3; v++) {
+      line(-0.24 + v * 0.02, 0.44 + v * 0.055, 0.16, 0.40 + v * 0.055, ink * 0.7);
+    }
+    line(-0.30, 0.38, -0.02, 0.34, ink * 0.6);
+
+    /* panel seams */
+    line(-0.84, -0.36, -0.30, -0.46, ink * 0.55);
+    line(-0.44, -0.90, -0.38, -0.66, ink * 0.55);
+    line(0.62, -0.56, 0.30, -0.50, ink * 0.55);
+    line(0.20, -0.26, 0.16, 0.34, ink * 0.55);
+    line(-0.56, 0.10, -0.18, 0.24, ink * 0.55);
+
+    /* rivets */
+    bolt(-0.62, -0.62, 0.034);
+    bolt(-0.16, -0.86, 0.034);
+    bolt(0.34, -0.66, 0.030);
+    bolt(-0.48, 0.30, 0.034);
+    bolt(0.36, 0.02, 0.030);
+
+    /* halftone shading on the lower armour */
+    g.save();
+    g.globalAlpha = 0.34;
+    g.fillStyle = tilePattern(g, toneTile);
+    g.fill(uPoly(g, [[0.86, -0.10], [0.84, 0.08], [0.62, 0.30], [0.52, 0.46],
+      [0.26, 0.60], [0.00, 0.64], [0.10, 0.44], [0.40, 0.26], [0.70, 0.06]]));
+    g.fill(uPoly(g, [[-0.44, 0.62], [0.30, 0.62], [0.34, 1.04], [-0.48, 1.06]]));
+    g.restore();
+
+    /* cyan inner light bounce along the jaw */
+    g.strokeStyle = 'rgba(53,200,255,0.45)';
+    g.lineWidth = ink * 1.6;
+    g.beginPath();
+    g.moveTo(0.78, -0.06);
+    g.lineTo(0.62, 0.30);
+    g.stroke();
+
+    /* cables from the pod to the shoulder */
+    g.strokeStyle = 'rgba(51,64,90,0.55)';
+    g.lineWidth = ink * 1.1;
+    g.beginPath();
+    g.moveTo(-0.80, 0.20);
+    g.bezierCurveTo(-0.86, 0.62, -0.72, 0.90, -0.66, 1.16);
+    g.stroke();
+    g.beginPath();
+    g.moveTo(-0.68, 0.18);
+    g.bezierCurveTo(-0.62, 0.60, -0.56, 0.88, -0.52, 1.12);
+    g.stroke();
+
+    g.restore();
+
+    /* eye data for the frame loop (local coordinates) */
+    var ex = 0.06;
+    var ey = -0.200;
+    var vl = 0.56;
+    var lens = 0.56 * s;
+    p.eye = {
+      x0: ox + s * (ex * cs - ey * sn),
+      y0: oy + s * (ex * sn + ey * cs),
+      ax: s * (vl * cs),
+      ay: s * (vl * sn),
+      r: lens,
+      lens: makeLens(Math.max(18, Math.round(lens)))
+    };
+  }
+
+  /* ================================================= PANEL 1: MECHA FLIGHT */
+
+  function paintLaunch(p, g, bw, bh, m) {
+    var sky = g.createLinearGradient(0, 0, bw * 0.2, bh);
+    sky.addColorStop(0, '#cfe2f8');
+    sky.addColorStop(0.5, '#e6f0fc');
+    sky.addColorStop(1, '#fdfaf3');
+    g.fillStyle = sky;
+    g.fillRect(0, 0, bw, bh);
+
+    g.save();
+    g.globalAlpha = 0.36;
+    g.fillStyle = tilePattern(g, toneTile);
+    g.fillRect(0, 0, bw, bh);
+    g.restore();
+
+    /* cyan glow low left, warm thrust glow at the tail */
+    var rg = g.createRadialGradient(bw * 0.20, bh * 0.86, 0, bw * 0.20, bh * 0.86, bw * 0.62);
+    rg.addColorStop(0, 'rgba(53,200,255,0.30)');
+    rg.addColorStop(1, 'rgba(53,200,255,0)');
     g.fillStyle = rg;
     g.fillRect(0, 0, bw, bh);
-    var rg2 = g.createRadialGradient(bw * 0.12, bh * 0.86, 0, bw * 0.12, bh * 0.86, bw * 0.7);
-    rg2.addColorStop(0, 'rgba(142,230,242,0.30)');
-    rg2.addColorStop(1, 'rgba(142,230,242,0)');
+    var rg2 = g.createRadialGradient(bw * 0.30, bh * 0.52, 0, bw * 0.30, bh * 0.52, bw * 0.5);
+    rg2.addColorStop(0, 'rgba(255,154,60,0.34)');
+    rg2.addColorStop(1, 'rgba(255,154,60,0)');
     g.fillStyle = rg2;
     g.fillRect(0, 0, bw, bh);
 
-    /* static stars */
-    var rnd = rngOf(0x77c1);
-    var k, sx, sy, sz, sa;
-    for (k = 0; k < 170; k++) {
-      sx = rnd() * bw;
-      sy = rnd() * bh;
-      sz = 0.6 + rnd() * 1.9;
-      sa = 0.4 + rnd() * 0.6;
-      g.fillStyle = 'rgba(255,255,255,' + sa.toFixed(2) + ')';
-      g.beginPath();
-      g.arc(sx, sy, sz, 0, 6.2832);
-      g.fill();
-      if (sz > 1.8) {
-        g.fillStyle = 'rgba(255,255,255,0.22)';
-        g.beginPath();
-        g.arc(sx, sy, sz * 2.6, 0, 6.2832);
-        g.fill();
-      }
-    }
-    /* baked sparkles */
-    var bigs = [[0.24, 0.30, bw * 0.095], [0.62, 0.14, bw * 0.068], [0.86, 0.52, bw * 0.052], [0.42, 0.78, bw * 0.045]];
-    for (k = 0; k < bigs.length; k++) {
-      g.globalAlpha = 0.92;
-      g.drawImage(sparkBig, bigs[k][0] * bw - bigs[k][2] * 0.5, bigs[k][1] * bh - bigs[k][2] * 0.5, bigs[k][2], bigs[k][2]);
-    }
-    g.globalAlpha = 1;
-
-    /* static pale light trails, each with its own bend */
+    /* static launch rails / motion streaks (the animated band is separate) */
+    var rnd = rngOf(0x6d21);
+    var k, yy, x0, x1;
     g.save();
     g.lineCap = 'round';
-    var tr = [
-      [[0.02, 0.98], [0.44, 0.56], [0.98, 0.08], 0.62],
-      [[0.24, 1.04], [0.54, 0.54], [0.88, 0.02], 0.50],
-      [[0.62, 1.06], [0.80, 0.62], [1.04, 0.24], 0.44],
-      [[0.00, 0.62], [0.30, 0.40], [0.66, 0.06], 0.34]
-    ];
-    for (k = 0; k < tr.length; k++) {
-      g.strokeStyle = k % 2 === 0
-        ? 'rgba(255,255,255,' + tr[k][3].toFixed(2) + ')'
-        : 'rgba(255,214,230,' + tr[k][3].toFixed(2) + ')';
-      g.lineWidth = Math.max(1.3, bh * (0.013 - k * 0.0022));
+    for (k = 0; k < 46; k++) {
+      yy = bh * (rnd() * 1.05 - 0.02);
+      x0 = bw * (rnd() * 0.8);
+      x1 = x0 + bw * (0.06 + rnd() * 0.26);
+      g.strokeStyle = rnd() < 0.3
+        ? 'rgba(53,200,255,' + (0.10 + rnd() * 0.16).toFixed(2) + ')'
+        : 'rgba(51,64,90,' + (0.06 + rnd() * 0.12).toFixed(2) + ')';
+      g.lineWidth = (0.8 + rnd() * 1.8) * (m / 900);
       g.beginPath();
-      g.moveTo(bw * tr[k][0][0], bh * tr[k][0][1]);
-      g.quadraticCurveTo(bw * tr[k][1][0], bh * tr[k][1][1], bw * tr[k][2][0], bh * tr[k][2][1]);
+      g.moveTo(x0, yy);
+      g.lineTo(x1, yy);
       g.stroke();
     }
     g.restore();
 
-    /* drift of clouds at the bottom */
-    g.fillStyle = 'rgba(255,255,255,0.72)';
+    /* ---- the mecha unit: armoured flight frame, no humanoid silhouette */
+    var u = bh * 0.60;
+    var cx = bw * 0.58;
+    var cy = bh * 0.50;
+    var rot = -0.06;
+    var cs = Math.cos(rot);
+    var sn = Math.sin(rot);
+    var ink = clamp(m * 0.0036, 1.7, 3.4) / u;
+
+    g.save();
+    g.translate(cx, cy);
+    g.rotate(rot);
+    g.scale(u, u);
+
+    function P(pts, color, w) {
+      var p2 = uPoly(g, pts);
+      if (color) { g.fillStyle = color; g.fill(p2); }
+      g.strokeStyle = LINE;
+      g.lineWidth = w || ink;
+      g.lineJoin = 'miter';
+      g.stroke(p2);
+      return p2;
+    }
+
+    /* thruster frame behind the hull */
+    P([[-0.86, -0.20], [-1.28, -0.30], [-1.34, -0.12], [-0.90, 0.02]], STEEL3, ink);
+    P([[-0.88, 0.06], [-1.34, 0.10], [-1.36, 0.26], [-0.86, 0.24]], STEEL3, ink);
+    /* nozzles */
+    P([[-1.30, -0.24], [-1.46, -0.20], [-1.46, 0.00], [-1.30, 0.02]], '#33405a', ink);
+    P([[-1.30, 0.08], [-1.46, 0.12], [-1.46, 0.26], [-1.30, 0.26]], '#33405a', ink);
+
+    /* main hull */
+    P([[1.42, 0.02], [0.62, -0.26], [-0.10, -0.34], [-0.86, -0.22],
+      [-1.04, 0.02], [-0.92, 0.26], [-0.20, 0.34], [0.56, 0.28]], STEEL, ink * 1.2);
+    /* swept winglets */
+    P([[0.10, -0.30], [0.52, -0.24], [0.16, -0.62], [-0.06, -0.58]], STEEL2, ink);
+    P([[-0.30, 0.30], [-0.70, 0.24], [-0.52, 0.54], [-0.20, 0.50]], STEEL2, ink);
+    g.fillStyle = 'rgba(53,200,255,0.55)';
     g.beginPath();
-    g.moveTo(0, bh * 0.90);
-    g.bezierCurveTo(bw * 0.3, bh * 0.82, bw * 0.6, bh * 0.96, bw, bh * 0.86);
-    g.lineTo(bw, bh);
-    g.lineTo(0, bh);
+    g.moveTo(0.16, -0.56);
+    g.lineTo(0.44, -0.28);
+    g.lineTo(0.20, -0.30);
+    g.lineTo(0.06, -0.50);
     g.closePath();
     g.fill();
+    /* rear booster block */
+    P([[-0.86, -0.26], [-1.14, -0.30], [-1.16, 0.26], [-0.90, 0.30]], STEEL3, ink);
+    /* top deck plate */
+    P([[1.16, -0.02], [0.58, -0.22], [-0.04, -0.30], [-0.78, -0.19],
+      [-0.66, -0.08], [0.00, -0.16], [0.60, -0.10]], '#eef4fb', ink);
+    /* side pods */
+    P([[-0.28, -0.16], [0.10, -0.20], [0.22, -0.02], [0.06, 0.12], [-0.26, 0.10]], STEEL2, ink);
+    P([[-0.62, 0.04], [-0.34, 0.00], [-0.26, 0.16], [-0.44, 0.26], [-0.66, 0.20]], STEEL2, ink);
+    /* sensor head block at the nose with a cyan eye line */
+    P([[0.66, -0.16], [1.06, -0.08], [1.16, -0.01], [0.66, 0.02]], '#223050', ink);
+    g.fillStyle = CYAN;
+    g.beginPath();
+    g.moveTo(0.72, -0.11);
+    g.lineTo(1.10, -0.05);
+    g.lineTo(1.10, -0.02);
+    g.lineTo(0.72, -0.06);
+    g.closePath();
+    g.fill();
+    /* hull panel lines and rivets */
+    lineHelper([[0.66, -0.06], [0.10, -0.14], [-0.40, -0.08]]);
+    lineHelper([[-0.06, 0.24], [0.30, 0.16], [0.60, 0.06]]);
+    lineHelper([[-0.90, 0.00], [-0.40, 0.08], [0.10, 0.06]]);
+    g.beginPath();
+    g.arc(-0.10, 0.02, 0.022, 0, 6.2832);
+    g.fillStyle = 'rgba(51,64,90,0.6)';
+    g.fill();
+    g.beginPath();
+    g.arc(0.34, -0.04, 0.020, 0, 6.2832);
+    g.fill();
+    /* cyan strip along the hull */
+    g.fillStyle = 'rgba(53,200,255,0.9)';
+    g.beginPath();
+    g.moveTo(0.50, 0.18);
+    g.lineTo(-0.30, 0.24);
+    g.lineTo(-0.30, 0.29);
+    g.lineTo(0.50, 0.23);
+    g.closePath();
+    g.fill();
+    /* halftone shading under the hull */
+    g.save();
+    g.globalAlpha = 0.32;
+    g.fillStyle = tilePattern(g, toneTile);
+    g.fill(uPoly(g, [[-0.90, 0.10], [0.50, 0.22], [0.56, 0.30], [-0.86, 0.30]]));
+    g.restore();
+    g.restore();
+
+    function lineHelper(pts) {
+      g.beginPath();
+      g.moveTo(pts[0][0], pts[0][1]);
+      for (var n = 1; n < pts.length; n++) { g.lineTo(pts[n][0], pts[n][1]); }
+      g.strokeStyle = 'rgba(51,64,90,0.6)';
+      g.lineWidth = ink * 0.55;
+      g.stroke();
+    }
+
+    /* thruster flames (animated) */
+    var fw = u * 1.40;
+    var fh1 = u * 0.42;
+    var fx = cx + Math.cos(rot) * (-1.46 * u) - Math.sin(rot) * (-0.11 * u);
+    var fy = cy + Math.sin(rot) * (-1.46 * u) + Math.cos(rot) * (-0.11 * u);
+    p.flames.push({
+      x: fx, y: fy - fh1 * 0.22, w: fw, h: fh1, ph: 0.0,
+      spr: makeFlame(Math.max(28, Math.round(fw)), Math.max(16, Math.round(fh1)))
+    });
+    p.flames.push({
+      x: fx, y: fy + fh1 * 0.42, w: fw * 0.82, h: fh1 * 0.82, ph: 1.7,
+      spr: makeFlame(Math.max(24, Math.round(fw * 0.82)), Math.max(14, Math.round(fh1 * 0.82)))
+    });
+
+    /* spark emitter at the nozzles */
+    p.sparkAt = { x: fx, y: fy + fh1 * 0.1, w: u * 0.9, h: u * 0.55 };
+    makeSparks(p, 14, 0x21ad);
+
+    /* base speed band (animated horizontally) */
+    var bandW = Math.round(bw * 0.34) + 8;
+    var band = mkCanvas(bw + bandW, bh);
+    var bg = ctxOf(band);
+    var rr = rngOf(0x1f75);
+    var i, y2, xa, xb;
+    bg.save();
+    bg.lineCap = 'round';
+    for (i = 0; i < 34; i++) {
+      y2 = rr() * bh;
+      xa = rr() * (bw + bandW);
+      xb = xa + bandW * (0.25 + rr() * 0.7);
+      bg.strokeStyle = rr() < 0.36
+        ? 'rgba(53,200,255,' + (0.16 + rr() * 0.22).toFixed(2) + ')'
+        : 'rgba(51,64,90,' + (0.10 + rr() * 0.14).toFixed(2) + ')';
+      bg.lineWidth = (0.9 + rr() * 1.9) * (m / 900);
+      bg.beginPath();
+      bg.moveTo(xa, y2);
+      bg.lineTo(xb, y2);
+      bg.stroke();
+    }
+    bg.restore();
+    p.streak = band;
+    p.streakW = bandW;
   }
 
-  /* ========================================================= TRAILS PANEL */
+  /* =================================================== PANEL 2: GEARS */
 
-  function paintTrails(g, bw, bh, m) {
+  function paintGears(p, g, bw, bh, m) {
     var sky = g.createLinearGradient(0, 0, bw, bh);
-    sky.addColorStop(0, '#dae6f8');
-    sky.addColorStop(0.42, '#c8d8f0');
-    sky.addColorStop(0.72, '#e6dcf2');
-    sky.addColorStop(1, '#fdeef5');
+    sky.addColorStop(0, '#e9f1fb');
+    sky.addColorStop(0.5, '#f6faff');
+    sky.addColorStop(1, '#fdfaf3');
     g.fillStyle = sky;
     g.fillRect(0, 0, bw, bh);
 
     g.save();
-    g.globalAlpha = 0.30;
+    g.globalAlpha = 0.34;
     g.fillStyle = tilePattern(g, toneTile);
     g.fillRect(0, 0, bw, bh);
     g.restore();
 
-    var rg = g.createRadialGradient(bw * 0.30, bh * 0.34, 0, bw * 0.30, bh * 0.34, bw * 0.85);
-    rg.addColorStop(0, 'rgba(255,255,255,0.65)');
-    rg.addColorStop(1, 'rgba(255,255,255,0)');
+    var mn = Math.min(bw, bh);
+
+    /* machinery frame behind the gears */
+    g.save();
+    g.strokeStyle = 'rgba(51,64,90,0.30)';
+    g.lineWidth = Math.max(2, mn * 0.016);
+    g.beginPath();
+    g.moveTo(bw * 0.02, bh * 0.16);
+    g.lineTo(bw * 0.98, bh * 0.10);
+    g.stroke();
+    g.beginPath();
+    g.moveTo(bw * 0.04, bh * 0.88);
+    g.lineTo(bw * 0.96, bh * 0.94);
+    g.stroke();
+    g.restore();
+
+    /* hydraulic piston, top right */
+    g.save();
+    g.translate(bw * 0.80, bh * 0.20);
+    g.rotate(-0.22);
+    g.fillStyle = STEEL2;
+    g.strokeStyle = LINE;
+    g.lineWidth = Math.max(1.6, mn * 0.010);
+    g.beginPath();
+    g.rect(-mn * 0.20, -mn * 0.055, mn * 0.34, mn * 0.11);
+    g.fill();
+    g.stroke();
+    g.fillStyle = STEEL3;
+    g.beginPath();
+    g.rect(-mn * 0.02, -mn * 0.030, mn * 0.24, mn * 0.06);
+    g.fill();
+    g.stroke();
+    g.fillStyle = ORANGE;
+    g.beginPath();
+    g.rect(-mn * 0.19, -mn * 0.055, mn * 0.035, mn * 0.11);
+    g.fill();
+    g.restore();
+
+    /* cable bundle, bottom left */
+    g.save();
+    g.strokeStyle = 'rgba(51,64,90,0.45)';
+    g.lineWidth = Math.max(2, mn * 0.016);
+    g.beginPath();
+    g.moveTo(-mn * 0.05, bh * 0.78);
+    g.bezierCurveTo(bw * 0.20, bh * 0.66, bw * 0.24, bh * 0.96, bw * 0.48, bh * 0.90);
+    g.stroke();
+    g.beginPath();
+    g.moveTo(-mn * 0.05, bh * 0.86);
+    g.bezierCurveTo(bw * 0.22, bh * 0.76, bw * 0.26, bh * 1.02, bw * 0.50, bh * 0.96);
+    g.stroke();
+    g.restore();
+
+    /* warm glow at the meshing point */
+    var gx = bw * 0.60;
+    var gy = bh * 0.52;
+    var rg = g.createRadialGradient(gx, gy, 0, gx, gy, mn * 0.42);
+    rg.addColorStop(0, 'rgba(255,154,60,0.42)');
+    rg.addColorStop(0.5, 'rgba(255,154,60,0.14)');
+    rg.addColorStop(1, 'rgba(255,154,60,0)');
     g.fillStyle = rg;
     g.fillRect(0, 0, bw, bh);
+    var rg2 = g.createRadialGradient(gx, gy, 0, gx, gy, mn * 0.30);
+    rg2.addColorStop(0, 'rgba(53,200,255,0.30)');
+    rg2.addColorStop(1, 'rgba(53,200,255,0)');
+    g.fillStyle = rg2;
+    g.fillRect(0, 0, bw, bh);
 
-    /* big soft star with rings of light trail */
-    var cx = bw * 0.33;
-    var cy = bh * 0.33;
-    var rr = Math.min(bw, bh) * 0.058;
-    var halo = g.createRadialGradient(cx, cy, 0, cx, cy, rr * 7);
-    halo.addColorStop(0, 'rgba(255,255,255,0.55)');
-    halo.addColorStop(0.28, 'rgba(255,240,248,0.20)');
-    halo.addColorStop(1, 'rgba(255,240,248,0)');
-    g.fillStyle = halo;
-    g.beginPath();
-    g.arc(cx, cy, rr * 7, 0, 6.2832);
-    g.fill();
-    g.drawImage(sparkBig, cx - rr * 1.95, cy - rr * 1.95, rr * 3.9, rr * 3.9);
-    /* a smaller companion sparkle */
-    g.globalAlpha = 0.9;
-    g.drawImage(sparkPink, bw * 0.74, bh * 0.20, rr * 2.6, rr * 2.6);
-    g.globalAlpha = 1;
+    /* gear sprites drawn (rotating) every frame */
+    var r1 = mn * 0.40;
+    var r2 = mn * 0.24;
+    p.gears.push({
+      spr: makeGear(Math.max(40, Math.round(r1 * 2)), 16, STEEL2, STEEL3),
+      x: bw * 0.36, y: bh * 0.44, r: r1, ang: 0.0, spd: 0.28
+    });
+    p.gears.push({
+      spr: makeGear(Math.max(30, Math.round(r2 * 2)), 12, '#eef4fb', STEEL2),
+      x: bw * 0.71, y: bh * 0.66, r: r2, ang: 0.3, spd: -0.46
+    });
 
-    /* light trail rings around the star */
-    g.save();
-    g.lineCap = 'round';
-    var k;
-    for (k = 0; k < 4; k++) {
-      var rad = rr * (1.9 + k * 0.62);
-      g.strokeStyle = k % 2 === 0
-        ? 'rgba(142,230,242,' + (0.62 - k * 0.10).toFixed(2) + ')'
-        : 'rgba(255,184,210,' + (0.58 - k * 0.10).toFixed(2) + ')';
-      g.lineWidth = Math.max(1.5, rr * (0.30 - k * 0.045));
+    p.sparkAt = { x: bw * 0.60, y: bh * 0.52, w: mn * 0.5, h: mn * 0.42 };
+    /* baked impact sparks around the meshing point */
+    var ir = rngOf(0x9c31);
+    var ii;
+    for (ii = 0; ii < 16; ii++) {
+      var ia = ir() * 6.2832;
+      var id = mn * (0.06 + ir() * 0.26);
+      var ix = p.sparkAt.x + Math.cos(ia) * id;
+      var iy = p.sparkAt.y + Math.sin(ia) * id;
+      g.strokeStyle = ii % 2 === 0 ? 'rgba(255,154,60,0.85)' : 'rgba(53,200,255,0.7)';
+      g.lineWidth = Math.max(1.2, mn * 0.006);
       g.beginPath();
-      g.ellipse(cx, cy, rad * 1.34, rad * 0.72, -0.34 + k * 0.05, 0.35, 5.6);
+      g.moveTo(ix, iy);
+      g.lineTo(ix + Math.cos(ia) * mn * 0.035, iy + Math.sin(ia) * mn * 0.035);
       g.stroke();
     }
-    g.restore();
-
-    /* long light streaks, gently curved */
-    g.save();
-    g.lineCap = 'round';
-    var st2 = [
-      [[0.00, 0.94], [0.34, 0.72], [0.74, 0.10], 0.66],
-      [[0.16, 1.04], [0.52, 0.78], [1.02, 0.30], 0.52],
-      [[0.44, 1.06], [0.72, 0.66], [1.04, 0.54], 0.42]
-    ];
-    for (k = 0; k < st2.length; k++) {
-      g.strokeStyle = k % 2 === 0
-        ? 'rgba(255,255,255,' + st2[k][3].toFixed(2) + ')'
-        : 'rgba(255,220,235,' + st2[k][3].toFixed(2) + ')';
-      g.lineWidth = Math.max(1.5, bh * (0.017 - k * 0.0035));
-      g.beginPath();
-      g.moveTo(bw * st2[k][0][0], bh * st2[k][0][1]);
-      g.quadraticCurveTo(bw * st2[k][1][0], bh * st2[k][1][1], bw * st2[k][2][0], bh * st2[k][2][1]);
-      g.stroke();
-    }
-    g.restore();
-
-    /* small stars */
-    var rnd = rngOf(0x1c3d);
-    var sx, sy, sz, sa;
-    for (k = 0; k < 90; k++) {
-      sx = rnd() * bw;
-      sy = rnd() * bh;
-      sz = 0.6 + rnd() * 1.7;
-      sa = 0.30 + rnd() * 0.55;
-      g.fillStyle = 'rgba(255,255,255,' + sa.toFixed(2) + ')';
-      g.beginPath();
-      g.arc(sx, sy, sz, 0, 6.2832);
-      g.fill();
-    }
-    for (k = 0; k < 3; k++) {
-      var px = bw * (0.68 + k * 0.11);
-      var py = bh * (0.18 + k * 0.26);
-      var ps = Math.min(bw, bh) * 0.10;
-      g.globalAlpha = 0.8;
-      g.drawImage(k === 1 ? sparkPink : sparkMid, px, py, ps, ps);
-    }
-    g.globalAlpha = 1;
+    makeSparks(p, 26, 0x3f1d);
   }
 
-  /* ============================================================= CHROME == */
+  /* spark particles: pre-rendered sprites, updated in the frame loop */
+  function makeSparks(p, n, seed) {
+    var rnd = rngOf(seed);
+    var at = p.sparkAt;
+    var i;
+    for (i = 0; i < n; i++) {
+      var life = 0.9 + rnd() * 1.6;
+      p.sparks.push({
+        x: at.x + (rnd() - 0.5) * at.w,
+        y: at.y + (rnd() - 0.5) * at.h,
+        vx: (rnd() - 0.55) * at.w * 0.55,
+        vy: (rnd() - 0.55) * at.h * 0.55,
+        life: life, age: rnd() * life,
+        size: at.w * (0.075 + rnd() * 0.075),
+        spr: rnd() < 0.62 ? sparkOrange : sparkCyan
+      });
+    }
+  }
+
+  /* ============================================================= CHROME = */
 
   function buildChrome(p, m) {
     var M = Math.max(26, m * 0.034);
@@ -1089,9 +959,8 @@
     g.lineJoin = 'miter';
     g.lineCap = 'butt';
 
-    /* soft drop shadow cast by the frame edge only */
     g.save();
-    g.shadowColor = 'rgba(112,142,186,0.42)';
+    g.shadowColor = 'rgba(90,124,170,0.46)';
     g.shadowBlur = m * 0.030;
     g.shadowOffsetY = m * 0.009;
     g.strokeStyle = 'rgba(255,255,255,0.85)';
@@ -1099,25 +968,21 @@
     g.stroke(p.path);
     g.restore();
 
-    /* white comic frame */
     g.strokeStyle = '#fffdf8';
     g.lineWidth = border;
     g.stroke(p.path);
-
-    /* thin blue grey inner line */
-    g.strokeStyle = 'rgba(51,64,90,0.26)';
+    g.strokeStyle = 'rgba(51,64,90,0.30)';
     g.lineWidth = Math.max(1, border * 0.13);
     g.stroke(p.path);
 
-    /* pale neon: cyan sides + pink top edge */
     p.glow = mkCanvas(p.fw, p.fh);
     var g2 = ctxOf(p.glow);
     g2.translate(-p.fx, -p.fy);
-    neonStroke(g2, p.path, Math.max(1.5, border * 0.30), 'rgba(142,230,242,0.95)', 0.55);
+    neonStroke(g2, p.path, Math.max(1.5, border * 0.30), 'rgba(53,200,255,0.95)', 0.55);
     var top = new Path2D();
     top.moveTo(p.tl.x, p.tl.y);
     top.lineTo(p.tl.x + p.u.x, p.tl.y + p.u.y);
-    neonStroke(g2, top, Math.max(1.4, border * 0.26), 'rgba(255,168,200,0.95)', 0.55);
+    neonStroke(g2, top, Math.max(1.4, border * 0.26), 'rgba(255,154,60,0.95)', 0.55);
   }
 
   /* ================================================================ PAGE = */
@@ -1128,22 +993,20 @@
     g.fillStyle = PAPER;
     g.fillRect(0, 0, W, H);
 
-    /* pale blue tone wash over the whole page */
     g.save();
-    g.globalAlpha = 0.75;
+    g.globalAlpha = 0.78;
     g.fillStyle = tilePattern(g, pageDotTile);
     g.fillRect(0, 0, W, H);
     g.restore();
 
-    /* soft light from the top right */
-    var lg = g.createRadialGradient(W * 0.72, H * 0.10, 0, W * 0.72, H * 0.10, Math.max(W, H) * 0.85);
-    lg.addColorStop(0, 'rgba(255,255,255,0.55)');
-    lg.addColorStop(0.5, 'rgba(255,252,242,0.18)');
+    var lg = g.createRadialGradient(W * 0.68, H * 0.12, 0, W * 0.68, H * 0.12, Math.max(W, H) * 0.85);
+    lg.addColorStop(0, 'rgba(255,255,255,0.50)');
+    lg.addColorStop(0.5, 'rgba(255,252,242,0.16)');
     lg.addColorStop(1, 'rgba(255,250,236,0)');
     g.fillStyle = lg;
     g.fillRect(0, 0, W, H);
 
-    /* night sky header band: keeps the host exit button area dark */
+    /* night tech band: keeps the host exit button area dark */
     var band = g.createLinearGradient(0, 0, W * 0.4, H * 0.18);
     band.addColorStop(0, '#16203a');
     band.addColorStop(0.55, '#1d2947');
@@ -1157,67 +1020,75 @@
     g.closePath();
     g.fill();
 
-    /* stars inside the band */
+    /* thin tech grid inside the band, left side only */
+    g.save();
+    g.strokeStyle = 'rgba(53,200,255,0.16)';
+    g.lineWidth = Math.max(1, H * 0.0012);
+    var gh, i;
+    for (gh = 0; gh < 9; gh++) {
+      g.beginPath();
+      g.moveTo(W * 0.02, H * (0.014 + gh * 0.015));
+      g.lineTo(W * 0.50, H * (0.014 + gh * 0.015));
+      g.stroke();
+    }
+    for (i = 0; i < 12; i++) {
+      g.beginPath();
+      g.moveTo(W * (0.02 + i * 0.042), H * 0.012);
+      g.lineTo(W * (0.02 + i * 0.042), H * 0.142);
+      g.stroke();
+    }
+    g.restore();
+
+    /* small stars / rivet dots in the band */
     var brnd = rngOf(0x4b17);
-    var bi, bx, by, bs, ba;
-    for (bi = 0; bi < 80; bi++) {
+    var bi, bx, by, bs;
+    for (bi = 0; bi < 40; bi++) {
       bx = brnd() * W * 0.70;
-      by = brnd() * H * 0.132;
-      bs = 0.7 + brnd() * 1.4;
-      ba = 0.22 + brnd() * 0.5;
-      g.fillStyle = 'rgba(253,250,243,' + ba.toFixed(2) + ')';
+      by = brnd() * H * 0.130;
+      bs = 0.7 + brnd() * 1.3;
+      g.fillStyle = 'rgba(253,250,243,' + (0.20 + brnd() * 0.45).toFixed(2) + ')';
       g.beginPath();
       g.arc(bx, by, bs, 0, 6.2832);
       g.fill();
     }
-    for (bi = 0; bi < 4; bi++) {
-      var spr = bi % 2 === 0 ? sparkMid : sparkPink;
-      var ssize = H * (0.028 + brnd() * 0.018);
-      g.globalAlpha = 0.6;
-      g.drawImage(spr, W * (0.06 + brnd() * 0.52) - ssize * 0.5, H * (0.03 + brnd() * 0.08) - ssize * 0.5, ssize, ssize);
-    }
-    g.globalAlpha = 1;
 
-    /* pale divider lines following the slanted band edge */
-    g.fillStyle = 'rgba(255,168,200,0.88)';
+    /* divider lines following the slanted band edge */
+    g.fillStyle = 'rgba(255,154,60,0.92)';
     g.beginPath();
     g.moveTo(0, H * 0.146);
     g.lineTo(W, H * 0.156);
-    g.lineTo(W, H * 0.156 + Math.max(1, H * 0.0032));
-    g.lineTo(0, H * 0.146 + Math.max(1, H * 0.0032));
+    g.lineTo(W, H * 0.156 + Math.max(1, H * 0.0034));
+    g.lineTo(0, H * 0.146 + Math.max(1, H * 0.0034));
     g.closePath();
     g.fill();
-    g.fillStyle = 'rgba(142,230,242,0.88)';
+    g.fillStyle = 'rgba(53,200,255,0.90)';
     g.beginPath();
-    g.moveTo(0, H * 0.146 + Math.max(2, H * 0.0055));
-    g.lineTo(W * 0.40, H * 0.150 + Math.max(2, H * 0.0055));
-    g.lineTo(W * 0.40, H * 0.150 + Math.max(2, H * 0.0055) + Math.max(1, H * 0.0018));
-    g.lineTo(0, H * 0.146 + Math.max(2, H * 0.0055) + Math.max(1, H * 0.0018));
+    g.moveTo(0, H * 0.146 + Math.max(2, H * 0.0056));
+    g.lineTo(W * 0.42, H * 0.150 + Math.max(2, H * 0.0056));
+    g.lineTo(W * 0.42, H * 0.150 + Math.max(2, H * 0.0056) + Math.max(1, H * 0.0018));
+    g.lineTo(0, H * 0.146 + Math.max(2, H * 0.0056) + Math.max(1, H * 0.0018));
     g.closePath();
     g.fill();
 
-    /* title */
     var fs = Math.min(H * 0.056, W * 0.029);
     g.textBaseline = 'middle';
     g.textAlign = 'left';
     g.fillStyle = PAPER;
     g.font = '700 ' + fs.toFixed(1) + 'px ' + FONT;
-    g.fillText('STAR SEA', W * 0.034, H * 0.070);
-    var tw = g.measureText('STAR SEA').width;
-    g.fillStyle = 'rgba(142,230,242,0.95)';
+    g.fillText('MECHA MANGA', W * 0.034, H * 0.070);
+    var tw = g.measureText('MECHA MANGA').width;
+    g.fillStyle = 'rgba(53,200,255,0.95)';
     g.font = '700 ' + (fs * 0.52).toFixed(1) + 'px ' + FONT;
-    g.fillText('NO.02', W * 0.034 + tw + fs * 0.62, H * 0.074);
+    g.fillText('NO.03', W * 0.034 + tw + fs * 0.62, H * 0.074);
     g.fillStyle = 'rgba(253,250,243,0.62)';
     g.font = '400 ' + (fs * 0.52).toFixed(1) + 'px ' + FONT;
-    g.fillText('\u661f\u6d77\u6f2b\u5267', W * 0.034 + tw + fs * 2.45, H * 0.074);
+    g.fillText('\u673a\u7532\u6f2b\u5267', W * 0.034 + tw + fs * 2.45, H * 0.074);
 
-    /* bottom hairlines */
     g.fillStyle = 'rgba(51,64,90,0.18)';
     g.fillRect(0, H * 0.988, W, Math.max(1, H * 0.0025));
-    g.fillStyle = 'rgba(142,230,242,0.85)';
+    g.fillStyle = 'rgba(53,200,255,0.85)';
     g.fillRect(0, H * 0.984, W * 0.13, Math.max(1, H * 0.0022));
 
-    /* caption box, bottom right */
     var bw2 = W * 0.112;
     var bh2 = H * 0.038;
     var bx2 = W * 0.984 - bw2;
@@ -1227,10 +1098,12 @@
     g.strokeStyle = 'rgba(51,64,90,0.34)';
     g.lineWidth = Math.max(1.2, H * 0.0022);
     g.strokeRect(bx2, by2, bw2, bh2);
-    g.fillStyle = 'rgba(51,64,90,0.82)';
-    g.font = '700 ' + (bh2 * 0.54).toFixed(1) + 'px ' + FONT;
+    g.fillStyle = 'rgba(255,154,60,0.95)';
+    g.fillRect(bx2, by2, Math.max(2, W * 0.004), bh2);
+    g.fillStyle = 'rgba(51,64,90,0.85)';
+    g.font = '700 ' + (bh2 * 0.52).toFixed(1) + 'px ' + FONT;
     g.textAlign = 'center';
-    g.fillText('STARLIGHT 100%', bx2 + bw2 * 0.5, by2 + bh2 * 0.54);
+    g.fillText('SYS ONLINE', bx2 + bw2 * 0.52, by2 + bh2 * 0.54);
   }
 
   function buildDots() {
@@ -1239,7 +1112,6 @@
     dotCv = mkCanvas(dotW, dotH);
     var g = ctxOf(dotCv);
     g.fillStyle = tilePattern(g, pageDotTile);
-    /* tone starts below the night sky band so the dark header stays clean */
     var y0 = H * 0.153 + 14;
     g.fillRect(0, y0, dotW, dotH - y0);
   }
@@ -1248,7 +1120,6 @@
     grainCv = mkCanvas(W, H);
     var g = ctxOf(grainCv);
 
-    /* paper fibre noise, very light */
     var nw = 128;
     var noise = document.createElement('canvas');
     noise.width = Math.round(nw * dpr);
@@ -1272,14 +1143,12 @@
     g.fillRect(0, 0, W, H);
     g.globalAlpha = 1;
 
-    /* very soft warm edge shading (no heavy vignette on a high key page) */
-    var rg = g.createRadialGradient(W * 0.5, H * 0.48, Math.min(W, H) * 0.42, W * 0.5, H * 0.5, Math.max(W, H) * 0.82);
-    rg.addColorStop(0, 'rgba(120,140,170,0)');
-    rg.addColorStop(1, 'rgba(120,140,170,0.16)');
+    var rg = g.createRadialGradient(W * 0.5, H * 0.48, Math.min(W, H) * 0.44, W * 0.5, H * 0.5, Math.max(W, H) * 0.82);
+    rg.addColorStop(0, 'rgba(110,135,170,0)');
+    rg.addColorStop(1, 'rgba(110,135,170,0.14)');
     g.fillStyle = rg;
     g.fillRect(0, 0, W, H);
 
-    /* speech bubbles ride on this static layer (bubbles stay above the grain) */
     buildBubbles(g);
   }
 
@@ -1287,13 +1156,13 @@
 
   function drawBubble(g, cx, cy, rx, ry, tip, text, fs, lw) {
     var ang = Math.atan2((tip.y - cy) / ry, (tip.x - cx) / rx);
-    var d = 0.28;
+    var d = 0.26;
     g.beginPath();
     g.ellipse(cx, cy, rx, ry, 0, ang + d, ang - d + 6.283185307, false);
     g.lineTo(tip.x, tip.y);
     g.closePath();
     g.save();
-    g.shadowColor = 'rgba(112,142,186,0.35)';
+    g.shadowColor = 'rgba(90,124,170,0.38)';
     g.shadowBlur = Math.min(W, H) * 0.012;
     g.shadowOffsetY = Math.min(W, H) * 0.004;
     g.fillStyle = '#fffefb';
@@ -1315,17 +1184,15 @@
     var m = Math.min(W, H);
     var lw = clamp(m * 0.0038, 1.6, 4.6);
 
-    /* bubble 1: tonight let's watch the stars together */
-    drawBubble(g, W * 0.508, H * 0.196, W * 0.116, H * 0.058,
-      { x: W * 0.312, y: H * 0.470 },
-      '\u4eca\u665a\u4e5f\u4e00\u8d77\u770b\u661f\u661f',
-      Math.min(H * 0.058 * 0.62, W * 0.0172), lw);
+    /* system boot */
+    drawBubble(g, W * 0.520, H * 0.198, W * 0.104, H * 0.056,
+      { x: W * 0.318, y: H * 0.430 },
+      '\u7cfb\u7edf\u542f\u52a8', Math.min(H * 0.056 * 0.78, W * 0.0215), lw);
 
-    /* bubble 2: starlight connected */
-    drawBubble(g, W * 0.206, H * 0.884, W * 0.074, H * 0.047,
-      { x: W * 0.172, y: H * 0.806 },
-      '\u661f\u5149\u5df2\u8fde\u63a5',
-      Math.min(H * 0.047 * 0.70, W * 0.0150), lw * 0.8);
+    /* target locked */
+    drawBubble(g, W * 0.206, H * 0.884, W * 0.072, H * 0.046,
+      { x: W * 0.176, y: H * 0.806 },
+      '\u76ee\u6807\u9501\u5b9a', Math.min(H * 0.046 * 0.80, W * 0.0165), lw * 0.82);
   }
 
   /* ================================================================ DRAW = */
@@ -1342,9 +1209,9 @@
 
     toneTile = makeTile(4, 0.95, 'rgba(96,124,162,0.85)', 1);
     pageDotTile = makeTile(8, 1.28, 'rgba(176,203,235,0.90)', 1);
-    sparkBig = makeSparkle(Math.max(24, Math.round(Math.min(W, H) * 0.075)), 'rgba(255,255,255,0.98)', 'rgba(255,244,250,0.75)');
-    sparkMid = makeSparkle(Math.max(14, Math.round(Math.min(W, H) * 0.040)), 'rgba(255,255,255,0.95)', 'rgba(226,242,255,0.70)');
-    sparkPink = makeSparkle(Math.max(14, Math.round(Math.min(W, H) * 0.042)), 'rgba(255,226,238,0.98)', 'rgba(255,196,220,0.72)');
+    starBig = makeSparkle(Math.max(24, Math.round(Math.min(W, H) * 0.070)), 'rgba(255,255,255,0.98)', 'rgba(255,238,220,0.75)');
+    sparkCyan = makeSparkle(Math.max(10, Math.round(Math.min(W, H) * 0.016)), 'rgba(220,250,255,0.98)', 'rgba(53,200,255,0.72)');
+    sparkOrange = makeSparkle(Math.max(10, Math.round(Math.min(W, H) * 0.017)), 'rgba(255,244,214,0.98)', 'rgba(255,154,60,0.80)');
 
     buildPage();
     buildDots();
@@ -1357,31 +1224,67 @@
   }
 
   function drawMotion(p, dt) {
-    var i, tw;
-    if (p.tw.length) {
-      for (i = 0; i < p.tw.length; i++) {
-        tw = p.tw[i];
-        var a = tw.lo + (1 - tw.lo) * (0.5 + 0.5 * Math.sin(t * tw.spd + tw.ph));
-        ctx.globalAlpha = a;
-        ctx.drawImage(tw.spr, tw.x - tw.s * 0.5, tw.y - tw.s * 0.5, tw.s, tw.s);
-      }
+    var i;
+
+    /* mono eye scan + flicker (panel 0) */
+    if (p.eye) {
+      var e = p.eye;
+      var sp = 0.5 + 0.5 * Math.sin(t * 0.85);
+      var ease = sp * sp * (3 - 2 * sp);
+      var lx = e.x0 + e.ax * ease;
+      var ly = e.y0 + e.ay * ease;
+      var pulse = 0.80 + 0.20 * Math.sin(t * 3.1);
+      var flick = 1;
+      var cyc = t % 7.4;
+      if (cyc > 6.9 && cyc < 7.16) { flick = 0.25 + 0.75 * Math.abs(Math.sin(cyc * 42)); }
+      if (cyc > 7.16 && cyc < 7.30) { flick = 0.55; }
+      ctx.globalAlpha = pulse * flick;
+      ctx.drawImage(e.lens, lx - e.r * 0.5, ly - e.r * 0.5, e.r, e.r);
       ctx.globalAlpha = 1;
     }
-    for (i = 0; i < p.meteors.length; i++) {
-      var mm = p.meteors[i];
-      var ph = ((t / mm.period) + mm.off) % 1;
-      if (ph >= mm.dur) { continue; }
-      var u = ph / mm.dur;
-      var e = u * u * 0.35 + u * 0.65;
-      var x = mm.x0 + (mm.x1 - mm.x0) * e;
-      var y = mm.y0 + (mm.y1 - mm.y0) * e;
-      var fade = Math.sin(Math.PI * Math.min(1, u * 1.05));
-      ctx.globalAlpha = clamp(fade * 1.1, 0, 1);
+
+    /* launching speed streaks (panel 1) */
+    if (p.streak) {
+      p.streakOff = (p.streakOff + dt * 170) % p.streakW;
+      ctx.drawImage(p.streak, -p.streakOff, 0, p.streak.width / dpr, p.streak.height / dpr);
+    }
+
+    /* thruster flames (panel 1) */
+    for (i = 0; i < p.flames.length; i++) {
+      var fl = p.flames[i];
+      var fr = 0.86 + 0.14 * Math.sin(t * 26 + fl.ph) + 0.06 * Math.sin(t * 61 + fl.ph * 2);
+      var fw = fl.w * (0.92 + 0.08 * Math.sin(t * 19 + fl.ph));
+      var fh = fl.h * fr;
+      ctx.globalAlpha = 0.88;
+      ctx.drawImage(fl.spr, fl.x - fw, fl.y - fh * 0.5, fw, fh);
+      ctx.globalAlpha = 1;
+    }
+
+    /* rotating gears (panel 2) */
+    for (i = 0; i < p.gears.length; i++) {
+      var gr = p.gears[i];
+      gr.ang += gr.spd * dt;
       ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(mm.ang);
-      ctx.drawImage(mm.spr, -mm.len, -mm.thick * 0.5, mm.len, mm.thick);
+      ctx.translate(gr.x, gr.y);
+      ctx.rotate(gr.ang);
+      ctx.drawImage(gr.spr, -gr.r, -gr.r, gr.r * 2, gr.r * 2);
       ctx.restore();
+    }
+
+    /* spark particles */
+    if (p.sparks.length) {
+      for (i = 0; i < p.sparks.length; i++) {
+        var sp2 = p.sparks[i];
+        sp2.age += dt;
+        if (sp2.age > sp2.life) { sp2.age = 0; }
+        var u = sp2.age / sp2.life;
+        var px = sp2.x + sp2.vx * sp2.age;
+        var py = sp2.y + sp2.vy * sp2.age + 42 * sp2.age * sp2.age;
+        var fade = Math.sin(Math.PI * u);
+        var sz = sp2.size * (0.7 + 0.6 * fade);
+        ctx.globalAlpha = fade * 0.95;
+        ctx.drawImage(sp2.spr, px - sz * 0.5, py - sz * 0.5, sz, sz);
+      }
       ctx.globalAlpha = 1;
     }
   }
@@ -1417,15 +1320,13 @@
       drawMotion(p, dt);
       ctx.restore();
 
-      /* unfocused panels fade back into the paper: soft focus switch */
-      var veil = 0.30 * (1 - f);
+      var veil = 0.28 * (1 - f);
       if (veil > 0.004) {
         ctx.fillStyle = 'rgba(253,250,243,' + veil.toFixed(3) + ')';
         ctx.fillRect(p.bbox.x - 6, p.bbox.y - 6, p.bbox.w + 12, p.bbox.h + 12);
       }
       ctx.restore();
 
-      /* light frame + pale neon */
       ctx.save();
       ctx.translate(dx, dy);
       ctx.drawImage(p.chrome, p.fx, p.fy, p.fw, p.fh);
@@ -1441,7 +1342,6 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.fillStyle = PAPER;
     ctx.fillRect(0, 0, W, H);
-
     ctx.drawImage(pageCv, 0, 0, W, H);
     ctx.drawImage(dotCv, -dotOff, -dotOff, dotW, dotH);
     drawPanels(lastDt);

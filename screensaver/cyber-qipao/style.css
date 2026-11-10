@@ -1,4 +1,4 @@
-/* 光织少女：青白明亮科技风，画面全部由 canvas 程序化绘制 */
+/* 机械都市：黄昏青橙天空下的未来都市天际线，全部由 canvas 程序化绘制 */
 * {
   box-sizing: border-box;
 }
@@ -10,7 +10,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #e8f7ff;
+  background: #cfe4f2;
   /* 宿主在右上角注入退出按钮，光标保持可见 */
   cursor: default;
 }
@@ -23,13 +23,13 @@ body {
   height: 100%;
 }
 
-/* 极轻的白色边缘柔光，交给合成器，不占每帧预算 */
+/* 极轻的画框柔光，交给合成器，不占每帧预算 */
 .veil {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at 44% 46%,
-    rgba(255, 255, 255, 0) 52%,
-    rgba(210, 236, 252, 0.22) 84%,
-    rgba(188, 222, 244, 0.34) 100%);
+  background: radial-gradient(ellipse at 54% 46%,
+    rgba(255, 255, 255, 0) 56%,
+    rgba(220, 236, 248, 0.16) 86%,
+    rgba(196, 218, 236, 0.26) 100%);
 }

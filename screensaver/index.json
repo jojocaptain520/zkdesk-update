@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-11-10 09:31",
+  "updated": "2026-11-10 09:42",
   "presets": [
     {
       "id": "flip-clock",
@@ -104,21 +104,21 @@
     },
     {
       "id": "cyber-manga",
-      "name": "星海漫剧",
-      "desc": "浅色漫画分镜里的星空少女，梦幻柔光",
-      "version": "2.0.0",
+      "name": "机甲漫剧",
+      "desc": "漫画分镜里的机甲，速度线与火花",
+      "version": "3.0.0",
       "entry": "index.html",
       "cover": "covers/cyber-manga.png",
       "files": [
         {
           "path": "app.js",
-          "size": 48233,
-          "sha256": "fa69de13af0da9cbe5bd59cc5e2d9c5416e893bef5cb20a166f6ad10b3073339"
+          "size": 44773,
+          "sha256": "33e4ba9af144c341eb8d05637c9da9a128eced0a513e83773bf5f0d923f2c3a4"
         },
         {
           "path": "index.html",
           "size": 295,
-          "sha256": "27c6ffb6b37728925ca47d504e970fc3c627e8b1d351c5d0f6682ec2e94620b8"
+          "sha256": "95032a05f965a3637a19d6caf1107cde08503af3f638f75787280c4178aa0146"
         },
         {
           "path": "style.css",
@@ -129,76 +129,76 @@
     },
     {
       "id": "cyber-qipao",
-      "name": "光织少女",
-      "desc": "青白光织长裙少女，干净的未来科技感",
-      "version": "2.0.0",
+      "name": "机械都市",
+      "desc": "未来都市天际线，轨道环与无人机群",
+      "version": "3.0.0",
       "entry": "index.html",
       "cover": "covers/cyber-qipao.png",
       "files": [
         {
           "path": "app.js",
-          "size": 41240,
-          "sha256": "344900a74a4dfe93b41a66d1e5c9934dc290ada2fb00cc9b60cca550e0f61945"
+          "size": 27327,
+          "sha256": "4af964ce6ba044e6fe23ce724224c9a75eb14d65d1d514734ffa4de4bfbb50c2"
         },
         {
           "path": "index.html",
           "size": 320,
-          "sha256": "b3378e46984074f86ffeb047890aa785288764a919feb0a2a174ed2361ff8865"
+          "sha256": "9a0666050734f50e4afd62e1088ca61a096128377b4eccb2deec568a6f8ad91e"
         },
         {
           "path": "style.css",
-          "size": 703,
-          "sha256": "0f877738ea888b8d71171880ce4f6745523b32e7156090bee44f10a3d56c893e"
+          "size": 715,
+          "sha256": "9cd2abed077dbd25b5be182d02abd82f647ed8decb538c29101f9cea0f71e7ac"
         }
       ]
     },
     {
       "id": "neon-idol",
-      "name": "全息少女",
-      "desc": "浅色全息光带里的少女，柔光粉紫冰蓝",
-      "version": "2.0.0",
+      "name": "机甲核心",
+      "desc": "能量核心与机械骨架，冷光科技",
+      "version": "3.0.0",
       "entry": "index.html",
       "cover": "covers/neon-idol.png",
       "files": [
         {
           "path": "app.js",
-          "size": 52315,
-          "sha256": "387a935be554a4176bd2f902f070d5ceb95868829db39bfd24a70bebd983b635"
+          "size": 42137,
+          "sha256": "ecb34b2616e2fc5cf2f6f19bc95f30c0e42c50da008560e488c003fd9ba5aa41"
         },
         {
           "path": "index.html",
           "size": 350,
-          "sha256": "74cbd5fa6e2ea6b8ce600ca09ac0774a53c89a7efcc475ce19a997261f7914bf"
+          "sha256": "eb71f607a170a7408b085d60ac2ae47fe2327e0f512ee4ef5a2891e39f483b41"
         },
         {
           "path": "style.css",
-          "size": 1053,
-          "sha256": "4c82d60e20a4074c7b6983308a1b06b6cb122aa1c60b604a4e04f7cd86c24df0"
+          "size": 1063,
+          "sha256": "5eeb92c95b51530956809e81ddeb5e5ed82a3bebff20d2d345a540eeadc3cdd7"
         }
       ]
     },
     {
       "id": "neon-umbrella",
-      "name": "樱花霓虹",
-      "desc": "黄昏樱花雨里的少女，粉橙与淡紫",
-      "version": "2.0.0",
+      "name": "机甲出击",
+      "desc": "霓虹雨夜里的机甲装甲，蓝色冷光",
+      "version": "3.0.0",
       "entry": "index.html",
       "cover": "covers/neon-umbrella.png",
       "files": [
         {
           "path": "app.js",
-          "size": 53099,
-          "sha256": "9d64018532d13dd6c7c7a120949e1cfb4d406cc12632f45cfe368bb95ba8e1a8"
+          "size": 42340,
+          "sha256": "257d4f6db1e78de85a8bc6a4be09f84e5ae35b0e90286b622b6d49da1d8df5e2"
         },
         {
           "path": "index.html",
-          "size": 338,
-          "sha256": "7df7ab196fecc428ec006440f6c305343e123661be2ce3803e33a3e2cf98d2f6"
+          "size": 337,
+          "sha256": "741780ac94b603dbfc53273547438e06a278d31c4d1af9d23f476675279329fb"
         },
         {
           "path": "style.css",
-          "size": 408,
-          "sha256": "35f9da9e94dbcf76d08d63af44c58ebab0f67d1929e6d69163453957307780dd"
+          "size": 384,
+          "sha256": "9908e10672a5a6e0ddd06fc372fe8b55cb9dfbebc7d3f3bd523be025d3811328"
         }
       ]
     },
