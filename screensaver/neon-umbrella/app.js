@@ -98,9 +98,9 @@
     var c = makeCanvas(400, 280);
     var x = c.getContext('2d');
     var gr = x.createRadialGradient(200, 140, 12, 200, 140, 200);
-    gr.addColorStop(0, 'rgba(84,64,116,0.46)');
-    gr.addColorStop(0.45, 'rgba(96,76,130,0.30)');
-    gr.addColorStop(0.75, 'rgba(104,86,132,0.18)');
+    gr.addColorStop(0, 'rgba(76,58,108,0.64)');
+    gr.addColorStop(0.45, 'rgba(88,70,122,0.44)');
+    gr.addColorStop(0.75, 'rgba(96,80,128,0.24)');
     gr.addColorStop(1, 'rgba(120,104,148,0)');
     x.fillStyle = gr;
     x.fillRect(0, 0, 400, 280);
