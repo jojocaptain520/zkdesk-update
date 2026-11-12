@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "updated": "2026-11-12 19:54",
+  "themes": [
+    {
+      "id": "deep-glass",
+      "name": "极夜玻璃",
+      "desc": "深蓝磨砂玻璃，暗色桌面首选，适合夜间与深色壁纸",
+      "version": "1.0.0",
+      "entry": "theme.json",
+      "cover": "covers/deep-glass.png",
+      "files": [
+        {
+          "path": "images/box_bg.png",
+          "size": 139414,
+          "sha256": "e21e05b1eb6c5663b0adc15a15df6166cd433546106aedc3536919a8876eef3f"
+        },
+        {
+          "path": "images/toolbox_bg.png",
+          "size": 65488,
+          "sha256": "9c7856d48d7f776325831e1c04f7b70e236f232d94b7e22e4cb58c9aff6b7ad5"
+        },
+        {
+          "path": "theme.json",
+          "size": 575,
+          "sha256": "b3f315e2c04b54f89d0aa4e9da9b16374472822fb39247ea545d12f91ffef18d"
+        }
+      ]
+    },
+    {
+      "id": "ink-paper",
+      "name": "素纸微光",
+      "desc": "暖白宣纸质感，浅色清爽，适合白天与浅色壁纸",
+      "version": "1.0.0",
+      "entry": "theme.json",
+      "cover": "covers/ink-paper.png",
+      "files": [
+        {
+          "path": "images/box_bg.png",
+          "size": 182272,
+          "sha256": "e1693122c1f00faeb59a617b53b0bea2e9eb2c6e519e933588b56ad2725125ed"
+        },
+        {
+          "path": "images/toolbox_bg.png",
+          "size": 86948,
+          "sha256": "1eae93f3bb760bad09d3bc896dc68c24660dd85021cbb0bef7859806a9f7cb75"
+        },
+        {
+          "path": "theme.json",
+          "size": 575,
+          "sha256": "bbd0f7ba13cf4b85b0c5faa69d5a595c841fe9da5b690dadaea347fd50c33056"
+        }
+      ]
+    },
+    {
+      "id": "neon-dusk",
+      "name": "霓虹暮色",
+      "desc": "紫青霓虹渐变，大圆角、亮描边，适合深色壁纸与电竞风",
+      "version": "1.0.0",
+      "entry": "theme.json",
+      "cover": "covers/neon-dusk.png",
+      "files": [
+        {
+          "path": "images/box_bg.png",
+          "size": 142432,
+          "sha256": "a8369cddc1c176c05a0dab4acbaf6b96abca97d5da361b07db04793459535350"
+        },
+        {
+          "path": "images/toolbox_bg.png",
+          "size": 66653,
+          "sha256": "3eac0fbfe190ca8932463b017a73ad051b6932480abe7a2c4f9a724de1e5d27b"
+        },
+        {
+          "path": "theme.json",
+          "size": 576,
+          "sha256": "d2d39f19ad44927c601130b47c500ac3f57caa9b8c80a58d3388e9b557fa4896"
+        }
+      ]
+    }
+  ]
+}

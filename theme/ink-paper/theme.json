@@ -1,0 +1,32 @@
+{
+  "version": 3,
+  "name": "素纸微光",
+  "base": "",
+  "box": {
+    "color": "#f7f2e7",
+    "opacity": 0.94,
+    "radius": 8,
+    "image": "images/box_bg.png",
+    "blur": {
+      "enabled": false,
+      "radius": 20,
+      "downscale": 4
+    },
+    "shadow": {
+      "enabled": true,
+      "blur": 18,
+      "y": 3,
+      "color": "#000000",
+      "opacity": 0.18
+    },
+    "border": {
+      "width": 1,
+      "color": "#000000",
+      "opacity": 0.1
+    }
+  },
+  "toolbox": {
+    "radius": 10,
+    "image": "images/toolbox_bg.png"
+  }
+}

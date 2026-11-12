@@ -1,0 +1,32 @@
+{
+  "version": 3,
+  "name": "极夜玻璃",
+  "base": "",
+  "box": {
+    "color": "#0e1626",
+    "opacity": 0.58,
+    "radius": 14,
+    "image": "images/box_bg.png",
+    "blur": {
+      "enabled": true,
+      "radius": 20,
+      "downscale": 4
+    },
+    "shadow": {
+      "enabled": true,
+      "blur": 26,
+      "y": 6,
+      "color": "#000000",
+      "opacity": 0.45
+    },
+    "border": {
+      "width": 1,
+      "color": "#ffffff",
+      "opacity": 0.2
+    }
+  },
+  "toolbox": {
+    "radius": 14,
+    "image": "images/toolbox_bg.png"
+  }
+}
