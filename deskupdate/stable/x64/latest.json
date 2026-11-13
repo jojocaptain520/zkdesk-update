@@ -5,7 +5,7 @@
   "min_version" : "0.0.0.0",
   "notes" : 
   {
-    "zh" : "在线主题：设置中心「界面外观 → 主题」里直接浏览、下载、更新主题，不用再手动改 theme.json\r\n· 首批 5 套在线主题：极夜玻璃、素纸微光、霓虹暮色、默认主题、柔和圆角，支持在线更新到新版本\r\n· 主题格式升级 v4：盒子透明度成为你自己的设置，换主题不会再改掉调好的透明度\r\n· 盒子和工具箱统一外观：圆角、毛玻璃、投影都按同一套主题参数绘制（工具箱新增投影）\r\n· 「默认主题」：盒子与工具箱改为直角、无投影，并固定排在主题列表第一位\r\n· 主题带背景图时正常显示（之前会被毛玻璃盖住）\r\n其他\r\n· 设置中心「壁纸」页：来源单选、颜色/图片/轮播目录、暗化与模糊，独立于主题\r\n· 屏保设置点一下不再卡顿（改配置时不再同步广播系统消息）\r\n· 壁纸页图标与屏保区分开"
+    "zh" : "修复：更新完成后主程序可能以管理员权限运行，导致无法从资源管理器往盒子/桌面拖文件\r\n· 更新器无论自己是不是管理员，拉起主程序时都会强制回到普通权限（中完整性）\r\n· 先用资源管理器的令牌启动（命令行参数照常传递）；失败再退回由 explorer.exe 拉起（用标记文件告知“更新完成”）\r\n· 启动后校验进程令牌，确认不是管理员权限；两种方式都失败才判定启动失败并回滚"
   },
   "notes_url" : {},
   "packages" : 
@@ -17,32 +17,32 @@
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "5c3e7c6a6def3462d0fca928c5b12c4b56d4ef98b26b32b6294c835b267d69b4",
-          "size" : 21826560
+          "sha256" : "1cdc35aae859fda1f61bc0764a46c9cbb1332279184e470ef405a884dadeaf36",
+          "size" : 21827584
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "06271d0130575d969500b4bb4114ee3a1fe5ae9ee78d810e3cc97430d6a7446f",
+          "sha256" : "836c933cde9fec9a4a9730e1c22eed3e4b6b5aaf9697eac12d86987c5d08f7dc",
           "size" : 574976
         },
         {
           "mode" : "replace",
           "path" : "zkupdate.exe",
-          "sha256" : "df445484bb6c995a2c5e59711115f5beee4691275f93e252ed0fe34e6d287c70",
-          "size" : 916992
+          "sha256" : "8fac59a6c49498a3e0d5ab2b1932f451c5cfd1378660cbd9a7e5fe7f0ae658b8",
+          "size" : 921088
         }
       ],
       "from" : 
       [
-        "1.2.2.3"
+        "1.3.0.0"
       ],
-      "id" : "delta-1.2.2.3-1.3.0.0",
+      "id" : "delta-1.3.0.0-1.3.0.1",
       "kind" : "delta",
       "seeds" : [],
-      "sha256" : "ee04023eb0f68b8829ec673152f51fd2c406f0360523bd791ab48c0951f2b4ca",
-      "size" : 10818838,
-      "url" : "1.3.0.0/zkdesk-1.2.2.3-to-1.3.0.0-x64.zip"
+      "sha256" : "cfd4d4f53fb1395934c79fba89fbb6a6c5cca5608bda60509384ed02845060a3",
+      "size" : 10821088,
+      "url" : "1.3.0.1/zkdesk-1.3.0.0-to-1.3.0.1-x64.zip"
     },
     {
       "delete" : [],
@@ -111,27 +111,27 @@
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "5c3e7c6a6def3462d0fca928c5b12c4b56d4ef98b26b32b6294c835b267d69b4",
-          "size" : 21826560
+          "sha256" : "1cdc35aae859fda1f61bc0764a46c9cbb1332279184e470ef405a884dadeaf36",
+          "size" : 21827584
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "06271d0130575d969500b4bb4114ee3a1fe5ae9ee78d810e3cc97430d6a7446f",
+          "sha256" : "836c933cde9fec9a4a9730e1c22eed3e4b6b5aaf9697eac12d86987c5d08f7dc",
           "size" : 574976
         },
         {
           "mode" : "replace",
           "path" : "zkupdate.exe",
-          "sha256" : "df445484bb6c995a2c5e59711115f5beee4691275f93e252ed0fe34e6d287c70",
-          "size" : 916992
+          "sha256" : "8fac59a6c49498a3e0d5ab2b1932f451c5cfd1378660cbd9a7e5fe7f0ae658b8",
+          "size" : 921088
         }
       ],
       "from" : 
       [
         "*"
       ],
-      "id" : "full-1.3.0.0",
+      "id" : "full-1.3.0.1",
       "kind" : "full",
       "seeds" : 
       [
@@ -141,15 +141,15 @@
           "path" : "Modules/Modules.json"
         }
       ],
-      "sha256" : "6464eb1ffe4eb53183f932f5dcda50cff4a1945d12ac3cc3fb12edd4c5b3d858",
-      "size" : 11279474,
-      "url" : "1.3.0.0/zkdesk-1.3.0.0-x64-full.zip"
+      "sha256" : "2cc86f7f4f83c16c7fb8ef78a65b74f826a458377feca8c1422285c10a8420d7",
+      "size" : 11281724,
+      "url" : "1.3.0.1/zkdesk-1.3.0.1-x64-full.zip"
     }
   ],
   "paused" : false,
   "product" : "zkdesk",
-  "released_at" : "2026-11-13T02:08:10Z",
+  "released_at" : "2026-11-13T02:38:41Z",
   "rollout" : 100,
   "schema" : 1,
-  "version" : "1.3.0.0"
+  "version" : "1.3.0.1"
 }
