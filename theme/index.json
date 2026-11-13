@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-11-13 08:48",
+  "updated": "2026-11-13 09:04",
   "themes": [
     {
       "id": "deep-glass",
@@ -22,8 +22,8 @@
         },
         {
           "path": "theme.json",
-          "size": 544,
-          "sha256": "8fba95bfeec141423b61bc6607b8749ec9da09d502f19543526e7dd8a6ee19f2"
+          "size": 523,
+          "sha256": "eba18d22acf507a60ad7d5bb224b87394c096fd45ac102bfd5976ad780393020"
         }
       ]
     },
@@ -47,8 +47,8 @@
         },
         {
           "path": "theme.json",
-          "size": 544,
-          "sha256": "8777d3fdf807c4a59037dda5f2155e3510580cf7c1cefaf613aec877af4bda20"
+          "size": 523,
+          "sha256": "f48ffb80d730383c9b53e65f6ff13b300e04d0c5aa74a5a4e2b07f97835282a6"
         }
       ]
     },
@@ -72,8 +72,8 @@
         },
         {
           "path": "theme.json",
-          "size": 545,
-          "sha256": "6e7538774a095d1bc795933a33e81301d09210dfa17a9c61a7b70b20e3eadf11"
+          "size": 524,
+          "sha256": "c27cbe4e42e0ec0e75427c7b770a5aeee5f92f4587327fec90605c4a2013decf"
         }
       ]
     }

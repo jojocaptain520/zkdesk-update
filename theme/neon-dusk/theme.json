@@ -1,10 +1,9 @@
 {
-  "version": 3,
+  "version": 4,
   "name": "霓虹暮色",
   "base": "",
   "box": {
     "color": "#140a24",
-    "opacity": 0.55,
     "radius": 18,
     "image": "images/box_bg.png",
     "blur": {

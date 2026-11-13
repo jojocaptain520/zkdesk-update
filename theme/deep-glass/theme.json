@@ -1,10 +1,9 @@
 {
-  "version": 3,
+  "version": 4,
   "name": "极夜玻璃",
   "base": "",
   "box": {
     "color": "#0e1626",
-    "opacity": 0.58,
     "radius": 14,
     "image": "images/box_bg.png",
     "blur": {

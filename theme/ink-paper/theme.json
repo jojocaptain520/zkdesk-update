@@ -1,10 +1,9 @@
 {
-  "version": 3,
+  "version": 4,
   "name": "素纸微光",
   "base": "",
   "box": {
     "color": "#f7f2e7",
-    "opacity": 0.94,
     "radius": 8,
     "image": "images/box_bg.png",
     "blur": {
