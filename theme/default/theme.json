@@ -1,0 +1,31 @@
+{
+  "version": 4,
+  "name": "Default",
+  "base": "",
+  "box": {
+    "color": "#000000",
+    "radius": 8,
+    "image": "",
+    "blur": {
+      "enabled": false,
+      "radius": 20,
+      "downscale": 4
+    },
+    "shadow": {
+      "enabled": true,
+      "blur": 20,
+      "y": 4,
+      "color": "#000000",
+      "opacity": 0.35
+    },
+    "border": {
+      "width": 1,
+      "color": "#000000",
+      "opacity": 0.67
+    }
+  },
+  "toolbox": {
+    "radius": 10,
+    "image": ""
+  }
+}
