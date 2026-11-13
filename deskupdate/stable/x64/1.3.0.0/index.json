@@ -1,0 +1,70 @@
+{
+  "files" : 
+  [
+    {
+      "path" : "Modules/ContextMenuManager/ContextMenuManager.exe",
+      "sha256" : "1352c2222d2d28dd1a8824334f16c0676dfe88cd7211de873ec9b125f6782ec7",
+      "size" : 552960
+    },
+    {
+      "path" : "Modules/Modules.json",
+      "sha256" : "f31ed2beca57336f5ba0abc6ed685e9afebe7bcf0303d10655744ea0216b982c",
+      "size" : 852
+    },
+    {
+      "path" : "ScreenSaver.scr",
+      "sha256" : "043ef16acdf5f60257bca6cbd8f252c56fdb704dde00a647deb38e9fdfe000f0",
+      "size" : 418304
+    },
+    {
+      "path" : "configs/files.json",
+      "sha256" : "f803b82116f6c22afded9155313ce415d24fecc3b61910e9b077d239b29151c6",
+      "size" : 1544
+    },
+    {
+      "path" : "web/app.js",
+      "sha256" : "75581d6b3e896120e04b3f7e1b2c2be30c9ba83bf395d432b045a5e01c2c77ea",
+      "size" : 4466
+    },
+    {
+      "path" : "web/index.html",
+      "sha256" : "0da3e6caf0162d9486f7101a280a8887d33d62fd0b6529aaf1651db3e32f9e72",
+      "size" : 1544
+    },
+    {
+      "path" : "web/settings.css",
+      "sha256" : "ab50cc14540e6120e431c5dce659a3c300871b0ea0c47a9f2ae98ae4f63c21f1",
+      "size" : 4674
+    },
+    {
+      "path" : "web/settings.html",
+      "sha256" : "a38d05bde5b3b4f355ddbd81d7788486684644b50758e7070e5d3f1732de5516",
+      "size" : 1357
+    },
+    {
+      "path" : "web/settings.js",
+      "sha256" : "e788ea571e669b920a708d715479b09dbae051f8947e14c62dfe119fe6e6643d",
+      "size" : 3036
+    },
+    {
+      "path" : "web/style.css",
+      "sha256" : "1471092de04c23a898849624b46ff553f8b42ad6dcc8ac33423c763c947d6397",
+      "size" : 6296
+    },
+    {
+      "path" : "zkdesk64.exe",
+      "sha256" : "5c3e7c6a6def3462d0fca928c5b12c4b56d4ef98b26b32b6294c835b267d69b4",
+      "size" : 21826560
+    },
+    {
+      "path" : "zkdesk_svc.exe",
+      "sha256" : "06271d0130575d969500b4bb4114ee3a1fe5ae9ee78d810e3cc97430d6a7446f",
+      "size" : 574976
+    },
+    {
+      "path" : "zkupdate.exe",
+      "sha256" : "df445484bb6c995a2c5e59711115f5beee4691275f93e252ed0fe34e6d287c70",
+      "size" : 916992
+    }
+  ]
+}
