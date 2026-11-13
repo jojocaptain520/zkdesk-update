@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-11-13 09:48",
+  "updated": "2026-11-13 09:49",
   "themes": [
     {
       "id": "deep-glass",
@@ -81,7 +81,7 @@
       "id": "default",
       "name": "Default",
       "desc": "内置默认主题：黑色半透明盒子、8px 圆角、无投影",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "entry": "theme.json",
       "cover": "covers/default.png",
       "files": [
