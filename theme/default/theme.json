@@ -12,7 +12,7 @@
       "downscale": 4
     },
     "shadow": {
-      "enabled": true,
+      "enabled": false,
       "blur": 20,
       "y": 4,
       "color": "#000000",
