@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-11-13 09:49",
+  "updated": "2026-11-13 10:00",
   "themes": [
     {
       "id": "deep-glass",
@@ -79,16 +79,16 @@
     },
     {
       "id": "default",
-      "name": "Default",
-      "desc": "内置默认主题：黑色半透明盒子、8px 圆角、无投影",
-      "version": "1.2.0",
+      "name": "默认主题",
+      "desc": "内置默认主题：黑色半透明、直角（无圆角）、无投影",
+      "version": "1.3.0",
       "entry": "theme.json",
       "cover": "covers/default.png",
       "files": [
         {
           "path": "theme.json",
-          "size": 482,
-          "sha256": "293c8a7c1e9e2938ba5eeed33d1f4fe6b64e8254a877e32463ca2efd70f29a3e"
+          "size": 486,
+          "sha256": "f49f1c827483c23f236ac4340bb759bd4171f103e786002c0bfcb44ccc41c017"
         }
       ]
     },
