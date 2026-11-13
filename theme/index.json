@@ -1,12 +1,12 @@
 {
   "schema": 1,
-  "updated": "2026-11-13 09:04",
+  "updated": "2026-11-13 09:10",
   "themes": [
     {
       "id": "deep-glass",
       "name": "极夜玻璃",
       "desc": "深蓝磨砂玻璃，暗色桌面首选，适合夜间与深色壁纸",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "entry": "theme.json",
       "cover": "covers/deep-glass.png",
       "files": [
@@ -31,7 +31,7 @@
       "id": "ink-paper",
       "name": "素纸微光",
       "desc": "暖白宣纸质感，浅色清爽，适合白天与浅色壁纸",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "entry": "theme.json",
       "cover": "covers/ink-paper.png",
       "files": [
@@ -56,7 +56,7 @@
       "id": "neon-dusk",
       "name": "霓虹暮色",
       "desc": "紫青霓虹渐变，大圆角、亮描边，适合深色壁纸与电竞风",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "entry": "theme.json",
       "cover": "covers/neon-dusk.png",
       "files": [
