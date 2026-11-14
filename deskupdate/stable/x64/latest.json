@@ -5,7 +5,7 @@
   "min_version" : "0.0.0.0",
   "notes" : 
   {
-    "zh" : "1. 星期列加宽，避免星期/日期被省略\r\n2. 体感温度无数据时显示 --，不再编造 0°\r\n3. Open-Meteo 不可用时，中国天气网主数据仍可用，不再整体失败"
+    "zh" : "release 1.3.0.7"
   },
   "notes_url" : {},
   "packages" : 
@@ -17,32 +17,32 @@
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "b0b56b88c882ed72e0a9ae437540cb04a06754da6558e32d9f5debd84aeba960",
+          "sha256" : "ff266ef4324836606642ec342c6a997b70c4e8d51b8c575df7c31ca65e7e854a",
           "size" : 21979648
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "0f7fa72e9c017293c444afe40206066dcd806b1599a4478365b3a211cfb6b03e",
+          "sha256" : "31acf04c3c16e653f70d86afdf80d39ea3a41202ec804cbe638effb016df2bf0",
           "size" : 575488
         },
         {
           "mode" : "replace",
           "path" : "zkupdate.exe",
-          "sha256" : "302ec8399385edb819f44da7153bd8db1cebe52dd2acd4bcf7ae31dde588b3db",
+          "sha256" : "5e4157db9c70faf258b13aef759783dfb598e8cb84edb0675ad3432407806c25",
           "size" : 924672
         }
       ],
       "from" : 
       [
-        "1.3.0.5"
+        "1.3.0.6"
       ],
-      "id" : "delta-1.3.0.5-1.3.0.6",
+      "id" : "delta-1.3.0.6-1.3.0.7",
       "kind" : "delta",
       "seeds" : [],
-      "sha256" : "18ed739fed3ebaebd385e8689bb10ddcd98abba0746b2bdb89d4211c673bd7c2",
-      "size" : 10879723,
-      "url" : "1.3.0.6/zkdesk-1.3.0.5-to-1.3.0.6-x64.zip"
+      "sha256" : "6e905688c9da9aa724267b5859bd9c157380225f308bd5ae30cf7fad5cddeeb4",
+      "size" : 10879567,
+      "url" : "1.3.0.7/zkdesk-1.3.0.6-to-1.3.0.7-x64.zip"
     },
     {
       "delete" : [],
@@ -111,19 +111,19 @@
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "b0b56b88c882ed72e0a9ae437540cb04a06754da6558e32d9f5debd84aeba960",
+          "sha256" : "ff266ef4324836606642ec342c6a997b70c4e8d51b8c575df7c31ca65e7e854a",
           "size" : 21979648
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "0f7fa72e9c017293c444afe40206066dcd806b1599a4478365b3a211cfb6b03e",
+          "sha256" : "31acf04c3c16e653f70d86afdf80d39ea3a41202ec804cbe638effb016df2bf0",
           "size" : 575488
         },
         {
           "mode" : "replace",
           "path" : "zkupdate.exe",
-          "sha256" : "302ec8399385edb819f44da7153bd8db1cebe52dd2acd4bcf7ae31dde588b3db",
+          "sha256" : "5e4157db9c70faf258b13aef759783dfb598e8cb84edb0675ad3432407806c25",
           "size" : 924672
         }
       ],
@@ -131,7 +131,7 @@
       [
         "*"
       ],
-      "id" : "full-1.3.0.6",
+      "id" : "full-1.3.0.7",
       "kind" : "full",
       "seeds" : 
       [
@@ -141,15 +141,15 @@
           "path" : "Modules/Modules.json"
         }
       ],
-      "sha256" : "fca08db6c3f18994fbfd9ee1db63c262ea14d249c094149984fac76d24872ddb",
-      "size" : 11340359,
-      "url" : "1.3.0.6/zkdesk-1.3.0.6-x64-full.zip"
+      "sha256" : "655e73529da872a75bc9b1a76ca96fc41d2855ea80e45cd3f43fd6ea3bac6006",
+      "size" : 11340203,
+      "url" : "1.3.0.7/zkdesk-1.3.0.7-x64-full.zip"
     }
   ],
   "paused" : false,
   "product" : "zkdesk",
-  "released_at" : "2026-11-13T08:40:11Z",
+  "released_at" : "2026-11-14T04:34:14Z",
   "rollout" : 100,
   "schema" : 1,
-  "version" : "1.3.0.6"
+  "version" : "1.3.0.7"
 }
