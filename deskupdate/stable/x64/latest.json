@@ -5,7 +5,7 @@
   "min_version" : "0.0.0.0",
   "notes" : 
   {
-    "zh" : "产品英文名统一为 marsDesk（中文名「火星桌面」不变）\r\n· 官网、设置中心、版本信息、关于页等对外展示的英文名由 ZkDesk 改为 marsDesk\r\n· 内部标识（数据目录、更新清单、exe 名、注册表项）保持不变，老用户设置与在线更新不受影响\r\n设置中心「关于」页新增「用户协议」「隐私政策」链接，点击直达官网对应页面\r\n其它同 1.3.0.7"
+    "zh" : "修复多显示器切换 / 资源管理器重启后组件位置错乱\r\n· 便签、待办、工具箱、盒子在插拔显示器后不再整体平移或堆到屏幕角落，位置按屏幕绝对坐标保持不变\r\n· 便签位置改为按屏幕坐标保存，单屏与双屏之间切换后不再挪位\r\n· 盒子的位置文件按屏幕组合分开存放，单屏/双屏两套布局不再互相覆盖（此前切回单屏会差 800px）\r\n· 显示器热插拔后先等系统屏幕信息稳定再做位置修正，避免\"全部堆在两屏交界处\"\r\n· 修复资源管理器重启时偶发崩溃（重挂接前先释放桌面窗口的原生句柄）\r\n· 修复部分场景下盒子/待办被误判为 150% 缩放而变大"
   },
   "notes_url" : {},
   "packages" : 
@@ -17,32 +17,32 @@
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "4f3437b48853a9a7e69bb22db7fba87334c6a2b8c63eba569f1728d58de58e14",
-          "size" : 21983744
+          "sha256" : "a9e21429dfa2369bd20736cc7ff1ad7a7aaad8f09f62146dc7204d851f961d25",
+          "size" : 21999104
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "6e26c1d8fe9c6319c76d302c81447c3814af2ac43e22bf95ec8d98350f88332d",
-          "size" : 575488
+          "sha256" : "78ce72a88ba29e71484b5a1b7996f5eafb8a1f754851bdd5561367d9a7e38300",
+          "size" : 576000
         },
         {
           "mode" : "replace",
           "path" : "zkupdate.exe",
-          "sha256" : "f08a9d4067a4c9791d34d4aeaf7319e60fac978149e667a4e5a458d7f2e2ff87",
-          "size" : 924672
+          "sha256" : "b2f90c6bcf7229cef53a33f4ab6f49856c3b8d8ccf1df568967d9cee389a7572",
+          "size" : 926720
         }
       ],
       "from" : 
       [
-        "1.3.0.7"
+        "1.3.0.8"
       ],
-      "id" : "delta-1.3.0.7-1.3.0.8",
+      "id" : "delta-1.3.0.8-1.3.0.9",
       "kind" : "delta",
       "seeds" : [],
-      "sha256" : "8f062adfab668e89886e6d5a2065ff4329dfaf92cab7c3057e05a4281ed387b2",
-      "size" : 10881358,
-      "url" : "1.3.0.8/zkdesk-1.3.0.7-to-1.3.0.8-x64.zip"
+      "sha256" : "2d562a1c7575b1c350c9204a72d8fc526f06fdb8e5c496c8cbe01b60242155b7",
+      "size" : 10884973,
+      "url" : "1.3.0.9/zkdesk-1.3.0.8-to-1.3.0.9-x64.zip"
     },
     {
       "delete" : [],
@@ -111,27 +111,27 @@
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "4f3437b48853a9a7e69bb22db7fba87334c6a2b8c63eba569f1728d58de58e14",
-          "size" : 21983744
+          "sha256" : "a9e21429dfa2369bd20736cc7ff1ad7a7aaad8f09f62146dc7204d851f961d25",
+          "size" : 21999104
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "6e26c1d8fe9c6319c76d302c81447c3814af2ac43e22bf95ec8d98350f88332d",
-          "size" : 575488
+          "sha256" : "78ce72a88ba29e71484b5a1b7996f5eafb8a1f754851bdd5561367d9a7e38300",
+          "size" : 576000
         },
         {
           "mode" : "replace",
           "path" : "zkupdate.exe",
-          "sha256" : "f08a9d4067a4c9791d34d4aeaf7319e60fac978149e667a4e5a458d7f2e2ff87",
-          "size" : 924672
+          "sha256" : "b2f90c6bcf7229cef53a33f4ab6f49856c3b8d8ccf1df568967d9cee389a7572",
+          "size" : 926720
         }
       ],
       "from" : 
       [
         "*"
       ],
-      "id" : "full-1.3.0.8",
+      "id" : "full-1.3.0.9",
       "kind" : "full",
       "seeds" : 
       [
@@ -141,15 +141,15 @@
           "path" : "Modules/Modules.json"
         }
       ],
-      "sha256" : "cae5cf055ef4bb93c27ed650bab2532891cdb476ca2af2b0535ee40c3f372e45",
-      "size" : 11341994,
-      "url" : "1.3.0.8/zkdesk-1.3.0.8-x64-full.zip"
+      "sha256" : "2ffe1f67d4a372b3f579df468371bc9a6e2fbcb8af8e09808fc7229521d6c678",
+      "size" : 11345609,
+      "url" : "1.3.0.9/zkdesk-1.3.0.9-x64-full.zip"
     }
   ],
   "paused" : false,
   "product" : "zkdesk",
-  "released_at" : "2026-11-15T02:04:46Z",
+  "released_at" : "2026-11-22T13:10:47Z",
   "rollout" : 100,
   "schema" : 1,
-  "version" : "1.3.0.8"
+  "version" : "1.3.0.9"
 }
