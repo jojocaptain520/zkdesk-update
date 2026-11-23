@@ -13,8 +13,8 @@
     },
     {
       "path" : "ScreenSaver.scr",
-      "sha256" : "043ef16acdf5f60257bca6cbd8f252c56fdb704dde00a647deb38e9fdfe000f0",
-      "size" : 418304
+      "sha256" : "f533af8a6edde8267e7c36711b595176c0b8a39444238659dea5c103d783adc4",
+      "size" : 416256
     },
     {
       "path" : "configs/files.json",
@@ -53,17 +53,17 @@
     },
     {
       "path" : "zkdesk64.exe",
-      "sha256" : "a9e21429dfa2369bd20736cc7ff1ad7a7aaad8f09f62146dc7204d851f961d25",
-      "size" : 21999104
+      "sha256" : "d55b1800e41156744b0e4708462fc79f8773a86e1aa6afd69e7ff1213b5ab9b9",
+      "size" : 22420992
     },
     {
       "path" : "zkdesk_svc.exe",
-      "sha256" : "78ce72a88ba29e71484b5a1b7996f5eafb8a1f754851bdd5561367d9a7e38300",
+      "sha256" : "c6cfb50906edbc7b08b6a829ebac78925d5408f735cd22924c33dd0052890e7e",
       "size" : 576000
     },
     {
       "path" : "zkupdate.exe",
-      "sha256" : "b2f90c6bcf7229cef53a33f4ab6f49856c3b8d8ccf1df568967d9cee389a7572",
+      "sha256" : "eb13a6122a56a3f752d73abb3e0a487ab9ede976446c9ef779ff4c04e479c915",
       "size" : 926720
     }
   ]

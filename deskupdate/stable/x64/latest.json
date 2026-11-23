@@ -5,7 +5,7 @@
   "min_version" : "0.0.0.0",
   "notes" : 
   {
-    "zh" : "设置中心\r\n· 需要管理员权限的选项（来宾验证、UAC、远程桌面端口、AMD 右键菜单、空白密码等）在文字右上角加了一个琥珀色角标，悬停提示「设置需要管理员权限」\r\n· 「关于」导航项有新版本时，文字右上角亮一个红点；关于页新增「忽略此版本 / 恢复提醒」，忽略只针对当前版本，清单出了更新的版本会重新提醒\r\n· 基本设置新增「创建快捷方式时不加“ - 快捷方式”后缀」：勾上后往盒子里拖文件建的快捷方式直接用原文件名\r\n\r\n修复\r\n· 盒子 / 桌面图标的改动改为立刻保存（以前 5 分钟才写一次盘，程序被强杀或异常退出时最近几分钟的改动会丢，表现为“新加的文件重启后不在盒子里”）\r\n· 屏保等待时间写不进去：SPI_SETSCREENSAVETIMEOUT 在 Windows 11 26H2 上会返回错误 329，改为优先写注册表\r\n· 系统设置里的选项文案括号统一成半角，远程桌面端口输入框宽度减半\r\n· 热搜资讯的默认热键改为 Ctrl+Shift+S（仅未设置过的用户生效）"
+    "zh" : "· 更新完成的提醒改为右下角小卡片，提示音更轻\r\n· 基本设置按用途重新分组，以后新增设置更好找\r\n· 右键菜单「整理图标到格子」改名为「整理到盒子」"
   },
   "notes_url" : {},
   "packages" : 
@@ -15,40 +15,34 @@
       "files" : 
       [
         {
-          "mode" : "preserve",
-          "path" : "ScreenSaver.scr",
-          "sha256" : "f533af8a6edde8267e7c36711b595176c0b8a39444238659dea5c103d783adc4",
-          "size" : 416256
-        },
-        {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "334aeca4c4f1fca515210a89e4929bf952251a223c60a9676d9b6730ed8f5a6e",
-          "size" : 22016512
+          "sha256" : "d55b1800e41156744b0e4708462fc79f8773a86e1aa6afd69e7ff1213b5ab9b9",
+          "size" : 22420992
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "075d6e0e985529a4d5718e5208c294fc275c1df1f1d0ac774353bbc015e30572",
+          "sha256" : "c6cfb50906edbc7b08b6a829ebac78925d5408f735cd22924c33dd0052890e7e",
           "size" : 576000
         },
         {
           "mode" : "replace",
           "path" : "zkupdate.exe",
-          "sha256" : "9b5e3b707ecb0bd7e6a932a13915cc6d51cb0cf023eff22d6468f4dcb64eb1e8",
+          "sha256" : "eb13a6122a56a3f752d73abb3e0a487ab9ede976446c9ef779ff4c04e479c915",
           "size" : 926720
         }
       ],
       "from" : 
       [
-        "1.3.0.9"
+        "1.3.0.10"
       ],
-      "id" : "delta-1.3.0.9-1.3.0.10",
+      "id" : "delta-1.3.0.10-1.3.0.11",
       "kind" : "delta",
       "seeds" : [],
-      "sha256" : "92f86270d5586fff26aa3ae79087a05550ed24397b270eccb47fea4acb714b12",
-      "size" : 11091919,
-      "url" : "1.3.0.10/zkdesk-1.3.0.9-to-1.3.0.10-x64.zip"
+      "sha256" : "689765c69be465bf1fe865a2d83285c21cb64fd9c72e5c9dcc3702226517b4e0",
+      "size" : 11148121,
+      "url" : "1.3.0.11/zkdesk-1.3.0.10-to-1.3.0.11-x64.zip"
     },
     {
       "delete" : [],
@@ -117,19 +111,19 @@
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "334aeca4c4f1fca515210a89e4929bf952251a223c60a9676d9b6730ed8f5a6e",
-          "size" : 22016512
+          "sha256" : "d55b1800e41156744b0e4708462fc79f8773a86e1aa6afd69e7ff1213b5ab9b9",
+          "size" : 22420992
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "075d6e0e985529a4d5718e5208c294fc275c1df1f1d0ac774353bbc015e30572",
+          "sha256" : "c6cfb50906edbc7b08b6a829ebac78925d5408f735cd22924c33dd0052890e7e",
           "size" : 576000
         },
         {
           "mode" : "replace",
           "path" : "zkupdate.exe",
-          "sha256" : "9b5e3b707ecb0bd7e6a932a13915cc6d51cb0cf023eff22d6468f4dcb64eb1e8",
+          "sha256" : "eb13a6122a56a3f752d73abb3e0a487ab9ede976446c9ef779ff4c04e479c915",
           "size" : 926720
         }
       ],
@@ -137,7 +131,7 @@
       [
         "*"
       ],
-      "id" : "full-1.3.0.10",
+      "id" : "full-1.3.0.11",
       "kind" : "full",
       "seeds" : 
       [
@@ -147,15 +141,15 @@
           "path" : "Modules/Modules.json"
         }
       ],
-      "sha256" : "4a2d294fc4d90132dd04667aebd114fd84451a7f5f59219924494a6b0446b595",
-      "size" : 11350074,
-      "url" : "1.3.0.10/zkdesk-1.3.0.10-x64-full.zip"
+      "sha256" : "c2931493f735d168cf6e558fdae66d1e206631401c087ff630b28b7f10f7494b",
+      "size" : 11607707,
+      "url" : "1.3.0.11/zkdesk-1.3.0.11-x64-full.zip"
     }
   ],
   "paused" : false,
   "product" : "zkdesk",
-  "released_at" : "2026-11-23T04:01:59Z",
+  "released_at" : "2026-11-23T05:10:08Z",
   "rollout" : 100,
   "schema" : 1,
-  "version" : "1.3.0.10"
+  "version" : "1.3.0.11"
 }
