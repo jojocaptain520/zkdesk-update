@@ -5,7 +5,7 @@
   "min_version" : "0.0.0.0",
   "notes" : 
   {
-    "zh" : "修复多显示器切换 / 资源管理器重启后组件位置错乱\r\n· 便签、待办、工具箱、盒子在插拔显示器后不再整体平移或堆到屏幕角落，位置按屏幕绝对坐标保持不变\r\n· 便签位置改为按屏幕坐标保存，单屏与双屏之间切换后不再挪位\r\n· 盒子的位置文件按屏幕组合分开存放，单屏/双屏两套布局不再互相覆盖（此前切回单屏会差 800px）\r\n· 显示器热插拔后先等系统屏幕信息稳定再做位置修正，避免\"全部堆在两屏交界处\"\r\n· 修复资源管理器重启时偶发崩溃（重挂接前先释放桌面窗口的原生句柄）\r\n· 修复部分场景下盒子/待办被误判为 150% 缩放而变大"
+    "zh" : "设置中心\r\n· 需要管理员权限的选项（来宾验证、UAC、远程桌面端口、AMD 右键菜单、空白密码等）在文字右上角加了一个琥珀色角标，悬停提示「设置需要管理员权限」\r\n· 「关于」导航项有新版本时，文字右上角亮一个红点；关于页新增「忽略此版本 / 恢复提醒」，忽略只针对当前版本，清单出了更新的版本会重新提醒\r\n· 基本设置新增「创建快捷方式时不加“ - 快捷方式”后缀」：勾上后往盒子里拖文件建的快捷方式直接用原文件名\r\n\r\n修复\r\n· 盒子 / 桌面图标的改动改为立刻保存（以前 5 分钟才写一次盘，程序被强杀或异常退出时最近几分钟的改动会丢，表现为“新加的文件重启后不在盒子里”）\r\n· 屏保等待时间写不进去：SPI_SETSCREENSAVETIMEOUT 在 Windows 11 26H2 上会返回错误 329，改为优先写注册表\r\n· 系统设置里的选项文案括号统一成半角，远程桌面端口输入框宽度减半\r\n· 热搜资讯的默认热键改为 Ctrl+Shift+S（仅未设置过的用户生效）"
   },
   "notes_url" : {},
   "packages" : 
@@ -15,34 +15,40 @@
       "files" : 
       [
         {
+          "mode" : "preserve",
+          "path" : "ScreenSaver.scr",
+          "sha256" : "f533af8a6edde8267e7c36711b595176c0b8a39444238659dea5c103d783adc4",
+          "size" : 416256
+        },
+        {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "a9e21429dfa2369bd20736cc7ff1ad7a7aaad8f09f62146dc7204d851f961d25",
-          "size" : 21999104
+          "sha256" : "334aeca4c4f1fca515210a89e4929bf952251a223c60a9676d9b6730ed8f5a6e",
+          "size" : 22016512
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "78ce72a88ba29e71484b5a1b7996f5eafb8a1f754851bdd5561367d9a7e38300",
+          "sha256" : "075d6e0e985529a4d5718e5208c294fc275c1df1f1d0ac774353bbc015e30572",
           "size" : 576000
         },
         {
           "mode" : "replace",
           "path" : "zkupdate.exe",
-          "sha256" : "b2f90c6bcf7229cef53a33f4ab6f49856c3b8d8ccf1df568967d9cee389a7572",
+          "sha256" : "9b5e3b707ecb0bd7e6a932a13915cc6d51cb0cf023eff22d6468f4dcb64eb1e8",
           "size" : 926720
         }
       ],
       "from" : 
       [
-        "1.3.0.8"
+        "1.3.0.9"
       ],
-      "id" : "delta-1.3.0.8-1.3.0.9",
+      "id" : "delta-1.3.0.9-1.3.0.10",
       "kind" : "delta",
       "seeds" : [],
-      "sha256" : "2d562a1c7575b1c350c9204a72d8fc526f06fdb8e5c496c8cbe01b60242155b7",
-      "size" : 10884973,
-      "url" : "1.3.0.9/zkdesk-1.3.0.8-to-1.3.0.9-x64.zip"
+      "sha256" : "92f86270d5586fff26aa3ae79087a05550ed24397b270eccb47fea4acb714b12",
+      "size" : 11091919,
+      "url" : "1.3.0.10/zkdesk-1.3.0.9-to-1.3.0.10-x64.zip"
     },
     {
       "delete" : [],
@@ -63,8 +69,8 @@
         {
           "mode" : "preserve",
           "path" : "ScreenSaver.scr",
-          "sha256" : "043ef16acdf5f60257bca6cbd8f252c56fdb704dde00a647deb38e9fdfe000f0",
-          "size" : 418304
+          "sha256" : "f533af8a6edde8267e7c36711b595176c0b8a39444238659dea5c103d783adc4",
+          "size" : 416256
         },
         {
           "mode" : "replace",
@@ -111,19 +117,19 @@
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "a9e21429dfa2369bd20736cc7ff1ad7a7aaad8f09f62146dc7204d851f961d25",
-          "size" : 21999104
+          "sha256" : "334aeca4c4f1fca515210a89e4929bf952251a223c60a9676d9b6730ed8f5a6e",
+          "size" : 22016512
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "78ce72a88ba29e71484b5a1b7996f5eafb8a1f754851bdd5561367d9a7e38300",
+          "sha256" : "075d6e0e985529a4d5718e5208c294fc275c1df1f1d0ac774353bbc015e30572",
           "size" : 576000
         },
         {
           "mode" : "replace",
           "path" : "zkupdate.exe",
-          "sha256" : "b2f90c6bcf7229cef53a33f4ab6f49856c3b8d8ccf1df568967d9cee389a7572",
+          "sha256" : "9b5e3b707ecb0bd7e6a932a13915cc6d51cb0cf023eff22d6468f4dcb64eb1e8",
           "size" : 926720
         }
       ],
@@ -131,7 +137,7 @@
       [
         "*"
       ],
-      "id" : "full-1.3.0.9",
+      "id" : "full-1.3.0.10",
       "kind" : "full",
       "seeds" : 
       [
@@ -141,15 +147,15 @@
           "path" : "Modules/Modules.json"
         }
       ],
-      "sha256" : "2ffe1f67d4a372b3f579df468371bc9a6e2fbcb8af8e09808fc7229521d6c678",
-      "size" : 11345609,
-      "url" : "1.3.0.9/zkdesk-1.3.0.9-x64-full.zip"
+      "sha256" : "4a2d294fc4d90132dd04667aebd114fd84451a7f5f59219924494a6b0446b595",
+      "size" : 11350074,
+      "url" : "1.3.0.10/zkdesk-1.3.0.10-x64-full.zip"
     }
   ],
   "paused" : false,
   "product" : "zkdesk",
-  "released_at" : "2026-11-22T13:10:47Z",
+  "released_at" : "2026-11-23T04:01:59Z",
   "rollout" : 100,
   "schema" : 1,
-  "version" : "1.3.0.9"
+  "version" : "1.3.0.10"
 }
