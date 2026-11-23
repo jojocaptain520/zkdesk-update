@@ -53,18 +53,18 @@
     },
     {
       "path" : "zkdesk64.exe",
-      "sha256" : "d55b1800e41156744b0e4708462fc79f8773a86e1aa6afd69e7ff1213b5ab9b9",
-      "size" : 22420992
+      "sha256" : "55a38d8c59e18ded383b817beb7315259c6cbfc770670c888e3c30e9fc71ec9d",
+      "size" : 22480896
     },
     {
       "path" : "zkdesk_svc.exe",
-      "sha256" : "c6cfb50906edbc7b08b6a829ebac78925d5408f735cd22924c33dd0052890e7e",
-      "size" : 576000
+      "sha256" : "f26d1486baf2234e7674760c699206f42f6deb996531320106dfb45fb9abe6cf",
+      "size" : 588800
     },
     {
       "path" : "zkupdate.exe",
-      "sha256" : "eb13a6122a56a3f752d73abb3e0a487ab9ede976446c9ef779ff4c04e479c915",
-      "size" : 926720
+      "sha256" : "ceb22aa76019d545c63536651247d82a267cdf9b9d00083e11606b536e1fb1b1",
+      "size" : 933888
     }
   ]
 }
