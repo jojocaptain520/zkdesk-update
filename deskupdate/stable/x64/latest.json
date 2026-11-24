@@ -5,7 +5,7 @@
   "min_version" : "0.0.0.0",
   "notes" : 
   {
-    "zh" : "· 设置里可以修改配置目录，现有数据会自动迁移到新位置\r\n· 桌面右键菜单新增「显示更多选项」，查看 / 排序 / 刷新与系统菜单一致\r\n· 弹窗改为显示在所属窗口正中间，多显示器时不再跑到别的屏幕上"
+    "zh" : "· 设置中心显示存储占用，可一键清理缓存（新闻、天气、更新安装包、诊断日志等）\r\n· 退出、关机、注销时也会保存组件位置；切换屏幕组合后盒子、便签、待办等不再错位\r\n· 自动检查更新改为每 12 小时一次（原来是 24 小时）"
   },
   "notes_url" : {},
   "packages" : 
@@ -17,32 +17,32 @@
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "55a38d8c59e18ded383b817beb7315259c6cbfc770670c888e3c30e9fc71ec9d",
-          "size" : 22480896
+          "sha256" : "f3837c81b12ea458c3d86d32de91c235845c18a78a64bfc8abb2418254b7c691",
+          "size" : 22617088
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "f26d1486baf2234e7674760c699206f42f6deb996531320106dfb45fb9abe6cf",
+          "sha256" : "4662cf3e444db91d0e481c156c33085e9698fb81dcb378377327c29a159f12c6",
           "size" : 588800
         },
         {
           "mode" : "replace",
           "path" : "zkupdate.exe",
-          "sha256" : "ceb22aa76019d545c63536651247d82a267cdf9b9d00083e11606b536e1fb1b1",
+          "sha256" : "7020b147862864f7fbe2d1aebf9a6939b153ba40ca7c51a34a8699e3443e4e2e",
           "size" : 933888
         }
       ],
       "from" : 
       [
-        "1.3.1.0"
+        "1.4.0.0"
       ],
-      "id" : "delta-1.3.1.0-1.4.0.0",
+      "id" : "delta-1.4.0.0-1.5.0.0",
       "kind" : "delta",
       "seeds" : [],
-      "sha256" : "6f70c411cfd3600bef11620ba17c09c28eead49a288991cf238097c21ff0cd14",
-      "size" : 11182417,
-      "url" : "1.4.0.0/zkdesk-1.3.1.0-to-1.4.0.0-x64.zip"
+      "sha256" : "1f042fb7b6ab40a7a2a01c79503737b3578dee764434ddaa16ebe94a8a6a9b4b",
+      "size" : 11239094,
+      "url" : "1.5.0.0/zkdesk-1.4.0.0-to-1.5.0.0-x64.zip"
     },
     {
       "delete" : [],
@@ -111,19 +111,19 @@
         {
           "mode" : "replace",
           "path" : "zkdesk64.exe",
-          "sha256" : "55a38d8c59e18ded383b817beb7315259c6cbfc770670c888e3c30e9fc71ec9d",
-          "size" : 22480896
+          "sha256" : "f3837c81b12ea458c3d86d32de91c235845c18a78a64bfc8abb2418254b7c691",
+          "size" : 22617088
         },
         {
           "mode" : "replace",
           "path" : "zkdesk_svc.exe",
-          "sha256" : "f26d1486baf2234e7674760c699206f42f6deb996531320106dfb45fb9abe6cf",
+          "sha256" : "4662cf3e444db91d0e481c156c33085e9698fb81dcb378377327c29a159f12c6",
           "size" : 588800
         },
         {
           "mode" : "replace",
           "path" : "zkupdate.exe",
-          "sha256" : "ceb22aa76019d545c63536651247d82a267cdf9b9d00083e11606b536e1fb1b1",
+          "sha256" : "7020b147862864f7fbe2d1aebf9a6939b153ba40ca7c51a34a8699e3443e4e2e",
           "size" : 933888
         }
       ],
@@ -131,7 +131,7 @@
       [
         "*"
       ],
-      "id" : "full-1.4.0.0",
+      "id" : "full-1.5.0.0",
       "kind" : "full",
       "seeds" : 
       [
@@ -141,15 +141,15 @@
           "path" : "Modules/Modules.json"
         }
       ],
-      "sha256" : "a1b5f06b0ec201d80c2ee20b4da02c6589a4c5b9f440be07d29a1493b1e7f3ca",
-      "size" : 11642003,
-      "url" : "1.4.0.0/zkdesk-1.4.0.0-x64-full.zip"
+      "sha256" : "5c6d2c2f5f6bdcd840ea5a3daab2d95226d1b5d4211f5a0af903ca2acd65e7b2",
+      "size" : 11698680,
+      "url" : "1.5.0.0/zkdesk-1.5.0.0-x64-full.zip"
     }
   ],
   "paused" : false,
   "product" : "zkdesk",
-  "released_at" : "2026-11-23T13:46:41Z",
+  "released_at" : "2026-11-24T03:52:57Z",
   "rollout" : 100,
   "schema" : 1,
-  "version" : "1.4.0.0"
+  "version" : "1.5.0.0"
 }
