@@ -2,8 +2,13 @@
     "schema":  1,
     "product":  "zkdesk",
     "channel":  "stable",
-    "updated_at":  "2026-11-24T03:52:56Z",
+    "updated_at":  "2026-11-25T01:03:20Z",
     "versions":  [
+                     {
+                         "version":  "1.5.1.0",
+                         "date":  "2026-11-25",
+                         "notes":  "· 系统设置里的「启用经典右键菜单」注明需要重启 Windows 资源管理器才生效"
+                     },
                      {
                          "version":  "1.5.0.0",
                          "date":  "2026-11-24",
